@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 16 - File Handling | CodePath</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 22px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1 {
+            color: #22d3ee;
+            margin: 0;
+        }
+
+        header p {
+            margin-bottom: 0;
+        }
+
+        nav {
+            text-align: center;
+            padding: 15px;
+            background: #101a2d;
+        }
+
+        nav a {
+            display: inline-block;
+            color: #22d3ee;
+            text-decoration: none;
+            margin: 5px 10px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        main {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background: #111c33;
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid #263650;
+        }
+
+        h2, h3 {
+            color: #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        pre {
+            background: #080e1a;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #22d3ee;
+            white-space: pre;
+        }
+
+        .note {
+            background: #172a40;
+            padding: 12px;
+            border-left: 4px solid #22d3ee;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #33251a;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #22d3ee;
+            color: #08111f;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #67e8f9;
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: #0b1527;
+            border-radius: 8px;
+        }
+
+        .question label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            background: #111c33;
+            color: #94a3b8;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
+            }
+
+            section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Chapter 16: File Handling in C</h1>
+    <p>Learn to create, read, write, and manage files using C.</p>
+</header>
+
+<nav>
+    <a href="chapter15.html">← Previous</a>
+    <a href="index.html">Home</a>
+    <a href="chapter17.html">Next →</a>
+</nav>
+
+<main>
+
+    <section>
+        <h2>1. What Is File Handling?</h2>
+
+        <p>
+            File handling allows a C program to store information in files
+            and retrieve it later. Unlike ordinary variables, data saved
+            in a file can remain available after the program ends.
+        </p>
+
+        <p>Common file operations include:</p>
+
+        <ul>
+            <li>Creating or opening a file</li>
+            <li>Writing data into a file</li>
+            <li>Reading data from a file</li>
+            <li>Appending new data</li>
+            <li>Closing a file</li>
+        </ul>
+
+        <div class="note">
+            <strong>Important:</strong> File handling in C commonly uses
+            functions declared in the <code>&lt;stdio.h&gt;</code> header.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. The FILE Pointer</h2>
+
+        <p>
+            C uses a <code>FILE</code> pointer to work with an opened file.
+            It keeps track of information needed for file operations.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *fp;
+
+    return 0;
+}</code></pre>
+
+        <p>
+            Here, <code>fp</code> is a pointer that can refer to a file
+            opened by the program.
+        </p>
+    </section>
+
+    <section>
+        <h2>3. Opening a File: fopen()</h2>
+
+        <p>
+            The <code>fopen()</code> function opens a file and returns a
+            file pointer if successful. If it fails, it returns
+            <code>NULL</code>.
+        </p>
+
+        <pre><code>FILE *fp = fopen("data.txt", "w");</code></pre>
+
+        <h3>Common File Modes</h3>
+
+        <ul>
+            <li><code>"r"</code> — Open an existing file for reading.</li>
+            <li><code>"w"</code> — Open for writing; create or overwrite the file.</li>
+            <li><code>"a"</code> — Open for appending; write at the end.</li>
+            <li><code>"r+"</code> — Open an existing file for reading and writing.</li>
+            <li><code>"w+"</code> — Open for reading and writing; create or overwrite.</li>
+            <li><code>"a+"</code> — Open for reading and appending; create if needed.</li>
+        </ul>
+
+        <div class="warning">
+            <strong>Be careful:</strong> Opening an existing file with
+            <code>"w"</code> erases its previous contents.
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Writing to a File</h2>
+
+        <p>
+            The <code>fprintf()</code> function writes formatted text
+            to a file.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *fp = fopen("data.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.\n");
+        return 1;
+    }
+
+    fprintf(fp, "Hello, CodePath!\n");
+    fprintf(fp, "Learning C file handling.\n");
+
+    fclose(fp);
+
+    printf("Data written successfully.\n");
+
+    return 0;
+}</code></pre>
+
+        <h3>How It Works</h3>
+
+        <ol>
+            <li>Open <code>data.txt</code> in write mode.</li>
+            <li>Check whether the file opened successfully.</li>
+            <li>Write two lines using <code>fprintf()</code>.</li>
+            <li>Close the file using <code>fclose()</code>.</li>
+        </ol>
+
+        <div class="note">
+            The file is normally created in the program's working directory
+            if it does not already exist.
+        </div>
+    </section>
+
+    <section>
+        <h2>5. Reading from a File</h2>
+
+        <p>
+            The <code>fgets()</code> function can read a line or a portion
+            of a line from a file.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *fp = fopen("data.txt", "r");
+    char line[100];
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.\n");
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The loop continues while <code>fgets()</code> successfully
+            reads data. When no more data can be read, it returns
+            <code>NULL</code>.
+        </p>
+
+        <div class="note">
+            Run the writing example first to create <code>data.txt</code>.
+            Then run this reading example.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. Appending Data to a File</h2>
+
+        <p>
+            Use <code>"a"</code> mode when you want to add new data without
+            deleting the existing contents.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *fp = fopen("data.txt", "a");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.\n");
+        return 1;
+    }
+
+    fprintf(fp, "This line was added later.\n");
+
+    fclose(fp);
+
+    printf("Data appended successfully.\n");
+
+    return 0;
+}</code></pre>
+
+        <p>
+            Each successful run adds another line to the end of the file.
+        </p>
+    </section>
+
+    <section>
+        <h2>7. Character-Based File Functions</h2>
+
+        <h3>fputc()</h3>
+
+        <p>
+            Writes one character to a file.
+        </p>
+
+        <pre><code>fputc('A', fp);</code></pre>
+
+        <h3>fgetc()</h3>
+
+        <p>
+            Reads one character from a file.
+        </p>
+
+        <pre><code>int ch = fgetc(fp);
+
+if (ch != EOF)
+{
+    printf("%c", ch);
+}</code></pre>
+
+        <div class="note">
+            Use an <code>int</code> variable for the result of
+            <code>fgetc()</code>, so it can represent every possible
+            unsigned-character value as well as <code>EOF</code>.
+        </div>
+    </section>
+
+    <section>
+        <h2>8. Closing a File: fclose()</h2>
+
+        <p>
+            Always close a file when you have finished using it.
+            The <code>fclose()</code> function releases resources
+            associated with the open file.
+        </p>
+
+        <pre><code>fclose(fp);</code></pre>
+
+        <p>
+            Closing a file also helps ensure that buffered output is
+            properly handled.
+        </p>
+    </section>
+
+    <section>
+        <h2>9. Complete Example: Save and Read a Number</h2>
+
+        <p>
+            This program writes a number to a file, closes it, opens
+            the file again, and reads the number back.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    FILE *fp;
+    int number;
+
+    fp = fopen("number.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("Unable to create file.\n");
+        return 1;
+    }
+
+    fprintf(fp, "%d", 250);
+    fclose(fp);
+
+    fp = fopen("number.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to read file.\n");
+        return 1;
+    }
+
+    if (fscanf(fp, "%d", &amp;number) == 1)
+    {
+        printf("Number from file: %d\n", number);
+    }
+    else
+    {
+        printf("Could not read a valid number.\n");
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Expected Output</h3>
+
+        <pre><code>Number from file: 250</code></pre>
+
+        <p>
+            The program creates <code>number.txt</code>, saves
+            <code>250</code>, and then reads it back.
+        </p>
+    </section>
+
+    <section>
+        <h2>10. Common Mistakes</h2>
+
+        <ul>
+            <li>Not checking whether <code>fopen()</code> returned <code>NULL</code>.</li>
+            <li>Using read mode when the file does not exist.</li>
+            <li>Accidentally erasing data by opening a file in <code>"w"</code> mode.</li>
+            <li>Forgetting to close a file.</li>
+            <li>Using a file pointer after its file has been closed.</li>
+            <li>Assuming the file is saved in the same directory as the source code without checking the working directory.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>11. Chapter Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>Q1. Which function opens a file?</strong></p>
+
+                <label>
+                    <input type="radio" name="q1" value="a">
+                    printf()
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="b">
+                    fopen()
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="c">
+                    scanf()
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q2. Which mode opens a file for appending?</strong></p>
+
+                <label>
+                    <input type="radio" name="q2" value="a">
+                    "r"
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="b">
+                    "w"
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="c">
+                    "a"
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q3. Which function closes an open file?</strong></p>
+
+                <label>
+                    <input type="radio" name="q3" value="a">
+                    fclose()
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="b">
+                    fclosefile()
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="c">
+                    closefile()
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q4. What does fopen() return when it fails?</strong></p>
+
+                <label>
+                    <input type="radio" name="q4" value="a">
+                    0 characters
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="b">
+                    NULL
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="c">
+                    EOF in every case
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q5. Which mode can erase existing file contents when opened?</strong></p>
+
+                <label>
+                    <input type="radio" name="q5" value="a">
+                    "a"
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="b">
+                    "r"
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="c">
+                    "w"
+                </label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+
+            <p id="quizResult" aria-live="polite"></p>
+
+        </form>
+    </section>
+
+    <section>
+        <h2>12. Coding Challenges</h2>
+
+        <h3>🟢 Easy</h3>
+        <p>
+            Write a program that creates a file named <code>student.txt</code>
+            and writes your name into it.
+        </p>
+
+        <h3>🟡 Medium</h3>
+        <p>
+            Write a program that reads and displays all the text from
+            <code>student.txt</code> using <code>fgets()</code>.
+        </p>
+
+        <h3>🔴 Hard</h3>
+        <p>
+            Write a program that asks the user to enter five integers,
+            saves them to a file, then opens the file and calculates
+            their sum.
+        </p>
+
+        <div class="note">
+            <strong>Challenge rule:</strong> Try writing each program
+            yourself before checking a solution. Test file-opening errors
+            and remember to close every file you successfully open.
+        </div>
+    </section>
+
+    <nav>
+        <a href="chapter15.html">← Previous Chapter</a>
+        <a href="index.html">Home</a>
+        <a href="chapter17.html">Next Chapter →</a>
+    </nav>
+
+</main>
+
+<footer>
+    <p>© 2026 CodePath | Learn C, One Step at a Time.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "b",
+            q2: "c",
+            q3: "a",
+            q4: "b",
+            q5: "c"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected)
+            {
+                unanswered++;
+            }
+            else if (selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quizResult");
+
+        if (unanswered > 0)
+        {
+            result.textContent =
+                "Please answer all 5 questions before submitting.";
+        }
+        else
+        {
+            result.textContent =
+                "Your score: " + score + "/5";
+
+            if (score === 5)
+            {
+                result.textContent += " — Excellent work!";
+            }
+            else if (score >= 3)
+            {
+                result.textContent += " — Good job! Review the missed answers.";
+            }
+            else
+            {
+                result.textContent += " — Review the chapter and try again.";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

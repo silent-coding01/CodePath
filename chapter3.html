@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3 - Operators in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .lesson-section {
+            background: #101a2c;
+            border: 1px solid #263b55;
+            border-radius: 12px;
+            padding: 22px;
+            margin: 22px 0;
+        }
+
+        .lesson-section h2 {
+            color: #00d9ff;
+        }
+
+        .lesson-section h3 {
+            color: #ffffff;
+            margin-top: 22px;
+        }
+
+        .code-example {
+            background: #080f1c;
+            color: #d8e8f5;
+            border-left: 4px solid #00d9ff;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .operator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .operator-table th,
+        .operator-table td {
+            padding: 12px;
+            border: 1px solid #30445e;
+            text-align: left;
+        }
+
+        .operator-table th {
+            background: #17243a;
+            color: #00d9ff;
+        }
+
+        .operator-table td {
+            color: #e0eaf5;
+        }
+
+        .quiz-question {
+            background: #17243a;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 18px 0;
+        }
+
+        .quiz-question label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .quiz-question input {
+            margin-right: 8px;
+        }
+
+        .quiz-button {
+            background: #00d9ff;
+            color: #08111f;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .quiz-button:hover {
+            background: #ffffff;
+        }
+
+        .quiz-feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .chapter-navigation a {
+            display: inline-block;
+            background: #17243a;
+            color: #00d9ff;
+            text-decoration: none;
+            border: 1px solid #00d9ff;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .chapter-navigation a:hover {
+            background: #00d9ff;
+            color: #08111f;
+        }
+
+        .important-note {
+            background: #17243a;
+            border-left: 4px solid #00d9ff;
+            padding: 14px;
+            margin: 16px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Chapter 3: Operators in C</h1>
+        <p>Learn how to perform calculations, comparisons, and logical operations.</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="chapter1.html">Chapter 1</a>
+        <a href="chapter2.html">Chapter 2</a>
+
+        <div class="search-container">
+            <div class="search-bar">
+                <input
+                    type="text"
+                    id="topicSearch"
+                    placeholder="Search topics..."
+                    onkeydown="if(event.key === 'Enter') searchTopic();"
+                >
+                <button type="button" onclick="searchTopic()">Search</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- INTRODUCTION -->
+        <section class="lesson-section">
+            <h2>1. What Are Operators?</h2>
+
+            <p>
+                Operators are symbols used to perform operations on variables
+                and values in a C program.
+            </p>
+
+            <p>For example:</p>
+
+            <pre class="code-example">int a = 10;
+int b = 5;
+int sum = a + b;
+
+printf("%d", sum);</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">15</pre>
+
+            <p>
+                Here, <code>+</code> is an arithmetic operator that adds
+                the values of <code>a</code> and <code>b</code>.
+            </p>
+        </section>
+
+        <!-- ARITHMETIC OPERATORS -->
+        <section class="lesson-section">
+            <h2>2. Arithmetic Operators</h2>
+
+            <p>
+                Arithmetic operators perform mathematical calculations.
+            </p>
+
+            <table class="operator-table">
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>+</td>
+                    <td>Addition</td>
+                    <td>10 + 3</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Subtraction</td>
+                    <td>10 - 3</td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td>*</td>
+                    <td>Multiplication</td>
+                    <td>10 * 3</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>Division</td>
+                    <td>10 / 3</td>
+                    <td>3 (integer division)</td>
+                </tr>
+                <tr>
+                    <td>%</td>
+                    <td>Modulus</td>
+                    <td>10 % 3</td>
+                    <td>1 (remainder)</td>
+                </tr>
+            </table>
+
+            <div class="important-note">
+                <strong>Remember:</strong> When both operands are integers,
+                integer division discards the fractional part.
+                For example, <code>10 / 3</code> produces <code>3</code>.
+                The modulus operator <code>%</code> gives the remainder
+                and is used with integer operands in C.
+            </div>
+
+            <h3>Example Program</h3>
+
+            <pre class="code-example">#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10, b = 3;
+
+    printf("Addition = %d\n", a + b);
+    printf("Subtraction = %d\n", a - b);
+    printf("Multiplication = %d\n", a * b);
+    printf("Division = %d\n", a / b);
+    printf("Remainder = %d\n", a % b);
+
+    return 0;
+}</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">Addition = 13
+Subtraction = 7
+Multiplication = 30
+Division = 3
+Remainder = 1</pre>
+        </section>
+
+        <!-- RELATIONAL OPERATORS -->
+        <section class="lesson-section">
+            <h2>3. Relational Operators</h2>
+
+            <p>
+                Relational operators compare two values.
+                A comparison produces <code>1</code> when true and
+                <code>0</code> when false in C.
+            </p>
+
+            <table class="operator-table">
+                <tr>
+                    <th>Operator</th>
+                    <th>Meaning</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>==</td>
+                    <td>Equal to</td>
+                    <td>5 == 5 → 1</td>
+                </tr>
+                <tr>
+                    <td>!=</td>
+                    <td>Not equal to</td>
+                    <td>5 != 3 → 1</td>
+                </tr>
+                <tr>
+                    <td>&gt;</td>
+                    <td>Greater than</td>
+                    <td>8 &gt; 4 → 1</td>
+                </tr>
+                <tr>
+                    <td>&lt;</td>
+                    <td>Less than</td>
+                    <td>3 &lt; 2 → 0</td>
+                </tr>
+                <tr>
+                    <td>&gt;=</td>
+                    <td>Greater than or equal to</td>
+                    <td>5 &gt;= 5 → 1</td>
+                </tr>
+                <tr>
+                    <td>&lt;=</td>
+                    <td>Less than or equal to</td>
+                    <td>4 &lt;= 2 → 0</td>
+                </tr>
+            </table>
+
+            <h3>Example Program</h3>
+
+            <pre class="code-example">#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10, b = 5;
+
+    printf("%d\n", a > b);
+    printf("%d\n", a == b);
+    printf("%d\n", a != b);
+
+    return 0;
+}</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">1
+0
+1</pre>
+
+            <div class="important-note">
+                <strong>Important:</strong> <code>=</code> assigns a value,
+                while <code>==</code> compares two values.
+            </div>
+        </section>
+
+        <!-- LOGICAL OPERATORS -->
+        <section class="lesson-section">
+            <h2>4. Logical Operators</h2>
+
+            <p>
+                Logical operators combine conditions or reverse a condition.
+            </p>
+
+            <table class="operator-table">
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td>&amp;&amp;</td>
+                    <td>Logical AND</td>
+                    <td>True when both conditions are true.</td>
+                </tr>
+                <tr>
+                    <td>||</td>
+                    <td>Logical OR</td>
+                    <td>True when at least one condition is true.</td>
+                </tr>
+                <tr>
+                    <td>!</td>
+                    <td>Logical NOT</td>
+                    <td>Reverses a condition's truth value.</td>
+                </tr>
+            </table>
+
+            <h3>Example Program</h3>
+
+            <pre class="code-example">#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+
+    printf("%d\n", age >= 18 && age <= 60);
+    printf("%d\n", age < 18 || age > 60);
+    printf("%d\n", !(age >= 18));
+
+    return 0;
+}</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">1
+0
+0</pre>
+
+            <p>
+                The first expression is true because age is at least 18
+                and at most 60. The second and third expressions are false.
+            </p>
+        </section>
+
+        <!-- ASSIGNMENT OPERATORS -->
+        <section class="lesson-section">
+            <h2>5. Assignment Operators</h2>
+
+            <p>
+                Assignment operators assign or update values in variables.
+            </p>
+
+            <table class="operator-table">
+                <tr>
+                    <th>Operator</th>
+                    <th>Example</th>
+                    <th>Equivalent expression</th>
+                </tr>
+                <tr>
+                    <td>=</td>
+                    <td>a = 10</td>
+                    <td>Assign 10 to a</td>
+                </tr>
+                <tr>
+                    <td>+=</td>
+                    <td>a += 5</td>
+                    <td>a = a + 5</td>
+                </tr>
+                <tr>
+                    <td>-=</td>
+                    <td>a -= 5</td>
+                    <td>a = a - 5</td>
+                </tr>
+                <tr>
+                    <td>*=</td>
+                    <td>a *= 2</td>
+                    <td>a = a * 2</td>
+                </tr>
+                <tr>
+                    <td>/=</td>
+                    <td>a /= 2</td>
+                    <td>a = a / 2</td>
+                </tr>
+                <tr>
+                    <td>%=</td>
+                    <td>a %= 3</td>
+                    <td>a = a % 3</td>
+                </tr>
+            </table>
+
+            <h3>Example Program</h3>
+
+            <pre class="code-example">#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10;
+
+    a += 5;
+    printf("%d\n", a);
+
+    a -= 3;
+    printf("%d\n", a);
+
+    return 0;
+}</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">15
+12</pre>
+        </section>
+
+        <!-- INCREMENT AND DECREMENT -->
+        <section class="lesson-section">
+            <h2>6. Increment and Decrement Operators</h2>
+
+            <p>
+                The increment operator <code>++</code> increases a variable
+                by one. The decrement operator <code>--</code> decreases
+                a variable by one.
+            </p>
+
+            <pre class="code-example">int a = 5;
+
+a++;
+printf("%d\n", a);
+
+a--;
+printf("%d\n", a);</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">6
+5</pre>
+
+            <h3>Prefix and Postfix</h3>
+
+            <ul>
+                <li><code>++a</code>: increments first, then produces the new value.</li>
+                <li><code>a++</code>: produces the old value, then increments.</li>
+                <li><code>--a</code>: decrements first, then produces the new value.</li>
+                <li><code>a--</code>: produces the old value, then decrements.</li>
+            </ul>
+
+            <pre class="code-example">int a = 5;
+
+printf("%d\n", a++);
+printf("%d\n", a);
+
+printf("%d\n", ++a);</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">5
+6
+7</pre>
+        </section>
+
+        <!-- OPERATOR PRECEDENCE -->
+        <section class="lesson-section">
+            <h2>7. Operator Precedence</h2>
+
+            <p>
+                Operator precedence determines which operation is performed
+                first in an expression.
+            </p>
+
+            <pre class="code-example">int result = 2 + 3 * 4;
+printf("%d", result);</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">14</pre>
+
+            <p>
+                Multiplication is performed before addition, so the result
+                is <code>2 + 12 = 14</code>.
+            </p>
+
+            <p>
+                Use parentheses when you want to make the intended order clear:
+            </p>
+
+            <pre class="code-example">int result = (2 + 3) * 4;
+printf("%d", result);</pre>
+
+            <p><strong>Output:</strong></p>
+
+            <pre class="code-example">20</pre>
+        </section>
+
+        <!-- INTERACTIVE QUIZ -->
+        <section class="lesson-section">
+            <h2>8. Interactive Practice Quiz</h2>
+
+            <p>Select one answer for each question, then click Check Answers.</p>
+
+            <form id="operatorQuiz">
+
+                <div class="quiz-question">
+                    <p><strong>Question 1:</strong> What is the result of 17 % 5?</p>
+
+                    <label>
+                        <input type="radio" name="q1" value="a">
+                        A. 2
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="b">
+                        B. 3
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="c">
+                        C. 12
+                    </label>
+
+                    <p class="quiz-feedback" id="feedback1"></p>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>Question 2:</strong> What does 8 == 8 produce?</p>
+
+                    <label>
+                        <input type="radio" name="q2" value="a">
+                        A. 0
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q2" value="b">
+                        B. 1
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q2" value="c">
+                        C. 8
+                    </label>
+
+                    <p class="quiz-feedback" id="feedback2"></p>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>Question 3:</strong> Which operator means logical AND?</p>
+
+                    <label>
+                        <input type="radio" name="q3" value="a">
+                        A. ||
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q3" value="b">
+                        B. !
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q3" value="c">
+                        C. &amp;&amp;
+                    </label>
+
+                    <p class="quiz-feedback" id="feedback3"></p>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>Question 4:</strong> What is the result of 10 / 4 when both operands are integers?</p>
+
+                    <label>
+                        <input type="radio" name="q4" value="a">
+                        A. 2
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q4" value="b">
+                        B. 2.5
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q4" value="c">
+                        C. 3
+                    </label>
+
+                    <p class="quiz-feedback" id="feedback4"></p>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>Question 5:</strong> What is the value of a after this code?</p>
+
+                    <pre class="code-example">int a = 4;
+a += 3;</pre>
+
+                    <label>
+                        <input type="radio" name="q5" value="a">
+                        A. 3
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q5" value="b">
+                        B. 4
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q5" value="c">
+                        C. 7
+                    </label>
+
+                    <p class="quiz-feedback" id="feedback5"></p>
+                </div>
+
+                <button type="button" class="quiz-button" onclick="checkOperatorQuiz()">
+                    Check Answers
+                </button>
+
+                <button type="reset" class="quiz-button" onclick="resetOperatorQuiz()">
+                    Try Again
+                </button>
+
+                <h3 id="quizScore"></h3>
+
+            </form>
+        </section>
+
+        <!-- CHAPTER NAVIGATION -->
+        <div class="chapter-navigation">
+            <a href="chapter2.html">← Previous Chapter</a>
+            <a href="index.html">Back to Home</a>
+            <a href="chapter4.html">Next Chapter →</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>CodePath | Learn C. Think Logically.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        function checkOperatorQuiz() {
+            const answers = {
+                q1: "a",
+                q2: "b",
+                q3: "c",
+                q4: "a",
+                q5: "c"
+            };
+
+            let score = 0;
+            let total = Object.keys(answers).length;
+
+            for (let question in answers) {
+                let selected = document.querySelector(
+                    'input[name="' + question + '"]:checked'
+                );
+
+                let questionNumber = question.substring(1);
+                let feedback = document.getElementById(
+                    "feedback" + questionNumber
+                );
+
+                if (!selected) {
+                    feedback.textContent = "Please select an answer.";
+                    feedback.style.color = "#ffd166";
+                } else if (selected.value === answers[question]) {
+                    feedback.textContent = "Correct!";
+                    feedback.style.color = "#42e695";
+                    score++;
+                } else {
+                    feedback.textContent = "Incorrect. Try reviewing this topic.";
+                    feedback.style.color = "#ff7070";
+                }
+            }
+
+            document.getElementById("quizScore").textContent =
+                "Your score: " + score + " / " + total;
+        }
+
+        function resetOperatorQuiz() {
+            setTimeout(function () {
+                for (let i = 1; i <= 5; i++) {
+                    document.getElementById("feedback" + i).textContent = "";
+                }
+
+                document.getElementById("quizScore").textContent = "";
+            }, 0);
+        }
+    </script>
+
+</body>
+</html>

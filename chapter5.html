@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5 - Loops in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .lesson-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            color: #ffffff;
+        }
+
+        .lesson-section {
+            margin: 30px 0;
+            padding: 22px;
+            background: #101a2c;
+            border: 1px solid #263750;
+            border-radius: 12px;
+        }
+
+        .lesson-section h2 {
+            color: #00d9ff;
+        }
+
+        .lesson-section p,
+        .lesson-section li {
+            line-height: 1.8;
+            color: #c4d0df;
+        }
+
+        .code-example {
+            padding: 18px;
+            overflow-x: auto;
+            background: #080f1c;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .code-example code {
+            color: #a9f3ff;
+            white-space: pre;
+        }
+
+        .important-note {
+            padding: 15px;
+            background: #17243a;
+            border-radius: 8px;
+            border-left: 4px solid #00d9ff;
+        }
+
+        .quiz-question {
+            margin: 20px 0;
+            padding: 18px;
+            background: #17243a;
+            border-radius: 8px;
+        }
+
+        .quiz-question button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 11px;
+            text-align: left;
+            color: #ffffff;
+            background: #24344d;
+            border: 1px solid #40516b;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .quiz-question button:hover {
+            border-color: #00d9ff;
+        }
+
+        .quiz-feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 35px 0;
+        }
+
+        .chapter-navigation a {
+            display: inline-block;
+            padding: 12px 18px;
+            color: #07111f;
+            background: #00d9ff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .lesson-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="chapter4.html">Previous Chapter</a>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+
+        <h1>Chapter 5: Loops in C</h1>
+        <p>Learn how to repeat instructions efficiently using loops.</p>
+
+        <section class="lesson-section">
+            <h2>1. What Is a Loop?</h2>
+
+            <p>
+                A loop repeats a block of code while a condition is satisfied
+                or for a specified number of repetitions.
+                Loops help avoid writing the same statements repeatedly.
+            </p>
+
+            <div class="code-example"><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int i;
+
+    for (i = 1; i &lt;= 3; i++)
+    {
+        printf("Hello\n");
+    }
+
+    return 0;
+}</code></div>
+
+            <p><strong>Output:</strong></p>
+            <div class="code-example"><code>Hello
+Hello
+Hello</code></div>
+        </section>
+
+        <section class="lesson-section">
+            <h2>2. The for Loop</h2>
+
+            <p>
+                A <code>for</code> loop is commonly used when the number
+                of repetitions is known.
+            </p>
+
+            <div class="code-example"><code>for (initialization; condition; update)
+{
+    // Repeated statements
+}</code></div>
+
+            <p>Example: Print numbers from 1 to 5.</p>
+
+            <div class="code-example"><code>int i;
+
+for (i = 1; i &lt;= 5; i++)
+{
+    printf("%d ", i);
+}</code></div>
+
+            <p><strong>Output:</strong> 1 2 3 4 5</p>
+
+            <p class="important-note">
+                Initialization runs once. The condition is checked before
+                each iteration. The update runs after each iteration.
+            </p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>3. The while Loop</h2>
+
+            <p>
+                A <code>while</code> loop checks its condition before
+                executing the loop body. If the condition is false initially,
+                the body does not execute.
+            </p>
+
+            <div class="code-example"><code>int i = 1;
+
+while (i &lt;= 5)
+{
+    printf("%d ", i);
+    i++;
+}</code></div>
+
+            <p><strong>Output:</strong> 1 2 3 4 5</p>
+
+            <p class="important-note">
+                Remember to update the loop variable when necessary.
+                Otherwise, the loop may run indefinitely.
+            </p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>4. The do-while Loop</h2>
+
+            <p>
+                A <code>do-while</code> loop checks its condition after
+                executing the body. Therefore, its body executes at least once.
+            </p>
+
+            <div class="code-example"><code>int i = 1;
+
+do
+{
+    printf("%d ", i);
+    i++;
+}
+while (i &lt;= 5);</code></div>
+
+            <p><strong>Output:</strong> 1 2 3 4 5</p>
+
+            <p class="important-note">
+                Notice the semicolon after the condition:
+                <code>while (i &lt;= 5);</code>
+            </p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>5. Difference Between the Three Loops</h2>
+
+            <ul>
+                <li><strong>for:</strong> Useful when repetitions are controlled by initialization, condition, and update.</li>
+                <li><strong>while:</strong> Checks the condition before every iteration.</li>
+                <li><strong>do-while:</strong> Executes the body before checking the condition.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2>6. The break Statement</h2>
+
+            <p>
+                The <code>break</code> statement immediately exits the
+                nearest enclosing loop.
+            </p>
+
+            <div class="code-example"><code>int i;
+
+for (i = 1; i &lt;= 10; i++)
+{
+    if (i == 5)
+    {
+        break;
+    }
+
+    printf("%d ", i);
+}</code></div>
+
+            <p><strong>Output:</strong> 1 2 3 4</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>7. The continue Statement</h2>
+
+            <p>
+                The <code>continue</code> statement skips the remaining
+                statements in the current iteration and proceeds to the
+                next iteration.
+            </p>
+
+            <div class="code-example"><code>int i;
+
+for (i = 1; i &lt;= 5; i++)
+{
+    if (i == 3)
+    {
+        continue;
+    }
+
+    printf("%d ", i);
+}</code></div>
+
+            <p><strong>Output:</strong> 1 2 4 5</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>8. Nested Loops</h2>
+
+            <p>
+                A nested loop is a loop placed inside another loop.
+                Nested loops are useful for patterns, tables, and
+                two-dimensional arrays.
+            </p>
+
+            <div class="code-example"><code>int i, j;
+
+for (i = 1; i &lt;= 3; i++)
+{
+    for (j = 1; j &lt;= 3; j++)
+    {
+        printf("* ");
+    }
+
+    printf("\n");
+}</code></div>
+
+            <p><strong>Output:</strong></p>
+
+            <div class="code-example"><code>* * *
+* * *
+* * *</code></div>
+
+            <p>
+                The inner loop completes all its iterations for each
+                iteration of the outer loop.
+            </p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>9. Common Loop Mistakes</h2>
+
+            <ul>
+                <li>Forgetting to update the loop variable when an update is required.</li>
+                <li>Using the wrong condition, such as <code>i &lt; 5</code> instead of <code>i &lt;= 5</code>.</li>
+                <li>Adding an unnecessary semicolon after a <code>for</code> or <code>while</code> header.</li>
+                <li>Confusing <code>break</code> with <code>continue</code>.</li>
+                <li>Incorrectly tracing nested loops.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2>10. Test Your Knowledge</h2>
+
+            <div class="quiz-question">
+                <p><strong>Question 1:</strong> Which loop always executes its body at least once?</p>
+
+                <button onclick="checkAnswer(this, false)">A. for</button>
+                <button onclick="checkAnswer(this, false)">B. while</button>
+                <button onclick="checkAnswer(this, true)">C. do-while</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 2:</strong> What is the output?</p>
+
+                <div class="code-example"><code>int i;
+
+for (i = 1; i &lt;= 3; i++)
+{
+    printf("%d ", i);
+}</code></div>
+
+                <button onclick="checkAnswer(this, true)">A. 1 2 3</button>
+                <button onclick="checkAnswer(this, false)">B. 0 1 2</button>
+                <button onclick="checkAnswer(this, false)">C. 1 2 3 4</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 3:</strong> What does break do inside a loop?</p>
+
+                <button onclick="checkAnswer(this, false)">A. Skips only the current iteration</button>
+                <button onclick="checkAnswer(this, true)">B. Exits the nearest enclosing loop</button>
+                <button onclick="checkAnswer(this, false)">C. Restarts the loop</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 4:</strong> Which statement skips the remaining body of the current iteration?</p>
+
+                <button onclick="checkAnswer(this, false)">A. break</button>
+                <button onclick="checkAnswer(this, true)">B. continue</button>
+                <button onclick="checkAnswer(this, false)">C. return</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 5:</strong> How many times does the inner loop run in total?</p>
+
+                <div class="code-example"><code>int i, j;
+
+for (i = 1; i &lt;= 2; i++)
+{
+    for (j = 1; j &lt;= 3; j++)
+    {
+        printf("*");
+    }
+}</code></div>
+
+                <button onclick="checkAnswer(this, false)">A. 3 times</button>
+                <button onclick="checkAnswer(this, false)">B. 2 times</button>
+                <button onclick="checkAnswer(this, true)">C. 6 times</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+        </section>
+
+        <div class="chapter-navigation">
+            <a href="chapter4.html">← Previous Chapter</a>
+            <a href="index.html">Back to Home</a>
+            <a href="chapter6.html">Next Chapter →</a>
+        </div>
+
+    </main>
+
+    <script>
+        function checkAnswer(button, isCorrect)
+        {
+            const question = button.closest(".quiz-question");
+            const feedback = question.querySelector(".quiz-feedback");
+
+            if (isCorrect)
+            {
+                feedback.textContent = "Correct! Well done.";
+                feedback.style.color = "#00e676";
+            }
+            else
+            {
+                feedback.textContent = "Not quite. Try again!";
+                feedback.style.color = "#ff7070";
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

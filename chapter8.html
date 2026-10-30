@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Strings in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .chapter-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .hero {
+            text-align: center;
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 16px;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            color: #22d3ee;
+            font-size: 2.3rem;
+        }
+
+        .hero p {
+            color: #b7c5d8;
+            line-height: 1.7;
+        }
+
+        .lesson {
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 22px;
+            scroll-margin-top: 20px;
+        }
+
+        .lesson h2 {
+            color: #22d3ee;
+            margin-top: 0;
+        }
+
+        .lesson h3 {
+            color: #67e8f9;
+        }
+
+        .lesson p,
+        .lesson li {
+            line-height: 1.8;
+        }
+
+        .code-box {
+            background: #07111f;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            color: #a5f3fc;
+            white-space: pre;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .note {
+            background: #102b3c;
+            border-left: 4px solid #22d3ee;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #35251a;
+            border-left: 4px solid #fb923c;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .toc a {
+            color: #67e8f9;
+            text-decoration: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .quiz-question {
+            background: #0a1628;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 17px;
+            margin: 18px 0;
+        }
+
+        .quiz-question label {
+            display: block;
+            margin: 11px 0;
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .quiz-question input {
+            margin-right: 8px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .action-button:hover {
+            background: #0e7490;
+        }
+
+        #quiz-result {
+            line-height: 1.8;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .chapter-container {
+                padding: 12px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .lesson {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="chapter-container">
+
+    <header class="hero">
+        <h1>Chapter 8: Strings in C</h1>
+        <p>Learn how to store, read, search, compare, and manipulate text using C.</p>
+        <p>Estimated learning time: 60–90 minutes</p>
+    </header>
+
+    <section class="lesson toc">
+        <h2>📚 Chapter Contents</h2>
+        <ol>
+            <li><a href="#intro">Introduction to Strings</a></li>
+            <li><a href="#declaration">Declaration and Initialization</a></li>
+            <li><a href="#input">Taking String Input</a></li>
+            <li><a href="#length">String Length</a></li>
+            <li><a href="#traversal">Traversing a String</a></li>
+            <li><a href="#case">Changing Letter Case</a></li>
+            <li><a href="#reverse">Reversing a String</a></li>
+            <li><a href="#compare">Comparing Strings</a></li>
+            <li><a href="#join">Joining Strings</a></li>
+            <li><a href="#mistakes">Common Mistakes</a></li>
+            <li><a href="#quiz">Interactive Quiz</a></li>
+            <li><a href="#challenges">Coding Challenges</a></li>
+        </ol>
+    </section>
+
+    <section class="lesson" id="intro">
+        <h2>1. Introduction to Strings</h2>
+
+        <p>
+            A string is a sequence of characters used to represent text.
+            Examples include <code>"Arman"</code>, <code>"Kolkata"</code>,
+            and <code>"Hello World"</code>.
+        </p>
+
+        <p>
+            C does not have a separate built-in string data type.
+            We usually store strings in arrays of characters.
+        </p>
+
+        <div class="code-box">
+<pre>
+char name[] = "Arman";
+</pre>
+        </div>
+
+        <p>
+            The string is stored as individual characters followed by a
+            special character called the null terminator: <code>'\0'</code>.
+        </p>
+
+        <div class="code-box">
+<pre>
+'A'  'r'  'm'  'a'  'n'  '\0'
+</pre>
+        </div>
+
+        <div class="note">
+            <strong>Remember:</strong> <code>'\0'</code> marks the end
+            of a C string. It is not the same as the character
+            <code>'0'</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="declaration">
+        <h2>2. Declaration and Initialization</h2>
+
+        <h3>Method 1: Let C calculate the size</h3>
+        <div class="code-box">
+<pre>
+char name[] = "Arman";
+</pre>
+        </div>
+        <p>C automatically reserves enough space for the characters and the null terminator.</p>
+
+        <h3>Method 2: Specify the array size</h3>
+        <div class="code-box">
+<pre>
+char name[20] = "Arman";
+</pre>
+        </div>
+        <p>This array has room for up to 19 ordinary characters plus the null terminator.</p>
+
+        <h3>Method 3: Initialize characters individually</h3>
+        <div class="code-box">
+<pre>
+char name[] = {'A', 'r', 'm', 'a', 'n', '\0'};
+</pre>
+        </div>
+
+        <div class="note">
+            A string array must have enough space for its characters
+            and its terminating <code>'\0'</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="input">
+        <h2>3. Taking String Input</h2>
+
+        <h3>Using scanf()</h3>
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char name[20];
+
+    printf("Enter your name: ");
+    scanf("%19s", name);
+
+    printf("Hello, %s\n", name);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p>
+            <code>%s</code> reads a word until whitespace, such as a space,
+            is encountered. The width limit in <code>%19s</code> helps
+            prevent writing beyond the 20-character array.
+        </p>
+
+        <h3>Using fgets()</h3>
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char name[50];
+
+    printf("Enter your full name: ");
+
+    if (fgets(name, sizeof(name), stdin) != NULL)
+    {
+        printf("Your name is: %s", name);
+    }
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p>
+            Unlike <code>scanf("%s", name)</code>, <code>fgets()</code>
+            can read spaces. It may also keep the newline when the user
+            presses Enter.
+        </p>
+
+        <div class="note">
+            <strong>Example:</strong> If you enter <code>MD Arman</code>,
+            <code>scanf("%19s", name)</code> reads only <code>MD</code>,
+            while <code>fgets()</code> can read the complete line.
+        </div>
+    </section>
+
+    <section class="lesson" id="length">
+        <h2>4. Finding String Length</h2>
+
+        <p>
+            The <code>strlen()</code> function returns the number of
+            characters before the null terminator. It is declared in
+            <code>&lt;string.h&gt;</code>.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void)
+{
+    char name[] = "ARMAN";
+
+    printf("Length = %zu\n", strlen(name));
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Length = 5
+</pre>
+        </div>
+
+        <h3>Finding the length using a loop</h3>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char name[] = "ARMAN";
+    int i = 0;
+
+    while (name[i] != '\0')
+    {
+        i++;
+    }
+
+    printf("Length = %d\n", i);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <div class="note">
+            <code>strlen()</code> does not count the null terminator.
+            The loop stops when it reaches <code>'\0'</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="traversal">
+        <h2>5. Traversing a String</h2>
+
+        <p>
+            Traversing means visiting the characters of a string one by one.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char word[] = "CODE";
+    int i;
+
+    for (i = 0; word[i] != '\0'; i++)
+    {
+        printf("%c\n", word[i]);
+    }
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+C
+O
+D
+E
+</pre>
+        </div>
+
+        <p>
+            The condition <code>word[i] != '\0'</code> allows the loop
+            to stop at the end of the string.
+        </p>
+    </section>
+
+    <section class="lesson" id="case">
+        <h2>6. Changing Letter Case</h2>
+
+        <p>
+            The functions <code>toupper()</code> and <code>tolower()</code>
+            are declared in <code>&lt;ctype.h&gt;</code>.
+        </p>
+
+        <h3>Convert lowercase letters to uppercase</h3>
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main(void)
+{
+    char word[] = "arman";
+    int i;
+
+    for (i = 0; word[i] != '\0'; i++)
+    {
+        word[i] = (char)toupper((unsigned char)word[i]);
+    }
+
+    printf("%s\n", word);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+ARMAN
+</pre>
+        </div>
+
+        <h3>Convert uppercase letters to lowercase</h3>
+        <div class="code-box">
+<pre>
+word[i] = (char)tolower((unsigned char)word[i]);
+</pre>
+        </div>
+
+        <p>
+            Use this statement inside a loop that visits each character.
+            Include <code>&lt;ctype.h&gt;</code> in your program.
+        </p>
+    </section>
+
+    <section class="lesson" id="reverse">
+        <h2>7. Reversing a String</h2>
+
+        <p>
+            Reversing a string means displaying its characters in the
+            opposite order.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void)
+{
+    char name[] = "ARMAN";
+    int i;
+
+    for (i = (int)strlen(name) - 1; i >= 0; i--)
+    {
+        printf("%c", name[i]);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+NAMRA
+</pre>
+        </div>
+
+        <div class="note">
+            The loop starts at <code>strlen(name) - 1</code> because
+            string indexes start at zero. The last character is at
+            index <code>length - 1</code>.
+        </div>
+
+        <p>
+            This example displays the string backwards without modifying
+            the original array.
+        </p>
+    </section>
+
+    <section class="lesson" id="compare">
+        <h2>8. Comparing Strings with strcmp()</h2>
+
+        <p>
+            Use <code>strcmp()</code> from <code>&lt;string.h&gt;</code>
+            to compare two strings.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void)
+{
+    char a[] = "apple";
+    char b[] = "apple";
+
+    if (strcmp(a, b) == 0)
+    {
+        printf("Strings are equal\n");
+    }
+    else
+    {
+        printf("Strings are different\n");
+    }
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Strings are equal
+</pre>
+        </div>
+
+        <p>Remember these results:</p>
+        <ul>
+            <li><code>strcmp(a, b) == 0</code>: the strings are equal.</li>
+            <li><code>strcmp(a, b) &lt; 0</code>: the first string compares before the second.</li>
+            <li><code>strcmp(a, b) &gt; 0</code>: the first string compares after the second.</li>
+        </ul>
+
+        <div class="warning">
+            Do not normally compare string contents using
+            <code>a == b</code>. Use <code>strcmp(a, b) == 0</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="join">
+        <h2>9. Joining Strings with strcat()</h2>
+
+        <p>
+            The <code>strcat()</code> function appends one string to
+            another. It is declared in <code>&lt;string.h&gt;</code>.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void)
+{
+    char first[30] = "Hello ";
+    char second[] = "Arman";
+
+    strcat(first, second);
+
+    printf("%s\n", first);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Hello Arman
+</pre>
+        </div>
+
+        <div class="warning">
+            The destination array must have enough space for the combined
+            characters and the terminating <code>'\0'</code>.
+            Otherwise, the program can have undefined behavior.
+        </div>
+    </section>
+
+    <section class="lesson" id="mistakes">
+        <h2>10. Common Mistakes</h2>
+
+        <h3>Mistake 1: Forgetting the null terminator</h3>
+        <div class="code-box">
+<pre>
+char name[] = {'A', 'r', 'm', 'a', 'n'};
+</pre>
+        </div>
+        <p>
+            This array has no null terminator, so it is not a valid
+            null-terminated C string. Use <code>"Arman"</code> or add
+            <code>'\0'</code> explicitly.
+        </p>
+
+        <h3>Mistake 2: Using the wrong loop condition</h3>
+        <div class="code-box">
+<pre>
+for (i = 0; name[i] != '\0'; i++)
+{
+    printf("%c", name[i]);
+}
+</pre>
+        </div>
+        <p>
+            Stop at the null terminator rather than reading beyond the
+            end of the array.
+        </p>
+
+        <h3>Mistake 3: Comparing strings with ==</h3>
+        <div class="code-box">
+<pre>
+if (strcmp(a, b) == 0)
+{
+    printf("Equal");
+}
+</pre>
+        </div>
+        <p>Use <code>strcmp()</code> when you want to compare string contents.</p>
+
+        <h3>Mistake 4: Reading a sentence with scanf("%s", ...)</h3>
+        <p>
+            <code>scanf("%s", name)</code> stops at whitespace.
+            Use <code>fgets()</code> when you need to read a line containing spaces.
+        </p>
+
+        <h3>Mistake 5: Using strcat() without enough space</h3>
+        <p>
+            Always ensure the destination array can hold the resulting
+            string and its null terminator.
+        </p>
+    </section>
+
+    <section class="lesson" id="quiz">
+        <h2>11. Interactive Quiz</h2>
+        <p>Choose one answer for each question, then click Check Answers.</p>
+
+        <form id="quiz-form">
+
+            <div class="quiz-question">
+                <p><strong>Q1.</strong> Which character marks the end of a C string?</p>
+                <label><input type="radio" name="q1" value="a"> '0'</label>
+                <label><input type="radio" name="q1" value="b"> '\0'</label>
+                <label><input type="radio" name="q1" value="c"> '\n'</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q2.</strong> Which function returns the length of a string?</p>
+                <label><input type="radio" name="q2" value="a"> sizeofstr()</label>
+                <label><input type="radio" name="q2" value="b"> strcount()</label>
+                <label><input type="radio" name="q2" value="c"> strlen()</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q3.</strong> Which function compares two strings?</p>
+                <label><input type="radio" name="q3" value="a"> strcmp()</label>
+                <label><input type="radio" name="q3" value="b"> strcat()</label>
+                <label><input type="radio" name="q3" value="c"> strlen()</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q4.</strong> What does scanf("%s", name) normally read?</p>
+                <label><input type="radio" name="q4" value="a"> An entire paragraph</label>
+                <label><input type="radio" name="q4" value="b"> One word up to whitespace</label>
+                <label><input type="radio" name="q4" value="c"> Only one character</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q5.</strong> Which function appends one string to another?</p>
+                <label><input type="radio" name="q5" value="a"> strcmp()</label>
+                <label><input type="radio" name="q5" value="b"> strlen()</label>
+                <label><input type="radio" name="q5" value="c"> strcat()</label>
+            </div>
+
+            <button type="button" class="action-button" onclick="checkQuiz()">
+                Check Answers
+            </button>
+
+            <button type="reset" class="action-button" onclick="resetQuiz()">
+                Try Again
+            </button>
+
+        </form>
+
+        <div id="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section class="lesson" id="challenges">
+        <h2>12. Coding Challenges</h2>
+
+        <h3>Easy</h3>
+        <ol>
+            <li>Input a word and display it.</li>
+            <li>Find the length of a string without using strlen().</li>
+            <li>Count the number of vowels in a string.</li>
+        </ol>
+
+        <h3>Medium</h3>
+        <ol>
+            <li>Reverse a string using a loop.</li>
+            <li>Count uppercase and lowercase letters.</li>
+            <li>Count digits, spaces, and special characters in a line.</li>
+            <li>Convert lowercase letters to uppercase.</li>
+        </ol>
+
+        <h3>Hard</h3>
+        <ol>
+            <li>Check whether a string is a palindrome.</li>
+            <li>Count the frequency of each character.</li>
+            <li>Remove repeated characters from a string.</li>
+            <li>Count the number of words in a sentence.</li>
+        </ol>
+
+        <div class="note">
+            <strong>Practice tip:</strong> Try solving the challenges
+            yourself before looking for a solution. Start with Easy,
+            then move to Medium and Hard.
+        </div>
+    </section>
+
+    <nav class="chapter-navigation">
+        <a class="action-button" href="chapter7.html">← Previous: Arrays</a>
+        <a class="action-button" href="index.html">⌂ Home</a>
+        <a class="action-button" href="chapter9.html">Next: Functions →</a>
+    </nav>
+
+</main>
+
+<script>
+    function checkQuiz() {
+        const answers = {
+            q1: "b",
+            q2: "c",
+            q3: "a",
+            q4: "b",
+            q5: "c"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers) {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === answers[question]) {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quiz-result");
+
+        if (unanswered > 0) {
+            result.textContent =
+                "Please answer all 5 questions. You still have " +
+                unanswered + " unanswered question(s).";
+            return;
+        }
+
+        result.textContent =
+            "Your score: " + score + "/5. " +
+            (score === 5
+                ? "Excellent work!"
+                : "Review the lessons and try again.");
+    }
+
+    function resetQuiz() {
+        document.getElementById("quiz-result").textContent = "";
+    }
+</script>
+
+</body>
+</html>

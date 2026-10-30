@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Practice | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🧠 MCQ Practice</h1>
+        <p>Test your C programming knowledge</p>
+    </header>
+
+    <main>
+        <section class="practice-intro">
+            <h2>Choose Your Practice Mode</h2>
+            <p>Practice C programming with multiple-choice questions.</p>
+        </section>
+
+        <section class="practice-options">
+            <div class="feature-card">
+                <h3>📚 All Chapters</h3>
+                <p>Practise questions from all 19 chapters.</p>
+                <button type="button" onclick="startPractice('all')">
+                    Start Practice
+                </button>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎯 Chapter-wise Practice</h3>
+                <p>Choose a chapter and focus on one topic.</p>
+                <label for="chapterSelect">Select a chapter:</label>
+                <select id="chapterSelect">
+                    <option value="1">1. Introduction to C</option>
+                    <option value="2">2. Variables and Data Types</option>
+                    <option value="3">3. Operators in C</option>
+                    <option value="4">4. Conditional Statements</option>
+                    <option value="5">5. Loops</option>
+                    <option value="6">6. Nested Loops and Patterns</option>
+                    <option value="7">7. Arrays</option>
+                    <option value="8">8. Strings</option>
+                    <option value="9">9. Functions</option>
+                    <option value="10">10. Recursion</option>
+                    <option value="11">11. Pointers</option>
+                    <option value="12">12. Storage Classes</option>
+                    <option value="13">13. Structures and Unions</option>
+                    <option value="14">14. Enumerations and typedef</option>
+                    <option value="15">15. Dynamic Memory Allocation</option>
+                    <option value="16">16. File Handling</option>
+                    <option value="17">17. Preprocessor Directives</option>
+                    <option value="18">18. Command-Line Arguments</option>
+                    <option value="19">19. Bitwise Operators</option>
+                </select>
+                <button type="button" onclick="startPractice('chapter')">
+                    Practise This Chapter
+                </button>
+            </div>
+        </section>
+
+      <section id="quizArea" hidden>
+    <h2 id="quizTitle">C Programming MCQ Quiz</h2>
+    <p id="questionCounter"></p>
+
+    <div id="allQuestions"></div>
+
+    <button type="button" id="submitAnswersBtn">Submit Answers</button>
+</section>
+
+<section id="resultArea" hidden>
+    <h2>Quiz Results</h2>
+    <p id="scoreText"></p>
+    <div id="resultDetails"></div>
+    <button type="button" id="retryButton">Try Again</button>
+</section>
+
+        <section id="resultArea" hidden>
+            <h2>Quiz Complete!</h2>
+            <p id="scoreText"></p>
+            <button type="button" id="retryButton">Try Again</button>
+        </section>
+
+        <p><a href="index.html">← Back to Home</a></p>
+    </main>
+<!-- Scroll Navigation Buttons -->
+<div class="scroll-buttons">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" title="Scroll to top">⬆️</button>
+    <button type="button" id="scrollBottomBtn" aria-label="Scroll to bottom" title="Scroll to bottom">⬇️</button>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

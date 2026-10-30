@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 15: Dynamic Memory Allocation | CodePath</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1, h2, h3 {
+            color: #22d3ee;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #111827;
+        }
+
+        nav a {
+            color: #22d3ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 30px auto;
+        }
+
+        .hero, section {
+            background: #111c33;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #263650;
+            border-radius: 12px;
+        }
+
+        h2, h3 {
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin: 10px 0 15px 25px;
+        }
+
+        li {
+            margin-bottom: 7px;
+        }
+
+        pre {
+            background: #070c17;
+            color: #a5f3fc;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 3px solid #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        .note {
+            background: #172554;
+            border-left: 4px solid #38bdf8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .warning {
+            background: #3f1d2e;
+            border-left: 4px solid #fb7185;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #0e7490;
+        }
+
+        .question, .challenge {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            display: block;
+            margin: 7px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            margin-top: 15px;
+            color: #67e8f9;
+            font-weight: bold;
+        }
+
+        .chapter-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .chapter-buttons a {
+            background: #0891b2;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+        }
+
+        .chapter-buttons a:hover {
+            background: #0e7490;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            border-top: 1px solid #263650;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 94%;
+            }
+
+            section, .hero {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CodePath</h1>
+    <p>Chapter 15: Dynamic Memory Allocation in C</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="chapter14.html">Previous Chapter</a>
+    <a href="chapter16.html">Next Chapter</a>
+</nav>
+
+<main class="container">
+
+    <div class="hero">
+        <h2>Dynamic Memory Allocation</h2>
+
+        <p>
+            Learn how to request memory while a C program is running,
+            use it, resize it, and release it when it is no longer needed.
+        </p>
+
+        <p>
+            <strong>Learning goals:</strong>
+            Understand malloc(), calloc(), realloc(), free(),
+            pointers, and safe memory management.
+        </p>
+    </div>
+
+    <section>
+        <h2>1. What Is Dynamic Memory Allocation?</h2>
+
+        <p>
+            Dynamic memory allocation allows a program to request memory
+            during execution instead of deciding the entire amount in advance.
+        </p>
+
+        <p>
+            For example, suppose a user enters how many student marks
+            they want to store. Dynamic allocation lets the program
+            request memory based on that number.
+        </p>
+
+        <p>
+            The functions used for dynamic memory allocation are declared
+            in the <code>stdlib.h</code> header.
+        </p>
+
+        <pre>#include &lt;stdlib.h&gt;</pre>
+
+        <ul>
+            <li><code>malloc()</code> — allocates a block of memory.</li>
+            <li><code>calloc()</code> — allocates memory for multiple elements and initializes all bytes to zero.</li>
+            <li><code>realloc()</code> — changes the size of an allocated block.</li>
+            <li><code>free()</code> — releases allocated memory.</li>
+        </ul>
+
+        <div class="note">
+            Dynamically allocated memory remains allocated until it is
+            released with free() or until the program terminates.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. The malloc() Function</h2>
+
+        <p>
+            <code>malloc()</code> requests a block of memory of a specified
+            size in bytes. The memory is uninitialized, so its contents
+            must not be read before they are assigned suitable values.
+        </p>
+
+        <p><strong>Syntax:</strong></p>
+
+        <pre>pointer = malloc(number_of_bytes);</pre>
+
+        <h3>Example: Allocate memory for one integer</h3>
+
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+    int *ptr = malloc(sizeof *ptr);
+
+    if (ptr == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    *ptr = 100;
+
+    printf("Value = %d\n", *ptr);
+
+    free(ptr);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Value = 100</pre>
+
+        <p>Important points:</p>
+
+        <ul>
+            <li><code>sizeof *ptr</code> gives the size needed for the pointed-to integer.</li>
+            <li><code>malloc()</code> returns a pointer to the allocated memory or <code>NULL</code> if the allocation fails.</li>
+            <li>Always check whether the allocation succeeded before using the memory.</li>
+            <li>Use <code>free()</code> when you no longer need the allocated block.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Dynamic Arrays with malloc()</h2>
+
+        <p>
+            You can allocate enough memory for an array after learning
+            how many elements the user wants to store.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+    int n, i;
+    int *arr;
+
+    printf("Enter number of elements: ");
+
+    if (scanf("%d", &amp;n) != 1 || n &lt;= 0)
+    {
+        printf("Invalid size.\n");
+        return 1;
+    }
+
+    arr = malloc((size_t)n * sizeof *arr);
+
+    if (arr == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("Enter element %d: ", i + 1);
+
+        if (scanf("%d", &amp;arr[i]) != 1)
+        {
+            printf("Invalid input.\n");
+            free(arr);
+            return 1;
+        }
+    }
+
+    printf("Array elements: ");
+
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n");
+
+    free(arr);
+
+    return 0;
+}</pre>
+
+        <p>Example output:</p>
+
+        <pre>Enter number of elements: 3
+Enter element 1: 10
+Enter element 2: 20
+Enter element 3: 30
+Array elements: 10 20 30</pre>
+
+        <div class="note">
+            The pointer can be indexed like an array: <code>arr[i]</code>.
+            The allocated block must be large enough for every accessed element.
+        </div>
+    </section>
+
+    <section>
+        <h2>4. The calloc() Function</h2>
+
+        <p>
+            <code>calloc()</code> allocates memory for a number of elements
+            and initializes all allocated bytes to zero.
+        </p>
+
+        <p><strong>Syntax:</strong></p>
+
+        <pre>pointer = calloc(number_of_elements, size_of_each_element);</pre>
+
+        <h3>Example</h3>
+
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+    int i;
+    int *arr = calloc(5, sizeof *arr);
+
+    if (arr == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n");
+
+    free(arr);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>0 0 0 0 0</pre>
+
+        <p>
+            Here, the allocated bytes are zero-initialized, resulting in
+            zero values for these integer elements.
+        </p>
+
+        <div class="note">
+            <code>malloc()</code> leaves allocated memory uninitialized,
+            while <code>calloc()</code> initializes the allocated bytes to zero.
+        </div>
+    </section>
+
+    <section>
+        <h2>5. The realloc() Function</h2>
+
+        <p>
+            <code>realloc()</code> changes the size of a previously
+            allocated memory block.
+        </p>
+
+        <p><strong>Syntax:</strong></p>
+
+        <pre>new_pointer = realloc(old_pointer, new_size);</pre>
+
+        <h3>Example: Increase array size</h3>
+
+        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+    int *arr = malloc(3 * sizeof *arr);
+
+    if (arr == NULL)
+    {
+        printf("Initial allocation failed.\n");
+        return 1;
+    }
+
+    arr[0] = 10;
+    arr[1] = 20;
+    arr[2] = 30;
+
+    int *temp = realloc(arr, 5 * sizeof *arr);
+
+    if (temp == NULL)
+    {
+        printf("Resizing failed.\n");
+        free(arr);
+        return 1;
+    }
+
+    arr = temp;
+
+    arr[3] = 40;
+    arr[4] = 50;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n");
+
+    free(arr);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>10 20 30 40 50</pre>
+
+        <p>
+            The original three elements are preserved when the allocation
+            grows. The additional memory is uninitialized, so we assign
+            values to the new elements before reading them.
+        </p>
+
+        <div class="warning">
+            Do not directly overwrite your only pointer with realloc(),
+            such as <code>arr = realloc(arr, new_size);</code>.
+            If resizing fails, the original allocation would still exist
+            but its pointer could be lost.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. The free() Function</h2>
+
+        <p>
+            <code>free()</code> releases memory that was obtained through
+            a dynamic memory allocation function.
+        </p>
+
+        <pre>int *ptr = malloc(sizeof *ptr);
+
+if (ptr != NULL)
+{
+    *ptr = 50;
+
+    printf("%d\n", *ptr);
+
+    free(ptr);
+    ptr = NULL;
+}</pre>
+
+        <p>
+            Setting the pointer to <code>NULL</code> after freeing it
+            helps prevent accidental use of that pointer.
+        </p>
+
+        <ul>
+            <li>Free dynamically allocated memory when it is no longer needed.</li>
+            <li>Do not dereference a pointer after its memory has been freed.</li>
+            <li>Do not free the same allocation twice.</li>
+            <li>Do not call <code>free()</code> on ordinary local variables.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>7. Memory Leaks and Dangling Pointers</h2>
+
+        <h3>Memory leak</h3>
+
+        <p>
+            A memory leak occurs when allocated memory is no longer
+            accessible to the program but has not been released.
+        </p>
+
+        <pre>int *ptr = malloc(sizeof *ptr);
+
+/* If the program loses ptr without freeing the block,
+   that allocated memory can leak. */</pre>
+
+        <h3>Dangling pointer</h3>
+
+        <p>
+            A dangling pointer refers to memory that is no longer valid,
+            such as memory that has already been freed.
+        </p>
+
+        <pre>int *ptr = malloc(sizeof *ptr);
+
+if (ptr != NULL)
+{
+    *ptr = 10;
+    free(ptr);
+    ptr = NULL;
+}</pre>
+
+        <div class="note">
+            A useful habit is to release each allocation exactly once
+            and avoid using pointers to memory after it has been freed.
+        </div>
+    </section>
+
+    <section>
+        <h2>8. malloc() vs calloc()</h2>
+
+        <ul>
+            <li><code>malloc(size)</code> requests a specified number of bytes.</li>
+            <li><code>calloc(count, size)</code> requests space for a number of elements.</li>
+            <li><code>malloc()</code> does not initialize the allocated bytes.</li>
+            <li><code>calloc()</code> initializes the allocated bytes to zero.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>9. Common Mistakes</h2>
+
+        <ul>
+            <li>Forgetting to include <code>stdlib.h</code>.</li>
+            <li>Using allocated memory without checking for <code>NULL</code>.</li>
+            <li>Reading memory before assigning a valid value to it.</li>
+            <li>Forgetting to call <code>free()</code>.</li>
+            <li>Accessing memory after it has been freed.</li>
+            <li>Using the wrong size when allocating an array.</li>
+            <li>Overwriting the original pointer when <code>realloc()</code> fails.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>10. Interactive Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1. Which header file declares malloc() and free()?</strong></p>
+
+                <label><input type="radio" name="q1" value="a"> stdio.h</label>
+                <label><input type="radio" name="q1" value="b"> stdlib.h</label>
+                <label><input type="radio" name="q1" value="c"> string.h</label>
+            </div>
+
+            <div class="question">
+                <p><strong>2. Which function initializes allocated bytes to zero?</strong></p>
+
+                <label><input type="radio" name="q2" value="a"> malloc()</label>
+                <label><input type="radio" name="q2" value="b"> realloc()</label>
+                <label><input type="radio" name="q2" value="c"> calloc()</label>
+            </div>
+
+            <div class="question">
+                <p><strong>3. Which function releases dynamically allocated memory?</strong></p>
+
+                <label><input type="radio" name="q3" value="a"> free()</label>
+                <label><input type="radio" name="q3" value="b"> delete()</label>
+                <label><input type="radio" name="q3" value="c"> remove()</label>
+            </div>
+
+            <div class="question">
+                <p><strong>4. What should you do if malloc() returns NULL?</strong></p>
+
+                <label><input type="radio" name="q4" value="a"> Use the pointer anyway</label>
+                <label><input type="radio" name="q4" value="b"> Handle the allocation failure before using the pointer</label>
+                <label><input type="radio" name="q4" value="c"> Call printf() on the pointer</label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Answers</button>
+
+            <p id="quizResult"></p>
+        </form>
+    </section>
+
+    <section>
+        <h2>11. Coding Challenges</h2>
+
+        <div class="challenge">
+            <h3>Easy: Allocate One Integer</h3>
+            <p>
+                Use malloc() to allocate memory for one integer.
+                Store a number, print it, and release the memory.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Medium: Dynamic Array Sum</h3>
+            <p>
+                Ask the user for the number of elements. Allocate an array
+                dynamically, input its elements, calculate their sum,
+                print the sum, and free the memory.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Hard: Resize an Array</h3>
+            <p>
+                Allocate an array for three integers. Input the values,
+                resize the array for five integers using realloc(), input
+                two additional values, and display all five elements.
+            </p>
+        </div>
+    </section>
+
+    <div class="chapter-buttons">
+        <a href="chapter14.html">← Previous: enum and typedef</a>
+        <a href="index.html">Home</a>
+        <a href="chapter16.html">Next: Chapter 16 →</a>
+    </div>
+
+</main>
+
+<footer>
+    <p>CodePath | Learn C. Think Logically.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "b",
+            q2: "c",
+            q3: "a",
+            q4: "b"
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (selected && selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        document.getElementById("quizResult").textContent =
+            "You scored " + score + " out of " + total + ".";
+    }
+</script>
+
+</body>
+</html>

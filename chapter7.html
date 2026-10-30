@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 7 - Arrays in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .lesson-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 25px;
+            color: #ffffff;
+        }
+
+        .chapter-intro {
+            padding: 28px;
+            background: linear-gradient(135deg, #101a2c, #172c43);
+            border: 1px solid #00d9ff;
+            border-radius: 15px;
+        }
+
+        .chapter-intro p {
+            line-height: 1.8;
+            color: #c4d0df;
+        }
+
+        .lesson-section {
+            margin: 30px 0;
+            padding: 24px;
+            background: #101a2c;
+            border: 1px solid #263750;
+            border-radius: 12px;
+            scroll-margin-top: 25px;
+        }
+
+        .lesson-section h2 {
+            color: #00d9ff;
+            margin-top: 0;
+        }
+
+        .lesson-section h3 {
+            color: #8beeff;
+            margin-top: 25px;
+        }
+
+        .lesson-section p,
+        .lesson-section li {
+            color: #c4d0df;
+            line-height: 1.8;
+        }
+
+        .lesson-section strong {
+            color: #ffffff;
+        }
+
+        .code-example {
+            margin: 18px 0;
+            padding: 18px;
+            overflow-x: auto;
+            background: #080f1c;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .code-example pre {
+            margin: 0;
+            color: #a9f3ff;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre;
+        }
+
+        .output-box {
+            padding: 15px;
+            background: #081b17;
+            border-left: 4px solid #00e676;
+            border-radius: 8px;
+        }
+
+        .output-box pre {
+            margin: 0;
+            color: #8affc2;
+            font-family: Consolas, monospace;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .important-note {
+            margin: 20px 0;
+            padding: 16px;
+            background: #17243a;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .important-note p {
+            margin: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .lesson-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #c4d0df;
+        }
+
+        .lesson-table th,
+        .lesson-table td {
+            padding: 12px;
+            border: 1px solid #34465f;
+            text-align: left;
+        }
+
+        .lesson-table th {
+            color: #00d9ff;
+            background: #17243a;
+        }
+
+        .lesson-table code {
+            color: #a9f3ff;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .toc-grid a {
+            display: block;
+            padding: 12px;
+            color: #a9f3ff;
+            text-decoration: none;
+            background: #17243a;
+            border: 1px solid #263750;
+            border-radius: 8px;
+        }
+
+        .toc-grid a:hover {
+            border-color: #00d9ff;
+            color: #ffffff;
+        }
+
+        .array-visual {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 7px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .array-cell {
+            min-width: 0;
+            padding: 12px 4px;
+            background: #17243a;
+            border: 1px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .array-cell .index {
+            display: block;
+            margin-bottom: 8px;
+            color: #8beeff;
+            font-size: 12px;
+        }
+
+        .array-cell .value {
+            display: block;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .quiz-question {
+            margin: 22px 0;
+            padding: 20px;
+            background: #17243a;
+            border: 1px solid #263750;
+            border-radius: 10px;
+        }
+
+        .quiz-question button {
+            display: block;
+            width: 100%;
+            margin: 9px 0;
+            padding: 12px;
+            text-align: left;
+            color: #ffffff;
+            background: #24344d;
+            border: 1px solid #40516b;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .quiz-question button:hover {
+            border-color: #00d9ff;
+        }
+
+        .quiz-feedback {
+            min-height: 20px;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 35px 0;
+        }
+
+        .chapter-navigation a {
+            display: inline-block;
+            padding: 12px 18px;
+            color: #07111f;
+            background: #00d9ff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            .lesson-content {
+                padding: 12px;
+            }
+
+            .lesson-section {
+                padding: 16px;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .array-visual {
+                gap: 4px;
+            }
+
+            .array-cell {
+                padding: 10px 2px;
+            }
+
+            .array-cell .value {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="chapter6.html">Previous Chapter</a>
+    </nav>
+</header>
+
+<main class="lesson-content">
+
+    <section class="chapter-intro">
+        <p>CHAPTER 07 · CORE C PROGRAMMING</p>
+        <h1>Arrays in C: Complete Guide</h1>
+
+        <p>
+            Learn how arrays store multiple values, how indexing works,
+            how loops process elements, and how to solve common programming
+            problems using arrays.
+        </p>
+
+        <p>
+            <strong>Level:</strong> Beginner to Intermediate
+        </p>
+    </section>
+
+    <!-- TABLE OF CONTENTS -->
+
+    <section class="lesson-section" id="contents">
+        <h2>Chapter Contents</h2>
+
+        <p>Choose a topic to jump directly to that section.</p>
+
+        <div class="toc-grid">
+            <a href="#basics">1. Array Fundamentals</a>
+            <a href="#declaration">2. Declaration and Initialization</a>
+            <a href="#indexing">3. Indexing and Modification</a>
+            <a href="#input-output">4. Input and Output</a>
+            <a href="#traversal">5. Traversing Arrays</a>
+            <a href="#sum-average">6. Sum and Average</a>
+            <a href="#max-min">7. Largest and Smallest</a>
+            <a href="#searching">8. Searching</a>
+            <a href="#counting">9. Counting Values</a>
+            <a href="#reversing">10. Reversing Arrays</a>
+            <a href="#copying">11. Copying and Merging</a>
+            <a href="#sorting">12. Sorting</a>
+            <a href="#frequency">13. Frequency and Duplicates</a>
+            <a href="#insertion-deletion">14. Insertion and Deletion</a>
+            <a href="#rotation">15. Array Rotation</a>
+            <a href="#second-largest">16. Second Largest</a>
+            <a href="#functions">17. Arrays and Functions</a>
+            <a href="#two-dimensional">18. Two-Dimensional Arrays</a>
+            <a href="#mistakes">19. Common Mistakes</a>
+            <a href="#quiz">20. Knowledge Test</a>
+        </div>
+    </section>
+
+    <!-- 1. BASICS -->
+
+    <section class="lesson-section" id="basics">
+        <h2>1. What Is an Array?</h2>
+
+        <p>
+            An array is a collection of elements of the same data type
+            stored in consecutive array positions. Each element can be
+            accessed using its index.
+        </p>
+
+        <h3>Why do we need arrays?</h3>
+
+        <p>
+            Suppose we want to store the marks of five students.
+            Without an array, we might declare five separate variables.
+        </p>
+
+        <div class="code-example">
+<pre>int mark1 = 70;
+int mark2 = 85;
+int mark3 = 90;
+int mark4 = 65;
+int mark5 = 80;</pre>
+        </div>
+
+        <p>
+            This works for five values, but it becomes inconvenient
+            when we need to store hundreds of values.
+        </p>
+
+        <p>With an array, we can write:</p>
+
+        <div class="code-example">
+<pre>int marks[5] = {70, 85, 90, 65, 80};</pre>
+        </div>
+
+        <p>We can then process all five marks using a loop.</p>
+
+        <div class="important-note">
+            <p>
+                <strong>Remember:</strong> A normal integer array stores
+                integer elements. It does not automatically store
+                unrelated data types such as strings and floating-point
+                values in the same array.
+            </p>
+        </div>
+
+        <h3>Visual representation</h3>
+
+        <p>
+            Consider <code>int marks[5] = {70, 85, 90, 65, 80};</code>
+        </p>
+
+        <div class="array-visual">
+            <div class="array-cell"><span class="index">Index 0</span><span class="value">70</span></div>
+            <div class="array-cell"><span class="index">Index 1</span><span class="value">85</span></div>
+            <div class="array-cell"><span class="index">Index 2</span><span class="value">90</span></div>
+            <div class="array-cell"><span class="index">Index 3</span><span class="value">65</span></div>
+            <div class="array-cell"><span class="index">Index 4</span><span class="value">80</span></div>
+        </div>
+
+        <p>
+            Each box represents an element. The index identifies its
+            position in the array.
+        </p>
+    </section>
+
+    <!-- 2. DECLARATION -->
+
+    <section class="lesson-section" id="declaration">
+        <h2>2. Declaration and Initialization</h2>
+
+        <h3>Array declaration</h3>
+
+        <div class="code-example">
+<pre>int numbers[5];</pre>
+        </div>
+
+        <p>
+            This declares an array that can hold five integers.
+            If it is a local array and no initial values are provided,
+            its elements have indeterminate values until initialized.
+            Do not read those values before assigning them.
+        </p>
+
+        <h3>Array initialization</h3>
+
+        <div class="code-example">
+<pre>int numbers[5] = {10, 20, 30, 40, 50};</pre>
+        </div>
+
+        <p>We can also let C determine the size from the initializer:</p>
+
+        <div class="code-example">
+<pre>int numbers[] = {10, 20, 30, 40, 50};</pre>
+        </div>
+
+        <p>The compiler determines that the array has five elements.</p>
+
+        <h3>Partial initialization</h3>
+
+        <div class="code-example">
+<pre>int numbers[5] = {10, 20};</pre>
+        </div>
+
+        <p>
+            The resulting elements are <code>{10, 20, 0, 0, 0}</code>.
+            Elements without explicit initializers are initialized to zero.
+        </p>
+
+        <h3>Common declaration examples</h3>
+
+        <div class="code-example">
+<pre>int ages[10];
+float prices[5];
+char letters[4];</pre>
+        </div>
+
+        <p>
+            The number inside the brackets specifies the number of elements,
+            not the last index.
+        </p>
+    </section>
+
+    <!-- 3. INDEXING -->
+
+    <section class="lesson-section" id="indexing">
+        <h2>3. Indexing and Modifying Elements</h2>
+
+        <p>
+            In C, array indexing begins at zero. An array containing
+            five elements has valid indices from zero through four.
+        </p>
+
+        <div class="table-wrapper">
+            <table class="lesson-table">
+                <tr>
+                    <th>Expression</th>
+                    <th>Value</th>
+                </tr>
+                <tr><td><code>numbers[0]</code></td><td>10</td></tr>
+                <tr><td><code>numbers[1]</code></td><td>20</td></tr>
+                <tr><td><code>numbers[2]</code></td><td>30</td></tr>
+                <tr><td><code>numbers[3]</code></td><td>40</td></tr>
+                <tr><td><code>numbers[4]</code></td><td>50</td></tr>
+            </table>
+        </div>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    printf("%d\n", numbers[0]);
+    printf("%d\n", numbers[2]);
+
+    numbers[2] = 99;
+
+    printf("%d\n", numbers[2]);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>10
+30
+99</pre>
+        </div>
+
+        <div class="important-note">
+            <p>
+                <strong>Important:</strong> Accessing an array element
+                outside its valid range causes undefined behavior.
+                For an array of five elements, <code>numbers[5]</code>
+                is not valid.
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. INPUT AND OUTPUT -->
+
+    <section class="lesson-section" id="input-output">
+        <h2>4. Taking Input and Printing an Array</h2>
+
+        <p>
+            A loop lets us read or print each element without repeating
+            the same statement many times.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5];
+    int i;
+
+    printf("Enter 5 numbers: ");
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        scanf("%d", &amp;a[i]);
+    }
+
+    printf("Array elements: ");
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <p><strong>Sample input:</strong></p>
+        <div class="output-box"><pre>10 20 30 40 50</pre></div>
+
+        <p><strong>Sample output:</strong></p>
+        <div class="output-box"><pre>Array elements: 10 20 30 40 50</pre></div>
+
+        <p>
+            <code>&amp;a[i]</code> provides the address of the element
+            where <code>scanf</code> will store the entered integer.
+        </p>
+
+        <div class="important-note">
+            <p>
+                Check that input succeeds in production programs.
+                This introductory example assumes the user enters
+                five valid integers.
+            </p>
+        </div>
+    </section>
+
+    <!-- 5. TRAVERSAL -->
+
+    <section class="lesson-section" id="traversal">
+        <h2>5. Traversing an Array</h2>
+
+        <p>
+            Traversal means visiting array elements one by one.
+            It is the foundation of many array operations.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[4] = {12, 25, 37, 49};
+    int i;
+
+    for (i = 0; i &lt; 4; i++)
+    {
+        printf("Index %d = %d\n", i, a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Index 0 = 12
+Index 1 = 25
+Index 2 = 37
+Index 3 = 49</pre>
+        </div>
+
+        <h3>Tracing the loop</h3>
+
+        <div class="table-wrapper">
+            <table class="lesson-table">
+                <tr><th>Iteration</th><th>i</th><th>a[i]</th></tr>
+                <tr><td>1</td><td>0</td><td>12</td></tr>
+                <tr><td>2</td><td>1</td><td>25</td></tr>
+                <tr><td>3</td><td>2</td><td>37</td></tr>
+                <tr><td>4</td><td>3</td><td>49</td></tr>
+            </table>
+        </div>
+
+        <p>
+            The condition <code>i &lt; 4</code> is correct because the
+            final valid index is three.
+        </p>
+    </section>
+
+    <!-- 6. SUM AND AVERAGE -->
+
+    <section class="lesson-section" id="sum-average">
+        <h2>6. Sum and Average of Array Elements</h2>
+
+        <h3>Calculate the sum</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {10, 20, 30, 40, 50};
+    int i;
+    int sum = 0;
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        sum = sum + a[i];
+    }
+
+    printf("Sum = %d\n", sum);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>Sum = 150</pre></div>
+
+        <p>
+            We initialize <code>sum</code> to zero, then add every
+            element to it.
+        </p>
+
+        <h3>Calculate the average</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int marks[5] = {70, 80, 90, 60, 100};
+    int i;
+    int sum = 0;
+    double average;
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        sum += marks[i];
+    }
+
+    average = (double)sum / 5;
+
+    printf("Sum = %d\n", sum);
+    printf("Average = %.2f\n", average);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Sum = 400
+Average = 80.00</pre>
+        </div>
+
+        <p>
+            The cast <code>(double)sum</code> allows the division to
+            produce a fractional result when needed.
+        </p>
+    </section>
+
+    <!-- 7. MAXIMUM AND MINIMUM -->
+
+    <section class="lesson-section" id="max-min">
+        <h2>7. Find the Largest and Smallest Elements</h2>
+
+        <p>
+            Initialize both variables using the first array element.
+            This works even when every element is negative.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {12, 45, 7, 89, 23, 4};
+    int i;
+    int largest = a[0];
+    int smallest = a[0];
+
+    for (i = 1; i &lt; 6; i++)
+    {
+        if (a[i] &gt; largest)
+        {
+            largest = a[i];
+        }
+
+        if (a[i] &lt; smallest)
+        {
+            smallest = a[i];
+        }
+    }
+
+    printf("Largest = %d\n", largest);
+    printf("Smallest = %d\n", smallest);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Largest = 89
+Smallest = 4</pre>
+        </div>
+
+        <p>
+            We start at index one because index zero already provides
+            the initial largest and smallest values.
+        </p>
+    </section>
+
+    <!-- 8. SEARCHING -->
+
+    <section class="lesson-section" id="searching">
+        <h2>8. Searching for an Element</h2>
+
+        <p>
+            Linear search checks elements one by one until it finds the
+            target or reaches the end of the array.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {15, 28, 42, 57, 63};
+    int target = 42;
+    int i;
+    int found = 0;
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        if (a[i] == target)
+        {
+            found = 1;
+            break;
+        }
+    }
+
+    if (found)
+    {
+        printf("Found at index %d\n", i);
+    }
+    else
+    {
+        printf("Not found\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>Found at index 2</pre></div>
+
+        <p>
+            The <code>break</code> statement ends the search after the
+            first matching element.
+        </p>
+    </section>
+
+    <!-- 9. COUNTING -->
+
+    <section class="lesson-section" id="counting">
+        <h2>9. Count Even and Odd Elements</h2>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {2, 7, 10, 13, 18, 21};
+    int i;
+    int even = 0;
+    int odd = 0;
+
+    for (i = 0; i &lt; 6; i++)
+    {
+        if (a[i] % 2 == 0)
+        {
+            even++;
+        }
+        else
+        {
+            odd++;
+        }
+    }
+
+    printf("Even = %d\n", even);
+    printf("Odd = %d\n", odd);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Even = 3
+Odd = 3</pre>
+        </div>
+
+        <p>
+            The remainder operator <code>% 2</code> determines whether
+            an integer is even or odd.
+        </p>
+    </section>
+
+    <!-- 10. REVERSING -->
+
+    <section class="lesson-section" id="reversing">
+        <h2>10. Reverse an Array</h2>
+
+        <p>
+            To reverse an array in place, exchange the first element
+            with the last, the second with the second-last, and so on.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {10, 20, 30, 40, 50};
+    int i;
+    int temp;
+
+    for (i = 0; i &lt; 5 / 2; i++)
+    {
+        temp = a[i];
+        a[i] = a[4 - i];
+        a[4 - i] = temp;
+    }
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>50 40 30 20 10</pre></div>
+
+        <div class="important-note">
+            <p>
+                We only need to perform swaps for half the array.
+                Swapping every element again would undo the reversal.
+            </p>
+        </div>
+    </section>
+
+    <!-- 11. COPYING AND MERGING -->
+
+    <section class="lesson-section" id="copying">
+        <h2>11. Copying and Merging Arrays</h2>
+
+        <h3>Copy an array</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[4] = {5, 10, 15, 20};
+    int b[4];
+    int i;
+
+    for (i = 0; i &lt; 4; i++)
+    {
+        b[i] = a[i];
+    }
+
+    for (i = 0; i &lt; 4; i++)
+    {
+        printf("%d ", b[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>5 10 15 20</pre></div>
+
+        <h3>Merge two arrays</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[3] = {1, 2, 3};
+    int b[3] = {4, 5, 6};
+    int c[6];
+    int i;
+
+    for (i = 0; i &lt; 3; i++)
+    {
+        c[i] = a[i];
+        c[i + 3] = b[i];
+    }
+
+    for (i = 0; i &lt; 6; i++)
+    {
+        printf("%d ", c[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>1 2 3 4 5 6</pre></div>
+
+        <p>
+            This example concatenates two arrays. It does not sort
+            their combined values.
+        </p>
+    </section>
+
+    <!-- 12. SORTING -->
+
+    <section class="lesson-section" id="sorting">
+        <h2>12. Sorting an Array: Bubble Sort</h2>
+
+        <p>
+            Bubble sort compares adjacent elements and swaps them when
+            they are in the wrong order.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {40, 10, 50, 20, 30};
+    int i, j, temp;
+
+    for (i = 0; i &lt; 4; i++)
+    {
+        for (j = 0; j &lt; 4 - i; j++)
+        {
+            if (a[j] &gt; a[j + 1])
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>10 20 30 40 50</pre></div>
+
+        <h3>How the algorithm works</h3>
+
+        <ol>
+            <li>Compare two adjacent elements.</li>
+            <li>Swap them if the left element is larger.</li>
+            <li>Continue through the unsorted portion.</li>
+            <li>Repeat until the array is sorted.</li>
+        </ol>
+
+        <p>
+            This beginner-friendly version has O(n²) time complexity
+            in the average and worst cases.
+        </p>
+    </section>
+
+    <!-- 13. FREQUENCY AND DUPLICATES -->
+
+    <section class="lesson-section" id="frequency">
+        <h2>13. Frequency and Duplicate Elements</h2>
+
+        <p>
+            Frequency means how many times a value appears in an array.
+        </p>
+
+        <h3>Count a target value</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {2, 5, 2, 7, 2, 5};
+    int target = 2;
+    int count = 0;
+    int i;
+
+    for (i = 0; i &lt; 6; i++)
+    {
+        if (a[i] == target)
+        {
+            count++;
+        }
+    }
+
+    printf("%d appears %d times\n", target, count);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>2 appears 3 times</pre></div>
+
+        <h3>Identify duplicate values</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {2, 5, 2, 7, 5, 9};
+    int i, j, k;
+    int alreadyPrinted;
+
+    for (i = 0; i &lt; 6; i++)
+    {
+        alreadyPrinted = 0;
+
+        for (k = 0; k &lt; i; k++)
+        {
+            if (a[k] == a[i])
+            {
+                alreadyPrinted = 1;
+                break;
+            }
+        }
+
+        if (alreadyPrinted)
+        {
+            continue;
+        }
+
+        for (j = i + 1; j &lt; 6; j++)
+        {
+            if (a[i] == a[j])
+            {
+                printf("%d ", a[i]);
+                break;
+            }
+        }
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>2 5</pre></div>
+
+        <p>
+            The program prints each duplicated value once, even if it
+            appears more than twice.
+        </p>
+    </section>
+
+    <!-- 14. INSERTION AND DELETION -->
+
+    <section class="lesson-section" id="insertion-deletion">
+        <h2>14. Insertion and Deletion</h2>
+
+        <p>
+            C arrays have a fixed size after declaration. We can still
+            insert or delete values logically by shifting elements,
+            provided the allocated array has enough capacity.
+        </p>
+
+        <h3>Insert at an index</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {10, 20, 30, 40, 50};
+    int n = 5;
+    int position = 2;
+    int value = 99;
+    int i;
+
+    if (position &lt; 0 || position &gt; n || n &gt;= 6)
+    {
+        printf("Invalid insertion\n");
+        return 0;
+    }
+
+    for (i = n; i &gt; position; i--)
+    {
+        a[i] = a[i - 1];
+    }
+
+    a[position] = value;
+    n++;
+
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>10 20 99 30 40 50</pre></div>
+
+        <h3>Delete at an index</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {10, 20, 30, 40, 50};
+    int n = 5;
+    int position = 2;
+    int i;
+
+    if (position &lt; 0 || position &gt;= n)
+    {
+        printf("Invalid deletion\n");
+        return 0;
+    }
+
+    for (i = position; i &lt; n - 1; i++)
+    {
+        a[i] = a[i + 1];
+    }
+
+    n--;
+
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>10 20 40 50</pre></div>
+
+        <p>
+            These examples use zero-based indices. The deletion operation
+            decreases the logical element count, but the allocated array
+            capacity remains unchanged.
+        </p>
+    </section>
+
+    <!-- 15. ROTATION -->
+
+    <section class="lesson-section" id="rotation">
+        <h2>15. Rotate an Array to the Right</h2>
+
+        <p>
+            A right rotation by one position moves the last element
+            to the beginning and shifts all other elements one position right.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {1, 2, 3, 4, 5};
+    int i;
+    int last = a[4];
+
+    for (i = 4; i &gt; 0; i--)
+    {
+        a[i] = a[i - 1];
+    }
+
+    a[0] = last;
+
+    for (i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>5 1 2 3 4</pre></div>
+    </section>
+
+    <!-- 16. SECOND LARGEST -->
+
+    <section class="lesson-section" id="second-largest">
+        <h2>16. Find the Second-Largest Distinct Element</h2>
+
+        <p>
+            The second-largest distinct element must be smaller than the
+            largest value and different from it.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[6] = {12, 45, 7, 45, 32, 20};
+    int largest = a[0];
+    int second = 0;
+    int hasSecond = 0;
+    int i;
+
+    for (i = 1; i &lt; 6; i++)
+    {
+        if (a[i] &gt; largest)
+        {
+            second = largest;
+            largest = a[i];
+            hasSecond = 1;
+        }
+        else if (a[i] &lt; largest)
+        {
+            if (!hasSecond || a[i] &gt; second)
+            {
+                second = a[i];
+                hasSecond = 1;
+            }
+        }
+    }
+
+    if (hasSecond)
+    {
+        printf("Second largest = %d\n", second);
+    }
+    else
+    {
+        printf("No second-largest distinct value\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>Second largest = 32</pre></div>
+
+        <p>
+            Notice that another occurrence of 45 is not considered the
+            second-largest distinct value. The example also handles
+            arrays whose values are all equal.
+        </p>
+    </section>
+
+    <!-- 17. FUNCTIONS -->
+
+    <section class="lesson-section" id="functions">
+        <h2>17. Passing Arrays to Functions</h2>
+
+        <p>
+            Arrays can be passed to functions so that the function can
+            process their elements. In a function parameter, an array
+            declaration such as <code>int a[]</code> is adjusted to a
+            pointer parameter.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+void display(int a[], int size)
+{
+    int i;
+
+    for (i = 0; i &lt; size; i++)
+    {
+        printf("%d ", a[i]);
+    }
+}
+
+int sumArray(int a[], int size)
+{
+    int i;
+    int sum = 0;
+
+    for (i = 0; i &lt; size; i++)
+    {
+        sum += a[i];
+    }
+
+    return sum;
+}
+
+int main(void)
+{
+    int numbers[4] = {10, 20, 30, 40};
+
+    display(numbers, 4);
+
+    printf("\nSum = %d\n", sumArray(numbers, 4));
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>10 20 30 40
+Sum = 100</pre>
+        </div>
+
+        <div class="important-note">
+            <p>
+                The function receives access to the original array elements.
+                Changes made through the parameter can affect the original
+                array. The function does not automatically know the array's
+                length, so we pass the size separately.
+            </p>
+        </div>
+    </section>
+
+    <!-- 18. TWO-DIMENSIONAL ARRAYS -->
+
+    <section class="lesson-section" id="two-dimensional">
+        <h2>18. Two-Dimensional Arrays</h2>
+
+        <p>
+            A two-dimensional array organizes values into rows and columns.
+            It is often used to represent a matrix or a table.
+        </p>
+
+        <div class="code-example">
+<pre>int matrix[2][3] = {
+    {1, 2, 3},
+    {4, 5, 6}
+};</pre>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="lesson-table">
+                <tr><th></th><th>Column 0</th><th>Column 1</th><th>Column 2</th></tr>
+                <tr><th>Row 0</th><td>1</td><td>2</td><td>3</td></tr>
+                <tr><th>Row 1</th><td>4</td><td>5</td><td>6</td></tr>
+            </table>
+        </div>
+
+        <p>
+            For example, <code>matrix[1][2]</code> is 6 because it refers
+            to row 1 and column 2, with both indices starting at zero.
+        </p>
+
+        <h3>Print a matrix</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[2][3] = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    int i, j;
+
+    for (i = 0; i &lt; 2; i++)
+    {
+        for (j = 0; j &lt; 3; j++)
+        {
+            printf("%d ", a[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>1 2 3
+4 5 6</pre>
+        </div>
+
+        <h3>Matrix addition</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[2][2] = {{1, 2}, {3, 4}};
+    int b[2][2] = {{5, 6}, {7, 8}};
+    int c[2][2];
+    int i, j;
+
+    for (i = 0; i &lt; 2; i++)
+    {
+        for (j = 0; j &lt; 2; j++)
+        {
+            c[i][j] = a[i][j] + b[i][j];
+        }
+    }
+
+    for (i = 0; i &lt; 2; i++)
+    {
+        for (j = 0; j &lt; 2; j++)
+        {
+            printf("%d ", c[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>6 8
+10 12</pre>
+        </div>
+
+        <h3>Transpose a matrix</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int i, j;
+
+    for (j = 0; j &lt; 3; j++)
+    {
+        for (i = 0; i &lt; 2; i++)
+        {
+            printf("%d ", a[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>1 4
+2 5
+3 6</pre>
+        </div>
+
+        <p>
+            Transposition exchanges the row and column positions.
+            A matrix with two rows and three columns becomes a displayed
+            matrix with three rows and two columns.
+        </p>
+    </section>
+
+    <!-- 19. MISTAKES -->
+
+    <section class="lesson-section" id="mistakes">
+        <h2>19. Common Array Mistakes</h2>
+
+        <h3>Mistake 1: Wrong loop boundary</h3>
+
+        <div class="code-example">
+<pre>int a[5] = {1, 2, 3, 4, 5};
+int i;
+
+for (i = 0; i &lt;= 5; i++)
+{
+    printf("%d ", a[i]);
+}</pre>
+        </div>
+
+        <p>
+            This loop attempts to access <code>a[5]</code>, which is
+            outside the valid index range. Use <code>i &lt; 5</code>.
+        </p>
+
+        <h3>Mistake 2: Forgetting to initialize a sum</h3>
+
+        <div class="code-example">
+<pre>int sum;
+sum += a[0];</pre>
+        </div>
+
+        <p>
+            If <code>sum</code> is an uninitialized local variable,
+            reading its indeterminate value is not valid. Initialize it
+            before accumulating:
+        </p>
+
+        <div class="code-example">
+<pre>int sum = 0;</pre>
+        </div>
+
+        <h3>Mistake 3: Confusing an index with a value</h3>
+
+        <p>
+            <code>i</code> represents the current index in a loop.
+            <code>a[i]</code> represents the element stored at that index.
+        </p>
+
+        <h3>Mistake 4: Using the wrong array size</h3>
+
+        <p>
+            If an array has five elements, the valid indices are
+            0, 1, 2, 3, and 4—not 1 through 5.
+        </p>
+
+        <h3>Mistake 5: Forgetting that array parameters don't carry size</h3>
+
+        <p>
+            When an array is passed to a function, its length is not
+            automatically provided as part of the array parameter.
+            Pass the element count explicitly or use another suitable
+            size-management method.
+        </p>
+    </section>
+
+    <!-- 20. QUIZ -->
+
+    <section class="lesson-section" id="quiz">
+        <h2>20. Test Your Knowledge</h2>
+
+        <p>
+            Choose an answer for each question. If your answer is incorrect,
+            you can try again.
+        </p>
+
+        <div class="quiz-question">
+            <p><strong>Question 1:</strong> What is the first valid index of a C array?</p>
+
+            <button onclick="checkAnswer(this, false)">A. 1</button>
+            <button onclick="checkAnswer(this, true)">B. 0</button>
+            <button onclick="checkAnswer(this, false)">C. -1</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 2:</strong> What is the value of <code>a[2]</code>?</p>
+
+            <div class="code-example"><pre>int a[4] = {10, 20, 30, 40};</pre></div>
+
+            <button onclick="checkAnswer(this, false)">A. 20</button>
+            <button onclick="checkAnswer(this, true)">B. 30</button>
+            <button onclick="checkAnswer(this, false)">C. 40</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 3:</strong> Which condition correctly visits all five elements of an array using <code>i = 0</code>?</p>
+
+            <button onclick="checkAnswer(this, true)">A. i &lt; 5</button>
+            <button onclick="checkAnswer(this, false)">B. i &lt;= 5</button>
+            <button onclick="checkAnswer(this, false)">C. i &lt; 4</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 4:</strong> What should the initial value of a sum accumulator normally be?</p>
+
+            <button onclick="checkAnswer(this, false)">A. 1</button>
+            <button onclick="checkAnswer(this, true)">B. 0</button>
+            <button onclick="checkAnswer(this, false)">C. The array size</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 5:</strong> What is the sum of these elements?</p>
+
+            <div class="code-example"><pre>int a[3] = {4, 6, 10};</pre></div>
+
+            <button onclick="checkAnswer(this, false)">A. 16</button>
+            <button onclick="checkAnswer(this, true)">B. 20</button>
+            <button onclick="checkAnswer(this, false)">C. 24</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 6:</strong> Which algorithm is used in the sorting example in this chapter?</p>
+
+            <button onclick="checkAnswer(this, true)">A. Bubble sort</button>
+            <button onclick="checkAnswer(this, false)">B. Binary search</button>
+            <button onclick="checkAnswer(this, false)">C. Linear search</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 7:</strong> What does <code>a[1][2]</code> refer to in a 2D array?</p>
+
+            <button onclick="checkAnswer(this, false)">A. Row 1, column 2, using one-based indexing</button>
+            <button onclick="checkAnswer(this, true)">B. Row index 1, column index 2</button>
+            <button onclick="checkAnswer(this, false)">C. The second array element of any array</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 8:</strong> What does linear search do?</p>
+
+            <button onclick="checkAnswer(this, true)">A. Checks elements one by one</button>
+            <button onclick="checkAnswer(this, false)">B. Always sorts the array first</button>
+            <button onclick="checkAnswer(this, false)">C. Reverses the array</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 9:</strong> What is the second-largest distinct value in <code>{5, 9, 9, 3}</code>?</p>
+
+            <button onclick="checkAnswer(this, false)">A. 9</button>
+            <button onclick="checkAnswer(this, true)">B. 5</button>
+            <button onclick="checkAnswer(this, false)">C. 3</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 10:</strong> When passing an array to a function, what else is commonly passed so the function knows how many elements to process?</p>
+
+            <button onclick="checkAnswer(this, false)">A. The last element's value</button>
+            <button onclick="checkAnswer(this, true)">B. The array size or element count</button>
+            <button onclick="checkAnswer(this, false)">C. The name of the source file</button>
+
+            <p class="quiz-feedback"></p>
+        </div>
+    </section>
+
+    <!-- PRACTICE -->
+
+    <section class="lesson-section" id="practice">
+        <h2>Extra Coding Challenges</h2>
+
+        <p>Try solving these problems in GCC before looking for help.</p>
+
+        <h3>Beginner</h3>
+        <ol>
+            <li>Read five integers and print them in reverse order.</li>
+            <li>Count how many elements are greater than 10.</li>
+            <li>Find the sum of all odd elements.</li>
+        </ol>
+
+        <h3>Intermediate</h3>
+        <ol>
+            <li>Find the second-largest distinct value.</li>
+            <li>Count the frequency of every distinct value.</li>
+            <li>Rotate an array to the left by one position.</li>
+            <li>Insert a value at a user-provided valid index.</li>
+        </ol>
+
+        <h3>Advanced</h3>
+        <ol>
+            <li>Remove duplicate values from an array.</li>
+            <li>Merge two arrays and sort the result.</li>
+            <li>Multiply two compatible matrices.</li>
+            <li>Find the row with the largest sum in a matrix.</li>
+        </ol>
+    </section>
+
+    <div class="chapter-navigation">
+        <a href="chapter6.html">← Previous Chapter</a>
+        <a href="index.html">Back to Home</a>
+        <a href="chapter8.html">Next Chapter →</a>
+    </div>
+
+</main>
+
+<script>
+    function checkAnswer(button, isCorrect)
+    {
+        const question = button.closest(".quiz-question");
+        const feedback = question.querySelector(".quiz-feedback");
+
+        if (isCorrect)
+        {
+            feedback.textContent = "Correct! Well done.";
+            feedback.style.color = "#00e676";
+        }
+        else
+        {
+            feedback.textContent = "Not quite. Try again!";
+            feedback.style.color = "#ff7070";
+        }
+    }
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

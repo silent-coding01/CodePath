@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2 - Variables and Data Types | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CodePath<span>.</span></div>
+
+    
+	<nav>
+    <a href="index.html">Home</a>
+    <a href="#lesson">Lesson</a>
+    <a href="#practice">Practice</a>
+
+    <input
+        type="text"
+        id="topicSearch"
+        placeholder="Search topics..."
+        onkeydown="if(event.key === 'Enter') searchTopic();"
+    >
+
+    <button type="button" onclick="searchTopic()">Search</button>
+	</nav>
+
+</header>
+
+<main class="lesson-page">
+
+    <div class="lesson-heading">
+        <p class="tagline">CHAPTER 02</p>
+        <h1>Variables and <span>Data Types</span></h1>
+        <p>Learn how C stores information and works with different kinds of data.</p>
+    </div>
+
+    <section class="lesson-content" id="lesson">
+
+        <article class="lesson-card">
+            <h2>1. What Is a Variable?</h2>
+
+            <p>A variable is a named storage location used to hold a value that a program can use.</p>
+
+            <h3>Real-life example</h3>
+
+            <p>Imagine a box labelled "age". If the box contains the number 20, the variable age stores the value 20.</p>
+
+            <pre><code>int age = 20;</code></pre>
+
+            <p>Here:</p>
+            <ul>
+                <li><code>int</code> specifies the data type.</li>
+                <li><code>age</code> is the variable name.</li>
+                <li><code>20</code> is the initial value.</li>
+                <li><code>;</code> terminates the statement.</li>
+            </ul>
+        </article>
+
+        <article class="lesson-card">
+            <h2>2. Declaring and Initializing Variables</h2>
+
+            <p>Declaration tells the compiler a variable's name and type. Initialization gives it an initial value.</p>
+
+            <h3>Declaration</h3>
+            <pre><code>int marks;</code></pre>
+
+            <h3>Initialization</h3>
+            <pre><code>int marks = 85;</code></pre>
+
+            <h3>Changing a value</h3>
+            <pre><code>int score = 10;
+score = 25;
+
+printf("%d", score);</code></pre>
+
+            <p>Output:</p>
+            <pre><code>25</code></pre>
+
+            <p>The variable's value changes from 10 to 25.</p>
+        </article>
+
+        <article class="lesson-card">
+            <h2>3. Rules for Naming Variables</h2>
+
+            <ul>
+                <li>A variable name can contain letters, digits and underscores.</li>
+                <li>It cannot begin with a digit.</li>
+                <li>Spaces are not allowed.</li>
+                <li>C keywords such as <code>int</code> cannot be variable names.</li>
+                <li>C variable names are case-sensitive: <code>age</code> and <code>Age</code> are different.</li>
+            </ul>
+
+            <h3>Valid names</h3>
+            <pre><code>age
+student_marks
+number2</code></pre>
+
+            <h3>Invalid names</h3>
+            <pre><code>2number
+student marks
+float</code></pre>
+
+            <p><code>float</code> is invalid as a variable name because it is a C keyword.</p>
+        </article>
+
+        <article class="lesson-card">
+            <h2>4. Basic Data Types in C</h2>
+
+            <p>A data type determines what kind of value a variable can represent.</p>
+
+            <h3>Integer — int</h3>
+            <pre><code>int age = 20;
+printf("%d", age);</code></pre>
+            <p>Output:</p>
+            <pre><code>20</code></pre>
+
+            <h3>Character — char</h3>
+            <pre><code>char grade = 'A';
+printf("%c", grade);</code></pre>
+            <p>Output:</p>
+            <pre><code>A</code></pre>
+
+            <h3>Decimal number — float</h3>
+            <pre><code>float price = 12.5f;
+printf("%f", price);</code></pre>
+            <p>Output:</p>
+            <pre><code>12.500000</code></pre>
+
+            <h3>Double-precision decimal — double</h3>
+            <pre><code>double pi = 3.14159;
+printf("%f", pi);</code></pre>
+            <p>Output:</p>
+            <pre><code>3.141590</code></pre>
+
+            <p>These examples use common format specifiers: <code>%d</code> for <code>int</code>, <code>%c</code> for <code>char</code>, and <code>%f</code> for floating-point output.</p>
+        </article>
+
+        <article class="lesson-card">
+            <h2>5. Taking Input from the User</h2>
+
+            <p>The <code>scanf()</code> function can read input into a variable. Use <code>&amp;</code> before ordinary variables such as <code>age</code> and <code>marks</code>.</p>
+
+            <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age;
+
+    printf("Enter your age: ");
+    scanf("%d", &amp;age);
+
+    printf("Your age is %d", age);
+
+    return 0;
+}</code></pre>
+
+            <p>Example run:</p>
+            <pre><code>Enter your age: 20
+Your age is 20</code></pre>
+        </article>
+
+    </section>
+
+    <section class="lesson-content" id="practice">
+
+        <div class="lesson-card">
+            <h2>Practice Questions</h2>
+            <p>Try answering each question before checking your answer.</p>
+
+            <div class="practice-question">
+                <h3>Question 1: Multiple Choice</h3>
+                <p>Which data type is commonly used to store whole numbers?</p>
+
+                <label><input type="radio" name="q1" value="a"> float</label><br>
+                <label><input type="radio" name="q1" value="b"> int</label><br>
+                <label><input type="radio" name="q1" value="c"> char</label><br>
+                <label><input type="radio" name="q1" value="d"> double</label><br>
+
+                <button type="button" onclick="checkMCQ()">Check Answer</button>
+                <p id="result" aria-live="polite"></p>
+            </div>
+
+            <div class="practice-question">
+                <h3>Question 2: Fill in the Blanks</h3>
+                <p>Complete the statement to declare an integer variable named <code>age</code> with the value 20.</p>
+
+                <pre><code>_____ age = 20;</code></pre>
+
+                <input type="text" id="fillAnswer" class="answer-input" placeholder="Enter the data type">
+
+                <button type="button" onclick="checkFill()">Check Answer</button>
+                <p id="fillResult" aria-live="polite"></p>
+            </div>
+
+            <div class="practice-question">
+                <h3>Question 3: Predict the Output</h3>
+
+                <pre><code>int x = 5;
+x = 9;
+printf("%d", x);</code></pre>
+
+                <label><input type="radio" name="q3" value="a"> 5</label><br>
+                <label><input type="radio" name="q3" value="b"> 9</label><br>
+                <label><input type="radio" name="q3" value="c"> 14</label><br>
+                <label><input type="radio" name="q3" value="d"> Error</label><br>
+
+                <button type="button" onclick="checkOutput()">Check Answer</button>
+                <p id="outputResult" aria-live="polite"></p>
+            </div>
+
+            <div class="practice-question">
+                <h3>Question 4: Find the Error</h3>
+                <p>What is wrong with this declaration?</p>
+
+                <pre><code>int 2marks = 80;</code></pre>
+
+                <label><input type="radio" name="q4" value="a"> It needs a loop</label><br>
+                <label><input type="radio" name="q4" value="b"> A variable name cannot begin with a digit</label><br>
+                <label><input type="radio" name="q4" value="c"> int cannot store whole numbers</label><br>
+                <label><input type="radio" name="q4" value="d"> It needs printf()</label><br>
+
+                <button type="button" onclick="checkError()">Check Answer</button>
+                <p id="errorResult" aria-live="polite"></p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="lesson-navigation">
+		<a href="chapter1.html" class="start-btn">← Previous Chapter</a>
+
+		<a href="index.html" class="start-btn">Back to Home</a>
+
+		<a href="chapter3.html" class="start-btn">Next Chapter →</a>
+	</div>
+
+</main>
+
+<footer>
+    <p>© 2026 CodePath. Learn something new every day.</p>
+</footer>
+
+<script>
+function checkMCQ() {
+    const selected = document.querySelector('input[name="q1"]:checked');
+    const result = document.getElementById("result");
+
+    if (!selected) {
+        result.textContent = "Please select an answer first.";
+        result.style.color = "#fbbf24";
+    } else if (selected.value === "b") {
+        result.textContent = "Correct! int is commonly used for whole numbers.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent = "Not quite. Review the basic data types lesson.";
+        result.style.color = "#f87171";
+    }
+}
+
+function checkFill() {
+    const answer = document.getElementById("fillAnswer").value.trim().toLowerCase();
+    const result = document.getElementById("fillResult");
+
+    if (answer === "int") {
+        result.textContent = "Correct! int declares an integer variable.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent = "Try again. Which data type stores whole numbers?";
+        result.style.color = "#f87171";
+    }
+}
+
+function checkOutput() {
+    const selected = document.querySelector('input[name="q3"]:checked');
+    const result = document.getElementById("outputResult");
+
+    if (!selected) {
+        result.textContent = "Please select an answer first.";
+        result.style.color = "#fbbf24";
+    } else if (selected.value === "b") {
+        result.textContent = "Correct! The value of x was changed to 9.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent = "Incorrect. Remember that x is reassigned before printf().";
+        result.style.color = "#f87171";
+    }
+}
+
+function checkError() {
+    const selected = document.querySelector('input[name="q4"]:checked');
+    const result = document.getElementById("errorResult");
+
+    if (!selected) {
+        result.textContent = "Please select an answer first.";
+        result.style.color = "#fbbf24";
+    } else if (selected.value === "b") {
+        result.textContent = "Correct! A variable name cannot begin with a digit.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent = "Incorrect. Review the variable naming rules.";
+        result.style.color = "#f87171";
+    }
+}
+</script>
+<script src="script.js"></script>
+</body>
+</html>

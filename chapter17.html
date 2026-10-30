@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 17: Preprocessor Directives | CodePath</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1, h2, h3 {
+            color: #22d3ee;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #111827;
+        }
+
+        nav a {
+            color: #22d3ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 30px auto;
+        }
+
+        .hero, section {
+            background: #111c33;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #263650;
+            border-radius: 12px;
+        }
+
+        h2, h3 {
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin: 10px 0 15px 25px;
+        }
+
+        li {
+            margin-bottom: 7px;
+        }
+
+        pre {
+            background: #070c17;
+            color: #a5f3fc;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 3px solid #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        .note {
+            background: #172554;
+            border-left: 4px solid #38bdf8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .warning {
+            background: #3f1d2e;
+            border-left: 4px solid #fb7185;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #0e7490;
+        }
+
+        .question, .challenge {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            display: block;
+            margin: 7px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            margin-top: 15px;
+            color: #67e8f9;
+            font-weight: bold;
+        }
+
+        .chapter-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .chapter-buttons a {
+            background: #0891b2;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+        }
+
+        .chapter-buttons a:hover {
+            background: #0e7490;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            border-top: 1px solid #263650;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 94%;
+            }
+
+            section, .hero {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CodePath</h1>
+    <p>Chapter 17: Preprocessor Directives in C</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="chapter16.html">Previous Chapter</a>
+    <a href="chapter18.html">Next Chapter</a>
+</nav>
+
+<main class="container">
+
+    <div class="hero">
+        <h2>Preprocessor Directives in C</h2>
+        <p>
+            Learn how the C preprocessor handles header files, macros,
+            and conditional compilation before the compiler translates
+            your program.
+        </p>
+        <p><strong>Learning goal:</strong> Understand the most common preprocessor directives.</p>
+    </div>
+
+    <section>
+        <h2>1. What Is the C Preprocessor?</h2>
+
+        <p>
+            The preprocessor performs certain operations on your source
+            code before the main compilation process.
+        </p>
+
+        <p>Preprocessor directives begin with the <code>#</code> symbol.</p>
+
+        <pre>#include &lt;stdio.h&gt;
+#define MAX 100</pre>
+
+        <p>
+            These are directives, not ordinary C statements. They do not
+            normally end with a semicolon.
+        </p>
+
+        <div class="note">
+            Remember the general order: preprocessing, compilation,
+            assembly, and linking. Toolchains may combine some stages.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. The #include Directive</h2>
+
+        <p>
+            The <code>#include</code> directive makes a header file's
+            contents available to your source file through preprocessing.
+        </p>
+
+        <h3>Angle brackets</h3>
+
+        <pre>#include &lt;stdio.h&gt;</pre>
+
+        <p>
+            Commonly used for standard library headers such as
+            <code>stdio.h</code> and <code>string.h</code>.
+        </p>
+
+        <h3>Double quotation marks</h3>
+
+        <pre>#include "myheader.h"</pre>
+
+        <p>
+            Commonly used for your own header files. The exact file-search
+            rules depend on the compiler.
+        </p>
+    </section>
+
+    <section>
+        <h2>3. The #define Directive</h2>
+
+        <p>
+            Use <code>#define</code> to create a macro. An object-like macro
+            replaces occurrences of its name with replacement text.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+#define PI 3.14159
+
+int main(void)
+{
+    float radius = 5.0f;
+    float area = PI * radius * radius;
+
+    printf("Area = %.2f\n", area);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Area = 78.54</pre>
+
+        <p>
+            The preprocessor replaces <code>PI</code> with
+            <code>3.14159</code> before compilation.
+        </p>
+
+        <div class="note">
+            Unlike a variable declaration, <code>#define PI 3.14159</code>
+            does not create a typed variable.
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Function-Like Macros</h2>
+
+        <p>
+            A function-like macro can accept arguments. Parentheses are
+            important when defining expressions.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+#define SQUARE(x) ((x) * (x))
+
+int main(void)
+{
+    printf("%d\n", SQUARE(5));
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>25</pre>
+
+        <p>
+            The parentheses help prevent common operator-precedence errors.
+        </p>
+
+        <div class="warning">
+            Macro arguments may be evaluated more than once. Avoid calls
+            such as <code>SQUARE(i++)</code>. For many tasks, a function
+            is safer and easier to debug.
+        </div>
+    </section>
+
+    <section>
+        <h2>5. The #undef Directive</h2>
+
+        <p>
+            The <code>#undef</code> directive removes an existing macro
+            definition.
+        </p>
+
+        <pre>#define VALUE 10
+#undef VALUE
+
+/* VALUE is no longer defined as a macro here. */</pre>
+
+        <p>
+            After <code>#undef VALUE</code>, the preprocessor no longer
+            substitutes the previous definition of <code>VALUE</code>.
+        </p>
+    </section>
+
+    <section>
+        <h2>6. Conditional Compilation</h2>
+
+        <p>
+            Conditional directives control whether portions of source
+            code are included in the compilation.
+        </p>
+
+        <h3>Using #ifdef</h3>
+
+        <pre>#include &lt;stdio.h&gt;
+#define DEBUG
+
+int main(void)
+{
+#ifdef DEBUG
+    printf("Debug mode is active.\n");
+#endif
+
+    printf("Program running.\n");
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Debug mode is active.
+Program running.</pre>
+
+        <h3>Other useful directives</h3>
+
+        <ul>
+            <li><code>#ifndef</code> — includes code when a macro is not defined.</li>
+            <li><code>#if</code> — tests a preprocessor constant expression.</li>
+            <li><code>#elif</code> — tests another condition.</li>
+            <li><code>#else</code> — selects the alternative branch.</li>
+            <li><code>#endif</code> — ends the conditional section.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>7. Header Guards</h2>
+
+        <p>
+            Header guards prevent the same header file from being processed
+            repeatedly within one translation unit.
+        </p>
+
+        <pre>#ifndef MYHEADER_H
+#define MYHEADER_H
+
+void greet(void);
+
+#endif</pre>
+
+        <p>
+            If <code>MYHEADER_H</code> has already been defined, the
+            declarations inside the guarded section are skipped.
+        </p>
+    </section>
+
+    <section>
+        <h2>8. Common Mistakes</h2>
+
+        <ul>
+            <li>Adding a semicolon to the end of a simple <code>#define</code> replacement when it should not be there.</li>
+            <li>Forgetting parentheses in function-like macros.</li>
+            <li>Assuming macros behave exactly like functions.</li>
+            <li>Forgetting to close a conditional section with <code>#endif</code>.</li>
+            <li>Using a macro when a normal function would be clearer and safer.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>9. Interactive Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1. Which symbol begins a preprocessor directive?</strong></p>
+
+                <label><input type="radio" name="q1" value="a"> @</label>
+                <label><input type="radio" name="q1" value="b"> #</label>
+                <label><input type="radio" name="q1" value="c"> &amp;</label>
+            </div>
+
+            <div class="question">
+                <p><strong>2. Which directive is used to include a header file?</strong></p>
+
+                <label><input type="radio" name="q2" value="a"> #include</label>
+                <label><input type="radio" name="q2" value="b"> #define</label>
+                <label><input type="radio" name="q2" value="c"> #undef</label>
+            </div>
+
+            <div class="question">
+                <p><strong>3. What is the output of this code?</strong></p>
+
+                <pre>#define N 7
+printf("%d", N);</pre>
+
+                <label><input type="radio" name="q3" value="a"> N</label>
+                <label><input type="radio" name="q3" value="b"> 0</label>
+                <label><input type="radio" name="q3" value="c"> 7</label>
+            </div>
+
+            <div class="question">
+                <p><strong>4. Which directive ends a conditional compilation section?</strong></p>
+
+                <label><input type="radio" name="q4" value="a"> #end</label>
+                <label><input type="radio" name="q4" value="b"> #endif</label>
+                <label><input type="radio" name="q4" value="c"> #stop</label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Answers</button>
+
+            <p id="quizResult"></p>
+        </form>
+    </section>
+
+    <section>
+        <h2>10. Coding Challenges</h2>
+
+        <div class="challenge">
+            <h3>Easy: Constant Macro</h3>
+            <p>
+                Define a macro named <code>AGE</code> with the value 20.
+                Print the value using <code>printf()</code>.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Medium: Maximum Macro</h3>
+            <p>
+                Create a macro named <code>MAXIMUM(a, b)</code> that
+                returns the larger of two values. Test it with two integers.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Hard: Debug Mode</h3>
+            <p>
+                Use <code>#define DEBUG</code> and <code>#ifdef DEBUG</code>
+                to print a debug message only when debug mode is enabled.
+            </p>
+        </div>
+    </section>
+
+    <div class="chapter-buttons">
+        <a href="chapter16.html">← Previous: Storage Classes</a>
+        <a href="index.html">Home</a>
+        <a href="chapter18.html">Next: Chapter 14 →</a>
+    </div>
+
+</main>
+
+<footer>
+    <p>CodePath | Learn C. Think Logically.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "b",
+            q2: "a",
+            q3: "c",
+            q4: "b"
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (selected && selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        document.getElementById("quizResult").textContent =
+            "You scored " + score + " out of " + total + ".";
+    }
+</script>
+
+</body>
+</html>

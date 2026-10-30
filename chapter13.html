@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 13: Structures and Unions | CodePath</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1 {
+            color: #22d3ee;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #111827;
+        }
+
+        nav a {
+            color: #22d3ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 30px auto;
+        }
+
+        .hero, section {
+            background: #111c33;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #263650;
+            border-radius: 12px;
+        }
+
+        h2, h3 {
+            color: #22d3ee;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin: 10px 0 15px 25px;
+        }
+
+        li {
+            margin-bottom: 7px;
+        }
+
+        pre {
+            background: #070c17;
+            color: #a5f3fc;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 3px solid #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        .note {
+            background: #172554;
+            border-left: 4px solid #38bdf8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .warning {
+            background: #3f1d2e;
+            border-left: 4px solid #fb7185;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #0e7490;
+        }
+
+        .question, .challenge {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            display: block;
+            margin: 7px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            margin-top: 15px;
+            color: #67e8f9;
+            font-weight: bold;
+        }
+
+        .chapter-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .chapter-buttons a {
+            background: #0891b2;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+        }
+
+        .chapter-buttons a:hover {
+            background: #0e7490;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            border-top: 1px solid #263650;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 94%;
+            }
+
+            section, .hero {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CodePath</h1>
+    <p>Chapter 13: Structures and Unions in C</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="chapter12.html">Previous Chapter</a>
+    <a href="chapter14.html">Next Chapter</a>
+</nav>
+
+<main class="container">
+
+    <div class="hero">
+        <h2>Structures and Unions in C</h2>
+
+        <p>
+            Learn how to group related data using structures and how
+            unions allow multiple members to share the same memory.
+        </p>
+
+        <p>
+            <strong>Learning goals:</strong>
+            Understand structures, structure variables, arrays of structures,
+            nested structures, pointers to structures, and unions.
+        </p>
+    </div>
+
+    <!-- STRUCTURES -->
+
+    <section>
+        <h2>1. What Is a Structure?</h2>
+
+        <p>
+            A structure is a user-defined data type that groups variables
+            of different data types under one name.
+        </p>
+
+        <p>
+            For example, a student has a name, roll number, and marks.
+            These values have different data types but belong to the same student.
+        </p>
+
+        <pre>struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};</pre>
+
+        <p>Here:</p>
+
+        <ul>
+            <li><code>struct</code> is the structure keyword.</li>
+            <li><code>Student</code> is the structure tag.</li>
+            <li><code>roll</code>, <code>name</code>, and <code>marks</code> are members.</li>
+        </ul>
+
+        <div class="note">
+            The structure definition describes the format of the data.
+            It does not, by itself, create a structure variable.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Declaring Structure Variables</h2>
+
+        <p>You can declare variables after defining the structure.</p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main(void)
+{
+    struct Student s1;
+
+    s1.roll = 101;
+    s1.marks = 85.5f;
+
+    printf("Roll: %d\n", s1.roll);
+    printf("Marks: %.2f\n", s1.marks);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Roll: 101
+Marks: 85.50</pre>
+
+        <p>
+            The dot operator (<code>.</code>) accesses a member of a
+            structure variable.
+        </p>
+    </section>
+
+    <section>
+        <h2>3. Initializing a Structure</h2>
+
+        <p>
+            You can initialize structure members when declaring a variable.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main(void)
+{
+    struct Student s1 = {101, 92.5f};
+
+    printf("%d\n", s1.roll);
+    printf("%.1f\n", s1.marks);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>101
+92.5</pre>
+
+        <p>
+            Values in a positional initializer correspond to the structure
+            members in declaration order.
+        </p>
+    </section>
+
+    <section>
+        <h2>4. Taking Input into a Structure</h2>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    char name[30];
+    float marks;
+};
+
+int main(void)
+{
+    struct Student s1;
+
+    printf("Enter roll number: ");
+    scanf("%d", &amp;s1.roll);
+
+    printf("Enter name: ");
+    scanf("%29s", s1.name);
+
+    printf("Enter marks: ");
+    scanf("%f", &amp;s1.marks);
+
+    printf("\nStudent Details\n");
+    printf("Roll: %d\n", s1.roll);
+    printf("Name: %s\n", s1.name);
+    printf("Marks: %.2f\n", s1.marks);
+
+    return 0;
+}</pre>
+
+        <p>
+            Notice that <code>&amp;</code> is used for the integer and float
+            members in <code>scanf()</code>, but not for the character array
+            <code>s1.name</code>.
+        </p>
+
+        <div class="note">
+            This example reads a single-word name. To accept spaces in a name,
+            use a suitable line-input method such as <code>fgets()</code>.
+        </div>
+    </section>
+
+    <section>
+        <h2>5. Array of Structures</h2>
+
+        <p>
+            An array of structures stores multiple records of the same
+            structure type.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main(void)
+{
+    struct Student s[3] = {
+        {1, 80.5f},
+        {2, 91.0f},
+        {3, 76.5f}
+    };
+
+    int i;
+
+    for (i = 0; i &lt; 3; i++)
+    {
+        printf("Roll: %d, Marks: %.1f\n",
+               s[i].roll, s[i].marks);
+    }
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Roll: 1, Marks: 80.5
+Roll: 2, Marks: 91.0
+Roll: 3, Marks: 76.5</pre>
+    </section>
+
+    <section>
+        <h2>6. Nested Structures</h2>
+
+        <p>
+            A nested structure is a structure that contains another
+            structure as one of its members.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Date
+{
+    int day;
+    int month;
+    int year;
+};
+
+struct Student
+{
+    int roll;
+    struct Date birth;
+};
+
+int main(void)
+{
+    struct Student s1 = {101, {15, 8, 2006}};
+
+    printf("Roll: %d\n", s1.roll);
+
+    printf("Date of birth: %02d-%02d-%d\n",
+           s1.birth.day,
+           s1.birth.month,
+           s1.birth.year);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Roll: 101
+Date of birth: 15-08-2006</pre>
+
+        <p>
+            Use multiple dot operators to access nested members, such as
+            <code>s1.birth.day</code>.
+        </p>
+    </section>
+
+    <section>
+        <h2>7. Pointers to Structures</h2>
+
+        <p>
+            A pointer can store the address of a structure variable.
+            The arrow operator (<code>-&gt;</code>) accesses members
+            through a structure pointer.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int roll;
+    float marks;
+};
+
+int main(void)
+{
+    struct Student s1 = {101, 88.5f};
+    struct Student *ptr = &amp;s1;
+
+    printf("Roll: %d\n", ptr-&gt;roll);
+    printf("Marks: %.1f\n", ptr-&gt;marks);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Roll: 101
+Marks: 88.5</pre>
+
+        <div class="note">
+            <code>ptr-&gt;roll</code> is equivalent to
+            <code>(*ptr).roll</code>.
+        </div>
+    </section>
+
+    <section>
+        <h2>8. Structure vs Array</h2>
+
+        <ul>
+            <li>An array stores multiple elements of the same type.</li>
+            <li>A structure groups members that can have different types.</li>
+        </ul>
+
+        <pre>int numbers[3] = {10, 20, 30};
+
+struct Student
+{
+    int roll;
+    float marks;
+    char grade;
+};</pre>
+
+        <p>
+            Use arrays for collections of similar values and structures
+            for records containing related fields.
+        </p>
+    </section>
+
+    <!-- UNIONS -->
+
+    <section>
+        <h2>9. What Is a Union?</h2>
+
+        <p>
+            A union is a user-defined data type in which all members share
+            the same memory region.
+        </p>
+
+        <pre>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</pre>
+
+        <p>
+            Unlike a structure, a union does not provide separate storage
+            for every member. Its members overlap in memory.
+        </p>
+
+        <div class="warning">
+            A union can contain several members, but that does not mean
+            all members can hold independent values at the same time.
+        </div>
+    </section>
+
+    <section>
+        <h2>10. Using a Union</h2>
+
+        <pre>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main(void)
+{
+    union Data d;
+
+    d.number = 25;
+    printf("Number: %d\n", d.number);
+
+    d.decimal = 12.5f;
+    printf("Decimal: %.1f\n", d.decimal);
+
+    d.letter = 'A';
+    printf("Letter: %c\n", d.letter);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Number: 25
+Decimal: 12.5
+Letter: A</pre>
+
+        <p>
+            Each value is assigned and read while that member is the one
+            being used. Writing to another member changes the stored
+            representation in the shared memory.
+        </p>
+
+        <div class="note">
+            In ordinary code, read the member whose value was most recently
+            stored, unless you specifically understand the rules for
+            interpreting another member's representation.
+        </div>
+    </section>
+
+    <section>
+        <h2>11. Structure vs Union</h2>
+
+        <pre>struct Example
+{
+    int a;
+    float b;
+};
+
+union Example
+{
+    int a;
+    float b;
+};</pre>
+
+        <p><strong>Main differences:</strong></p>
+
+        <ul>
+            <li>
+                <strong>Structure:</strong> Each member has its own storage.
+            </li>
+            <li>
+                <strong>Union:</strong> All members share the same storage.
+            </li>
+            <li>
+                <strong>Structure:</strong> Members can hold independent values simultaneously.
+            </li>
+            <li>
+                <strong>Union:</strong> Writing one member affects the shared representation.
+            </li>
+            <li>
+                <strong>Size:</strong> A structure's size includes space for all members and any required padding. A union's size is sufficient for its largest member and any required alignment.
+            </li>
+        </ul>
+
+        <div class="note">
+            Remember: structures are useful for grouping related information;
+            unions are useful when different data representations need to
+            reuse the same memory.
+        </div>
+    </section>
+
+    <section>
+        <h2>12. Common Mistakes</h2>
+
+        <ul>
+            <li>Forgetting the semicolon after a structure or union definition.</li>
+            <li>Using <code>.</code> instead of <code>-&gt;</code> when accessing a member through a pointer.</li>
+            <li>Forgetting that a structure variable must be declared before using it.</li>
+            <li>Assuming a union can safely preserve independent values in all its members.</li>
+            <li>Confusing a structure tag with a variable name.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>13. Interactive Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1. Which keyword defines a structure?</strong></p>
+
+                <label><input type="radio" name="q1" value="a"> union</label>
+                <label><input type="radio" name="q1" value="b"> struct</label>
+                <label><input type="radio" name="q1" value="c"> record</label>
+            </div>
+
+            <div class="question">
+                <p><strong>2. Which operator accesses a structure member through a pointer?</strong></p>
+
+                <label><input type="radio" name="q2" value="a"> .</label>
+                <label><input type="radio" name="q2" value="b"> &amp;</label>
+                <label><input type="radio" name="q2" value="c"> -&gt;</label>
+            </div>
+
+            <div class="question">
+                <p><strong>3. Where do union members store their values?</strong></p>
+
+                <label><input type="radio" name="q3" value="a"> In completely separate memory regions</label>
+                <label><input type="radio" name="q3" value="b"> In shared memory</label>
+                <label><input type="radio" name="q3" value="c"> Only in CPU registers</label>
+            </div>
+
+            <div class="question">
+                <p><strong>4. Which type is generally used to store several independent fields of a student record?</strong></p>
+
+                <label><input type="radio" name="q4" value="a"> struct</label>
+                <label><input type="radio" name="q4" value="b"> union</label>
+                <label><input type="radio" name="q4" value="c"> Neither</label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Answers</button>
+
+            <p id="quizResult"></p>
+        </form>
+    </section>
+
+    <section>
+        <h2>14. Coding Challenges</h2>
+
+        <div class="challenge">
+            <h3>Easy: Student Record</h3>
+            <p>
+                Create a structure named <code>Student</code> with roll
+                number and marks. Initialize one student and print both values.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Medium: Multiple Students</h3>
+            <p>
+                Create an array of five student structures. Input each
+                student's roll number and marks, then print all records.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Hard: Structure and Union</h3>
+            <p>
+                Define a structure containing an integer ID and a union
+                that can store either an integer quantity or a floating-point
+                price. Assign and print one union member at a time.
+            </p>
+        </div>
+    </section>
+
+    <div class="chapter-buttons">
+        <a href="chapter12.html">← Previous: Storage Classes</a>
+        <a href="index.html">Home</a>
+        <a href="chapter14.html">Next: Chapter 14 →</a>
+    </div>
+
+</main>
+
+<footer>
+    <p>CodePath | Learn C. Think Logically.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "b",
+            q2: "c",
+            q3: "b",
+            q4: "a"
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (selected && selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        document.getElementById("quizResult").textContent =
+            "You scored " + score + " out of " + total + ".";
+    }
+</script>
+
+</body>
+</html>

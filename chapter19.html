@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 19 - Bitwise Operators | CodePath</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 22px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1 {
+            color: #22d3ee;
+            margin: 0;
+        }
+
+        nav {
+            text-align: center;
+            padding: 15px;
+            background: #101a2d;
+        }
+
+        nav a {
+            display: inline-block;
+            color: #22d3ee;
+            text-decoration: none;
+            margin: 5px 10px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        main {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background: #111c33;
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid #263650;
+        }
+
+        h2, h3 {
+            color: #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        pre {
+            background: #080e1a;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #22d3ee;
+            white-space: pre;
+        }
+
+        .note {
+            background: #172a40;
+            padding: 12px;
+            border-left: 4px solid #22d3ee;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #33251a;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #22d3ee;
+            color: #08111f;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #67e8f9;
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: #0b1527;
+            border-radius: 8px;
+        }
+
+        .question label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            background: #111c33;
+            color: #94a3b8;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
+            }
+
+            section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Chapter 19: Bitwise Operators in C</h1>
+    <p>Understand how C operates on individual bits.</p>
+</header>
+
+<nav>
+    <a href="chapter18.html">← Previous</a>
+    <a href="index.html">Home</a>
+</nav>
+
+<main>
+
+    <section>
+        <h2>1. What Are Bitwise Operators?</h2>
+
+        <p>
+            Computers represent integer values using binary digits,
+            called bits. Each bit is either 0 or 1.
+        </p>
+
+        <p>
+            Bitwise operators perform operations on the individual
+            bits of integer values.
+        </p>
+
+        <p>Consider these two numbers:</p>
+
+        <pre><code>A = 5  = 0101
+B = 3  = 0011</code></pre>
+
+        <p>
+            In these examples, we show four bits for simplicity.
+            The actual integer representation depends on the C type
+            and the system.
+        </p>
+    </section>
+
+    <section>
+        <h2>2. Bitwise AND (&amp;)</h2>
+
+        <p>
+            The AND operator produces 1 in a bit position only when
+            both corresponding bits are 1.
+        </p>
+
+        <h3>Truth Table</h3>
+
+        <pre><code>0 &amp; 0 = 0
+0 &amp; 1 = 0
+1 &amp; 0 = 0
+1 &amp; 1 = 1</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a = 5, b = 3;
+
+    printf("%d", a &amp; b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Binary Calculation</h3>
+
+        <pre><code>  0101   (5)
+&amp; 0011   (3)
+------
+  0001   (1)</code></pre>
+
+        <p><strong>Output:</strong> <code>1</code></p>
+    </section>
+
+    <section>
+        <h2>3. Bitwise OR (|)</h2>
+
+        <p>
+            The OR operator produces 1 if at least one of the
+            corresponding bits is 1.
+        </p>
+
+        <pre><code>0 | 0 = 0
+0 | 1 = 1
+1 | 0 = 1
+1 | 1 = 1</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a = 5, b = 3;
+
+    printf("%d", a | b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Binary Calculation</h3>
+
+        <pre><code>  0101   (5)
+| 0011   (3)
+------
+  0111   (7)</code></pre>
+
+        <p><strong>Output:</strong> <code>7</code></p>
+    </section>
+
+    <section>
+        <h2>4. Bitwise XOR (^)</h2>
+
+        <p>
+            XOR produces 1 when the corresponding bits are different.
+            If both bits are the same, it produces 0.
+        </p>
+
+        <pre><code>0 ^ 0 = 0
+0 ^ 1 = 1
+1 ^ 0 = 1
+1 ^ 1 = 0</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a = 5, b = 3;
+
+    printf("%d", a ^ b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Binary Calculation</h3>
+
+        <pre><code>  0101   (5)
+^ 0011   (3)
+------
+  0110   (6)</code></pre>
+
+        <p><strong>Output:</strong> <code>6</code></p>
+    </section>
+
+    <section>
+        <h2>5. Bitwise NOT (~)</h2>
+
+        <p>
+            The NOT operator flips every bit: each 0 becomes 1,
+            and each 1 becomes 0.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    unsigned int a = 5;
+
+    printf("%u\n", ~a);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            On a system with 32-bit <code>unsigned int</code>,
+            the result is:
+        </p>
+
+        <pre><code>4294967290</code></pre>
+
+        <div class="note">
+            The result depends on the width of the unsigned integer type.
+            On a 32-bit unsigned type, <code>~5u</code> equals
+            <code>4294967290</code>.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. Left Shift (&lt;&lt;)</h2>
+
+        <p>
+            The left-shift operator moves the bits of its left operand
+            to the left by the number of positions specified by its
+            right operand.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    unsigned int a = 5;
+
+    printf("%u", a &lt;&lt; 1);
+
+    return 0;
+}</code></pre>
+
+        <h3>Binary Calculation</h3>
+
+        <pre><code>00000101  (5)
+&lt;&lt; 1
+---------
+00001010  (10)</code></pre>
+
+        <p><strong>Output:</strong> <code>10</code></p>
+
+        <div class="note">
+            For unsigned integers, left shift discards bits that move
+            beyond the type's width and fills the vacated low-order
+            bits with zeros. Shift counts must be valid for the type.
+        </div>
+    </section>
+
+    <section>
+        <h2>7. Right Shift (&gt;&gt;)</h2>
+
+        <p>
+            The right-shift operator moves bits to the right.
+            For unsigned integers, zeros enter from the left.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    unsigned int a = 5;
+
+    printf("%u", a &gt;&gt; 1);
+
+    return 0;
+}</code></pre>
+
+        <h3>Binary Calculation</h3>
+
+        <pre><code>00000101  (5)
+&gt;&gt; 1
+---------
+00000010  (2)</code></pre>
+
+        <p><strong>Output:</strong> <code>2</code></p>
+
+        <div class="warning">
+            Right-shifting a negative signed integer has
+            implementation-defined behavior in C. For predictable
+            beginner examples, use nonnegative or unsigned values.
+        </div>
+    </section>
+
+    <section>
+        <h2>8. Bitwise Operators Summary</h2>
+
+        <pre><code>Operator    Meaning
+&amp;           Bitwise AND
+|           Bitwise OR
+^           Bitwise XOR
+~           Bitwise NOT
+&lt;&lt;          Left shift
+&gt;&gt;          Right shift</code></pre>
+
+        <div class="note">
+            <strong>Remember:</strong> Bitwise operators are different
+            from logical operators. For example, <code>&amp;</code> is
+            bitwise AND, while <code>&amp;&amp;</code> is logical AND.
+            Similarly, <code>|</code> is bitwise OR, while
+            <code>||</code> is logical OR.
+        </div>
+    </section>
+
+    <section>
+        <h2>9. Practical Example: Check Odd or Even</h2>
+
+        <p>
+            For an integer, the least significant bit is 1 when the
+            number is odd and 0 when it is even.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    unsigned int n = 7;
+
+    if (n &amp; 1u)
+    {
+        printf("Odd number");
+    }
+    else
+    {
+        printf("Even number");
+    }
+
+    return 0;
+}</code></pre>
+
+        <p><strong>Output:</strong> <code>Odd number</code></p>
+
+        <p>
+            Try changing <code>n</code> to 8 and run the program again.
+        </p>
+    </section>
+
+    <section>
+        <h2>10. Chapter Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>Q1. What is the result of 5 &amp; 3?</strong></p>
+
+                <label><input type="radio" name="q1" value="a"> 1</label>
+                <label><input type="radio" name="q1" value="b"> 7</label>
+                <label><input type="radio" name="q1" value="c"> 6</label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q2. What is the result of 5 | 3?</strong></p>
+
+                <label><input type="radio" name="q2" value="a"> 1</label>
+                <label><input type="radio" name="q2" value="b"> 7</label>
+                <label><input type="radio" name="q2" value="c"> 6</label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q3. What is the result of 5 ^ 3?</strong></p>
+
+                <label><input type="radio" name="q3" value="a"> 6</label>
+                <label><input type="radio" name="q3" value="b"> 7</label>
+                <label><input type="radio" name="q3" value="c"> 1</label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q4. What is the result of 5u &lt;&lt; 1?</strong></p>
+
+                <label><input type="radio" name="q4" value="a"> 2</label>
+                <label><input type="radio" name="q4" value="b"> 10</label>
+                <label><input type="radio" name="q4" value="c"> 5</label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q5. Which operator flips each bit?</strong></p>
+
+                <label><input type="radio" name="q5" value="a"> &amp;</label>
+                <label><input type="radio" name="q5" value="b"> ^</label>
+                <label><input type="radio" name="q5" value="c"> ~</label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+
+            <p id="quizResult" aria-live="polite"></p>
+
+        </form>
+    </section>
+
+    <section>
+        <h2>11. Coding Challenges</h2>
+
+        <h3>🟢 Easy</h3>
+        <p>
+            Write a program that checks whether a number is odd or even
+            using the bitwise AND operator.
+        </p>
+
+        <h3>🟡 Medium</h3>
+        <p>
+            Take two unsigned integers and display the results of
+            bitwise AND, OR, and XOR.
+        </p>
+
+        <h3>🔴 Hard</h3>
+        <p>
+            Write a program that checks whether a particular bit is set
+            in an unsigned integer. Ask the user for a number and a bit
+            position, then use a bit mask and the AND operator to check it.
+            Explain why the bit position must be within the width of the type.
+        </p>
+
+        <div class="note">
+            Try solving the challenges yourself before checking any
+            solutions. Trace the binary values on paper when needed.
+        </div>
+    </section>
+
+    <nav>
+        <a href="chapter18.html">← Previous Chapter</a>
+        <a href="index.html">Home</a>
+    </nav>
+
+</main>
+
+<footer>
+    <p>© 2026 CodePath | Learn C, One Step at a Time.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "a",
+            q2: "b",
+            q3: "a",
+            q4: "b",
+            q5: "c"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected)
+            {
+                unanswered++;
+            }
+            else if (selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quizResult");
+
+        if (unanswered > 0)
+        {
+            result.textContent =
+                "Please answer all 5 questions before submitting.";
+        }
+        else
+        {
+            result.textContent = "Your score: " + score + "/5";
+
+            if (score === 5)
+            {
+                result.textContent += " — Excellent work!";
+            }
+            else if (score >= 3)
+            {
+                result.textContent += " — Good job! Review the missed answers.";
+            }
+            else
+            {
+                result.textContent += " — Review the chapter and try again.";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,824 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10: Recursion in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .chapter-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .hero {
+            text-align: center;
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 16px;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            color: #22d3ee;
+            font-size: 2.3rem;
+        }
+
+        .hero p {
+            color: #b7c5d8;
+            line-height: 1.7;
+        }
+
+        .lesson {
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 22px;
+            scroll-margin-top: 20px;
+        }
+
+        .lesson h2 {
+            color: #22d3ee;
+            margin-top: 0;
+        }
+
+        .lesson h3 {
+            color: #67e8f9;
+        }
+
+        .lesson p,
+        .lesson li {
+            line-height: 1.8;
+        }
+
+        .code-box {
+            background: #07111f;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            color: #a5f3fc;
+            white-space: pre;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .note {
+            background: #102b3c;
+            border-left: 4px solid #22d3ee;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #35251a;
+            border-left: 4px solid #fb923c;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .toc a {
+            color: #67e8f9;
+            text-decoration: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .quiz-question {
+            background: #0a1628;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 17px;
+            margin: 18px 0;
+        }
+
+        .quiz-question label {
+            display: block;
+            margin: 11px 0;
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .quiz-question input {
+            margin-right: 8px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .action-button:hover {
+            background: #0e7490;
+        }
+
+        #quiz-result {
+            line-height: 1.8;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .chapter-container {
+                padding: 12px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .lesson {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="chapter-container">
+
+    <header class="hero">
+        <h1>Chapter 10: Recursion in C</h1>
+        <p>Learn how a function can solve a problem by calling itself.</p>
+        <p>Estimated learning time: 60–90 minutes</p>
+    </header>
+
+    <section class="lesson toc">
+        <h2>📚 Chapter Contents</h2>
+        <ol>
+            <li><a href="#intro">Introduction to Recursion</a></li>
+            <li><a href="#base">Base Case and Recursive Case</a></li>
+            <li><a href="#count">Print Numbers Using Recursion</a></li>
+            <li><a href="#sum">Sum of Natural Numbers</a></li>
+            <li><a href="#factorial">Factorial Using Recursion</a></li>
+            <li><a href="#trace">Understanding the Call Stack</a></li>
+            <li><a href="#fibonacci">Fibonacci Series</a></li>
+            <li><a href="#digits">Sum of Digits</a></li>
+            <li><a href="#reverse">Reverse a Number</a></li>
+            <li><a href="#recursion-loop">Recursion vs Loops</a></li>
+            <li><a href="#mistakes">Common Mistakes</a></li>
+            <li><a href="#quiz">Interactive Quiz</a></li>
+            <li><a href="#challenges">Coding Challenges</a></li>
+        </ol>
+    </section>
+
+    <section class="lesson" id="intro">
+        <h2>1. Introduction to Recursion</h2>
+
+        <p>
+            Recursion is a programming technique in which a function calls
+            itself to solve a smaller version of the same problem.
+        </p>
+
+        <p>Here is a simple example:</p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void countDown(int n)
+{
+    if (n == 0)
+        return;
+
+    printf("%d\n", n);
+    countDown(n - 1);
+}
+
+int main(void)
+{
+    countDown(5);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+5
+4
+3
+2
+1
+</pre>
+        </div>
+
+        <p>
+            When <code>countDown(5)</code> runs, it prints 5 and calls
+            <code>countDown(4)</code>. This continues until the function
+            receives 0 and returns.
+        </p>
+
+        <div class="note">
+            <strong>Key idea:</strong> A recursive function solves a problem
+            by working on a smaller input until it reaches a stopping condition.
+        </div>
+    </section>
+
+    <section class="lesson" id="base">
+        <h2>2. Base Case and Recursive Case</h2>
+
+        <p>A recursive function usually needs two important parts.</p>
+
+        <h3>Base case</h3>
+        <p>
+            The base case stops the recursion. Without a reachable stopping
+            condition, recursive calls may continue until the program runs
+            out of stack space.
+        </p>
+
+        <h3>Recursive case</h3>
+        <p>
+            The recursive case calls the same function with an input that
+            moves toward the base case.
+        </p>
+
+        <div class="code-box">
+<pre>
+void printNumbers(int n)
+{
+    if (n == 0)        // Base case
+        return;
+
+    printf("%d ", n);
+    printNumbers(n - 1);  // Recursive case
+}
+</pre>
+        </div>
+
+        <div class="note">
+            Ask yourself two questions when writing recursion:
+            <ol>
+                <li>When should the function stop?</li>
+                <li>How will each call move closer to stopping?</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="lesson" id="count">
+        <h2>3. Print Numbers Using Recursion</h2>
+
+        <p>Let's print numbers from 1 to n.</p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void printNumbers(int n)
+{
+    if (n == 0)
+        return;
+
+    printNumbers(n - 1);
+    printf("%d ", n);
+}
+
+int main(void)
+{
+    printNumbers(5);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+1 2 3 4 5
+</pre>
+        </div>
+
+        <p>
+            Notice that the recursive call happens before
+            <code>printf()</code>. The function calls descend toward zero
+            first, then print while the calls return.
+        </p>
+
+        <div class="note">
+            If <code>printf()</code> is placed before the recursive call,
+            the output will instead be <code>5 4 3 2 1</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="sum">
+        <h2>4. Sum of Natural Numbers</h2>
+
+        <p>We can define the sum recursively:</p>
+
+        <p><code>sum(n) = n + sum(n - 1)</code></p>
+
+        <p>For the base case, <code>sum(0) = 0</code>.</p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int sum(int n)
+{
+    if (n == 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+
+int main(void)
+{
+    printf("Sum = %d\n", sum(5));
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+Sum = 15
+</pre>
+        </div>
+
+        <p>The calculation expands like this:</p>
+
+        <div class="code-box">
+<pre>
+sum(5)
+= 5 + sum(4)
+= 5 + 4 + sum(3)
+= 5 + 4 + 3 + sum(2)
+= 5 + 4 + 3 + 2 + sum(1)
+= 5 + 4 + 3 + 2 + 1 + sum(0)
+= 15
+</pre>
+        </div>
+    </section>
+
+    <section class="lesson" id="factorial">
+        <h2>5. Factorial Using Recursion</h2>
+
+        <p>
+            The factorial of a positive integer n is the product of all
+            integers from 1 to n.
+        </p>
+
+        <p><code>5! = 5 × 4 × 3 × 2 × 1 = 120</code></p>
+
+        <p>Mathematically:</p>
+        <ul>
+            <li><code>factorial(0) = 1</code></li>
+            <li><code>factorial(n) = n × factorial(n - 1)</code> for n &gt; 0</li>
+        </ul>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+unsigned long long factorial(int n)
+{
+    if (n == 0)
+        return 1;
+
+    return (unsigned long long)n * factorial(n - 1);
+}
+
+int main(void)
+{
+    int n = 5;
+
+    printf("Factorial = %llu\n", factorial(n));
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+Factorial = 120
+</pre>
+        </div>
+
+        <div class="warning">
+            This example assumes a non-negative input. A production program
+            should validate the input and prevent values that overflow the
+            chosen integer type. In this example, 20! fits in a typical
+            64-bit <code>unsigned long long</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="trace">
+        <h2>6. Understanding the Call Stack</h2>
+
+        <p>
+            Every active function call needs space to keep track of its
+            local state and where execution should resume. Recursive calls
+            create multiple active calls.
+        </p>
+
+        <p>Consider this function:</p>
+
+        <div class="code-box">
+<pre>
+void show(int n)
+{
+    if (n == 0)
+        return;
+
+    printf("%d ", n);
+    show(n - 1);
+    printf("%d ", n);
+}
+</pre>
+        </div>
+
+        <p>Calling <code>show(3)</code> produces:</p>
+
+        <div class="code-box">
+<pre>
+3 2 1 1 2 3
+</pre>
+        </div>
+
+        <p>The first print happens as calls descend. The second print happens as those calls return.</p>
+
+        <div class="note">
+            <strong>Trace carefully:</strong> Write down what happens before
+            the recursive call and what happens after it returns.
+        </div>
+    </section>
+
+    <section class="lesson" id="fibonacci">
+        <h2>7. Fibonacci Series</h2>
+
+        <p>
+            In the Fibonacci sequence, each term after the first two is
+            the sum of the previous two terms.
+        </p>
+
+        <p><code>0, 1, 1, 2, 3, 5, 8, 13, ...</code></p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int fibonacci(int n)
+{
+    if (n == 0)
+        return 0;
+
+    if (n == 1)
+        return 1;
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main(void)
+{
+    int i;
+
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d ", fibonacci(i));
+    }
+
+    printf("\n");
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+0 1 1 2 3 5 8 13
+</pre>
+        </div>
+
+        <div class="warning">
+            This simple recursive implementation repeats many calculations.
+            It is useful for learning recursion, but it becomes slow for larger
+            inputs. Iteration or memoization is more efficient for larger sequences.
+        </div>
+    </section>
+
+    <section class="lesson" id="digits">
+        <h2>8. Sum of Digits Using Recursion</h2>
+
+        <p>
+            We can find the sum of a non-negative integer's digits by adding
+            its last digit to the sum of the remaining digits.
+        </p>
+
+        <p><code>sumDigits(n) = n % 10 + sumDigits(n / 10)</code></p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int sumDigits(int n)
+{
+    if (n == 0)
+        return 0;
+
+    return n % 10 + sumDigits(n / 10);
+}
+
+int main(void)
+{
+    printf("Sum = %d\n", sumDigits(1234));
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+Sum = 10
+</pre>
+        </div>
+
+        <p>
+            The calculation is <code>4 + 3 + 2 + 1 = 10</code>.
+            This example assumes a non-negative integer.
+        </p>
+    </section>
+
+    <section class="lesson" id="reverse">
+        <h2>9. Reverse a Number Using Recursion</h2>
+
+        <p>
+            A recursive function can also build a reversed number by
+            carrying the result accumulated so far.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int reverseNumber(int n, int reversed)
+{
+    if (n == 0)
+        return reversed;
+
+    return reverseNumber(n / 10, reversed * 10 + n % 10);
+}
+
+int main(void)
+{
+    int n = 1234;
+
+    printf("Reverse = %d\n", reverseNumber(n, 0));
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+
+        <div class="code-box">
+<pre>
+Reverse = 4321
+</pre>
+        </div>
+
+        <div class="note">
+            This example assumes a non-negative input and does not preserve
+            leading zeros. For example, reversing 120 produces 21 as an integer.
+        </div>
+    </section>
+
+    <section class="lesson" id="recursion-loop">
+        <h2>10. Recursion vs Loops</h2>
+
+        <ul>
+            <li><strong>Loops:</strong> Repeat instructions using constructs such as <code>for</code> and <code>while</code>.</li>
+            <li><strong>Recursion:</strong> Solves a problem through function calls on smaller inputs.</li>
+            <li><strong>Memory:</strong> Recursive calls use call-stack space.</li>
+            <li><strong>Readability:</strong> Recursion can make some problems easier to express, but not every problem benefits from it.</li>
+            <li><strong>Performance:</strong> A loop may be simpler and more efficient for straightforward repetition.</li>
+        </ul>
+
+        <div class="note">
+            Recursion is especially useful for understanding problems that
+            naturally break into smaller versions of themselves. It is not
+            automatically better than a loop.
+        </div>
+    </section>
+
+    <section class="lesson" id="mistakes">
+        <h2>11. Common Mistakes</h2>
+
+        <h3>Mistake 1: Forgetting the base case</h3>
+        <p>
+            Without a stopping condition, recursive calls can continue until
+            the program runs out of stack space.
+        </p>
+
+        <h3>Mistake 2: Not moving toward the base case</h3>
+        <p>
+            If the input never gets closer to the stopping condition,
+            recursion may not terminate.
+        </p>
+
+        <h3>Mistake 3: Confusing the order of statements</h3>
+        <p>
+            Statements before the recursive call execute while calls descend.
+            Statements after it execute as calls return.
+        </p>
+
+        <h3>Mistake 4: Ignoring input limits</h3>
+        <p>
+            Deep recursion can exhaust the stack, and mathematical results
+            can overflow integer types. Choose appropriate input limits.
+        </p>
+    </section>
+
+    <section class="lesson" id="quiz">
+        <h2>12. Interactive Quiz</h2>
+        <p>Choose one answer for each question, then check your score.</p>
+
+        <form id="quiz-form">
+
+            <div class="quiz-question">
+                <p><strong>Q1.</strong> What is recursion?</p>
+                <label><input type="radio" name="q1" value="a"> A function calling itself</label>
+                <label><input type="radio" name="q1" value="b"> A variable storing text</label>
+                <label><input type="radio" name="q1" value="c"> A type of operator</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q2.</strong> What is the purpose of a base case?</p>
+                <label><input type="radio" name="q2" value="a"> To increase the input forever</label>
+                <label><input type="radio" name="q2" value="b"> To stop further recursive calls</label>
+                <label><input type="radio" name="q2" value="c"> To declare a variable</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q3.</strong> What is factorial(4)?</p>
+                <label><input type="radio" name="q3" value="a"> 10</label>
+                <label><input type="radio" name="q3" value="b"> 16</label>
+                <label><input type="radio" name="q3" value="c"> 24</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q4.</strong> What does sum(0) return in the natural-number sum example?</p>
+                <label><input type="radio" name="q4" value="a"> 0</label>
+                <label><input type="radio" name="q4" value="b"> 1</label>
+                <label><input type="radio" name="q4" value="c"> -1</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q5.</strong> What happens if recursion never reaches a stopping condition?</p>
+                <label><input type="radio" name="q5" value="a"> The function automatically becomes a loop</label>
+                <label><input type="radio" name="q5" value="b"> The program may exhaust its call stack</label>
+                <label><input type="radio" name="q5" value="c"> The compiler always fixes it</label>
+            </div>
+
+            <button type="button" class="action-button" onclick="checkQuiz()">
+                Check Answers
+            </button>
+
+            <button type="reset" class="action-button" onclick="resetQuiz()">
+                Try Again
+            </button>
+
+        </form>
+
+        <div id="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section class="lesson" id="challenges">
+        <h2>13. Coding Challenges</h2>
+
+        <h3>Easy</h3>
+        <ol>
+            <li>Print numbers from n down to 1 using recursion.</li>
+            <li>Print numbers from 1 to n using recursion.</li>
+            <li>Calculate the sum of the first n natural numbers.</li>
+        </ol>
+
+        <h3>Medium</h3>
+        <ol>
+            <li>Calculate the factorial of a non-negative integer.</li>
+            <li>Calculate the sum of digits of a non-negative integer.</li>
+            <li>Count the digits of a positive integer using recursion.</li>
+            <li>Find the nth Fibonacci number using recursion.</li>
+        </ol>
+
+        <h3>Hard</h3>
+        <ol>
+            <li>Reverse a number using recursion.</li>
+            <li>Check whether a number is a palindrome using recursion.</li>
+            <li>Find the greatest common divisor (GCD) using recursion.</li>
+            <li>Calculate a number raised to a non-negative integer power using recursion.</li>
+        </ol>
+
+        <div class="note">
+            <strong>Practice tip:</strong> For every challenge, identify
+            the base case first. Then determine how the recursive call
+            reduces the problem.
+        </div>
+    </section>
+
+    <nav class="chapter-navigation">
+        <a class="action-button" href="chapter9.html">← Previous: Functions</a>
+        <a class="action-button" href="index.html">⌂ Home</a>
+        <a class="action-button" href="chapter11.html">Next: Pointers →</a>
+    </nav>
+
+</main>
+
+<script>
+    function checkQuiz() {
+        const answers = {
+            q1: "a",
+            q2: "b",
+            q3: "c",
+            q4: "a",
+            q5: "b"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers) {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === answers[question]) {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quiz-result");
+
+        if (unanswered > 0) {
+            result.textContent =
+                "Please answer all 5 questions. Unanswered: " + unanswered;
+            return;
+        }
+
+        result.textContent =
+            "Your score: " + score + "/5. " +
+            (score === 5
+                ? "Excellent work!"
+                : "Review the chapter and try again.");
+    }
+
+    function resetQuiz() {
+        document.getElementById("quiz-result").textContent = "";
+    }
+</script>
+
+</body>
+</html>
+```

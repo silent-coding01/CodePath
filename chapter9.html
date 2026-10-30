@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Functions in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .chapter-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .hero {
+            text-align: center;
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 16px;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            color: #22d3ee;
+            font-size: 2.3rem;
+        }
+
+        .hero p {
+            color: #b7c5d8;
+            line-height: 1.7;
+        }
+
+        .lesson {
+            background: #111c32;
+            border: 1px solid #243650;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 22px;
+            scroll-margin-top: 20px;
+        }
+
+        .lesson h2 {
+            color: #22d3ee;
+            margin-top: 0;
+        }
+
+        .lesson h3 {
+            color: #67e8f9;
+        }
+
+        .lesson p,
+        .lesson li {
+            line-height: 1.8;
+        }
+
+        .code-box {
+            background: #07111f;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-box pre {
+            color: #a5f3fc;
+            white-space: pre;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .note {
+            background: #102b3c;
+            border-left: 4px solid #22d3ee;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #35251a;
+            border-left: 4px solid #fb923c;
+            padding: 13px;
+            border-radius: 5px;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .toc a {
+            color: #67e8f9;
+            text-decoration: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .quiz-question {
+            background: #0a1628;
+            border: 1px solid #293b54;
+            border-radius: 8px;
+            padding: 17px;
+            margin: 18px 0;
+        }
+
+        .quiz-question label {
+            display: block;
+            margin: 11px 0;
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .quiz-question input {
+            margin-right: 8px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .action-button:hover {
+            background: #0e7490;
+        }
+
+        #quiz-result {
+            line-height: 1.8;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .chapter-container {
+                padding: 12px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .lesson {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="chapter-container">
+
+    <header class="hero">
+        <h1>Chapter 9: Functions in C</h1>
+        <p>Learn to divide large programs into small, reusable blocks of code.</p>
+        <p>Estimated learning time: 60–90 minutes</p>
+    </header>
+
+    <section class="lesson toc">
+        <h2>📚 Chapter Contents</h2>
+        <ol>
+            <li><a href="#intro">Introduction to Functions</a></li>
+            <li><a href="#benefits">Why Use Functions?</a></li>
+            <li><a href="#three-parts">Declaration, Definition, and Call</a></li>
+            <li><a href="#no-args-no-return">No Arguments and No Return Value</a></li>
+            <li><a href="#arguments">Functions with Arguments</a></li>
+            <li><a href="#return">Functions with Return Values</a></li>
+            <li><a href="#both">Arguments and Return Values</a></li>
+            <li><a href="#multiple">Multiple Parameters</a></li>
+            <li><a href="#local-global">Local and Global Variables</a></li>
+            <li><a href="#value">Call by Value</a></li>
+            <li><a href="#mistakes">Common Mistakes</a></li>
+            <li><a href="#quiz">Interactive Quiz</a></li>
+            <li><a href="#challenges">Coding Challenges</a></li>
+        </ol>
+    </section>
+
+    <section class="lesson" id="intro">
+        <h2>1. Introduction to Functions</h2>
+
+        <p>
+            A function is a named block of code that performs a particular task.
+            A function can be called whenever its task is needed.
+        </p>
+
+        <p>For example, we can create a function to print a greeting.</p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void greet(void)
+{
+    printf("Hello, Arman!\n");
+}
+
+int main(void)
+{
+    greet();
+    greet();
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Hello, Arman!
+Hello, Arman!
+</pre>
+        </div>
+
+        <p>
+            The function <code>greet()</code> is defined once but called twice.
+            Each call executes its body.
+        </p>
+
+        <div class="note">
+            <strong>Remember:</strong> In C, execution normally starts from
+            <code>main()</code>. The statements inside <code>greet()</code>
+            run when the program calls <code>greet()</code>.
+        </div>
+    </section>
+
+    <section class="lesson" id="benefits">
+        <h2>2. Why Use Functions?</h2>
+
+        <ul>
+            <li><strong>Reusability:</strong> Write code once and use it many times.</li>
+            <li><strong>Organization:</strong> Divide a large program into smaller parts.</li>
+            <li><strong>Readability:</strong> Give meaningful names to tasks.</li>
+            <li><strong>Maintenance:</strong> Fix or improve one function without rewriting the entire program.</li>
+            <li><strong>Testing:</strong> Test a small part of a program independently.</li>
+        </ul>
+
+        <div class="note">
+            Instead of writing the same calculation several times,
+            you can put it in a function and call that function whenever needed.
+        </div>
+    </section>
+
+    <section class="lesson" id="three-parts">
+        <h2>3. Declaration, Definition, and Function Call</h2>
+
+        <p>A function commonly involves three important parts.</p>
+
+        <h3>A. Function declaration (prototype)</h3>
+        <div class="code-box">
+<pre>
+int add(int a, int b);
+</pre>
+        </div>
+        <p>
+            This tells the compiler the function's name, return type,
+            and parameter types before the function is called.
+        </p>
+
+        <h3>B. Function definition</h3>
+        <div class="code-box">
+<pre>
+int add(int a, int b)
+{
+    return a + b;
+}
+</pre>
+        </div>
+        <p>This contains the actual code that performs the task.</p>
+
+        <h3>C. Function call</h3>
+        <div class="code-box">
+<pre>
+result = add(10, 20);
+</pre>
+        </div>
+        <p>This calls the function and stores the returned value in `result`.</p>
+
+        <h3>Complete program</h3>
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int add(int a, int b);
+
+int main(void)
+{
+    int result = add(10, 20);
+
+    printf("Sum = %d\n", result);
+
+    return 0;
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Sum = 30
+</pre>
+        </div>
+
+        <div class="note">
+            A declaration is useful when the function definition appears
+            after the function that calls it. A definition placed before
+            the call can also make a separate prototype unnecessary.
+        </div>
+    </section>
+
+    <section class="lesson" id="no-args-no-return">
+        <h2>4. No Arguments and No Return Value</h2>
+
+        <p>
+            A function with no parameters receives no arguments from its caller.
+            A function with return type <code>void</code> does not return a value.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void showMessage(void)
+{
+    printf("Welcome to CodePath!\n");
+}
+
+int main(void)
+{
+    showMessage();
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Welcome to CodePath!
+</pre>
+        </div>
+
+        <p>
+            The first <code>void</code> means the function returns no value.
+            The <code>void</code> inside the parentheses means it takes no parameters.
+        </p>
+    </section>
+
+    <section class="lesson" id="arguments">
+        <h2>5. Functions with Arguments</h2>
+
+        <p>
+            A function can receive information through parameters.
+            The values supplied in the function call are called arguments.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void square(int n)
+{
+    printf("Square = %d\n", n * n);
+}
+
+int main(void)
+{
+    square(5);
+    square(8);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Square = 25
+Square = 64
+</pre>
+        </div>
+
+        <p>
+            Here, <code>n</code> is a parameter. The values <code>5</code>
+            and <code>8</code> are arguments passed in separate calls.
+        </p>
+    </section>
+
+    <section class="lesson" id="return">
+        <h2>6. Functions with Return Values</h2>
+
+        <p>
+            A function can calculate a result and return it to the caller
+            using the <code>return</code> statement.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int square(int n)
+{
+    return n * n;
+}
+
+int main(void)
+{
+    int result = square(6);
+
+    printf("Square = %d\n", result);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Square = 36
+</pre>
+        </div>
+
+        <p>
+            The expression <code>n * n</code> is calculated inside
+            <code>square()</code>. The resulting value is returned to
+            <code>main()</code>.
+        </p>
+
+        <div class="note">
+            <strong>Important:</strong> A function declared with return
+            type <code>int</code> should return an appropriate integer value
+            on every path where its caller expects a result.
+        </div>
+    </section>
+
+    <section class="lesson" id="both">
+        <h2>7. Arguments and Return Values</h2>
+
+        <p>
+            A function can accept arguments and return a result.
+            This is a common way to perform calculations.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int multiply(int a, int b)
+{
+    return a * b;
+}
+
+int main(void)
+{
+    int result;
+
+    result = multiply(4, 7);
+
+    printf("Product = %d\n", result);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Product = 28
+</pre>
+        </div>
+
+        <p>
+            The function receives two arguments, multiplies them,
+            and returns the product.
+        </p>
+    </section>
+
+    <section class="lesson" id="multiple">
+        <h2>8. Multiple Parameters</h2>
+
+        <p>
+            Functions can accept more than one parameter.
+            The arguments must correspond to the parameter types and order.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int maximum(int a, int b, int c)
+{
+    if (a >= b && a >= c)
+        return a;
+    else if (b >= a && b >= c)
+        return b;
+    else
+        return c;
+}
+
+int main(void)
+{
+    int result = maximum(15, 42, 27);
+
+    printf("Maximum = %d\n", result);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Maximum = 42
+</pre>
+        </div>
+
+        <div class="note">
+            The three arguments <code>15</code>, <code>42</code>,
+            and <code>27</code> are received by parameters
+            <code>a</code>, <code>b</code>, and <code>c</code>, respectively.
+        </div>
+    </section>
+
+    <section class="lesson" id="local-global">
+        <h2>9. Local and Global Variables</h2>
+
+        <h3>Local variable</h3>
+        <p>
+            A local variable declared inside a function or block is accessible
+            within its scope.
+        </p>
+
+        <div class="code-box">
+<pre>
+void example(void)
+{
+    int x = 10;
+    printf("%d\n", x);
+}
+</pre>
+        </div>
+
+        <h3>Global variable</h3>
+        <p>
+            A variable declared outside all functions has file scope.
+            Functions in the same file can access it where its declaration
+            is visible and no other scope rule prevents access.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+int total = 100;
+
+void showTotal(void)
+{
+    printf("%d\n", total);
+}
+
+int main(void)
+{
+    showTotal();
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+100
+</pre>
+        </div>
+
+        <div class="warning">
+            Avoid using global variables unnecessarily.
+            Passing data through function parameters often makes a program
+            easier to understand and test.
+        </div>
+    </section>
+
+    <section class="lesson" id="value">
+        <h2>10. Call by Value</h2>
+
+        <p>
+            In C, arguments are passed by value. A function receives its own
+            parameter value, so changing that parameter does not directly
+            change the caller's original variable.
+        </p>
+
+        <div class="code-box">
+<pre>
+#include &lt;stdio.h&gt;
+
+void change(int x)
+{
+    x = 100;
+    printf("Inside function: %d\n", x);
+}
+
+int main(void)
+{
+    int number = 10;
+
+    change(number);
+
+    printf("Inside main: %d\n", number);
+
+    return 0;
+}
+</pre>
+        </div>
+
+        <p><strong>Output:</strong></p>
+        <div class="code-box">
+<pre>
+Inside function: 100
+Inside main: 10
+</pre>
+        </div>
+
+        <p>
+            The parameter <code>x</code> receives a copy of <code>number</code>.
+            Assigning <code>100</code> to <code>x</code> does not change
+            <code>number</code>.
+        </p>
+    </section>
+
+    <section class="lesson" id="mistakes">
+        <h2>11. Common Mistakes</h2>
+
+        <h3>Mistake 1: Calling a function with the wrong arguments</h3>
+        <div class="code-box">
+<pre>
+int add(int a, int b)
+{
+    return a + b;
+}
+
+/* Correct call */
+add(5, 7);
+</pre>
+        </div>
+        <p>Supply arguments that match the function's parameter requirements.</p>
+
+        <h3>Mistake 2: Forgetting a return value</h3>
+        <p>
+            If a function is supposed to return an integer result,
+            make sure it returns an appropriate value on every expected path.
+        </p>
+
+        <h3>Mistake 3: Confusing printing and returning</h3>
+        <div class="code-box">
+<pre>
+void showSum(int a, int b)
+{
+    printf("%d\n", a + b);
+}
+</pre>
+        </div>
+        <p>
+            This function prints a sum but does not return it.
+            Use an <code>int</code> function with <code>return</code>
+            if the caller needs to use the result in another calculation.
+        </p>
+
+        <h3>Mistake 4: Forgetting a declaration when needed</h3>
+        <p>
+            If a function is defined after a call to it, provide a compatible
+            declaration before the call.
+        </p>
+
+        <h3>Mistake 5: Expecting call by value to change the original</h3>
+        <p>
+            Changing an ordinary parameter changes the parameter itself,
+            not the caller's original variable.
+        </p>
+    </section>
+
+    <section class="lesson" id="quiz">
+        <h2>12. Interactive Quiz</h2>
+        <p>Choose one answer for each question, then check your score.</p>
+
+        <form id="quiz-form">
+
+            <div class="quiz-question">
+                <p><strong>Q1.</strong> What is a function in C?</p>
+                <label><input type="radio" name="q1" value="a"> A named block of code that performs a task</label>
+                <label><input type="radio" name="q1" value="b"> A data type only</label>
+                <label><input type="radio" name="q1" value="c"> A loop that never ends</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q2.</strong> Which keyword indicates that a function returns no value?</p>
+                <label><input type="radio" name="q2" value="a"> int</label>
+                <label><input type="radio" name="q2" value="b"> void</label>
+                <label><input type="radio" name="q2" value="c"> return</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q3.</strong> Which statement returns a result from a function?</p>
+                <label><input type="radio" name="q3" value="a"> printf</label>
+                <label><input type="radio" name="q3" value="b"> scanf</label>
+                <label><input type="radio" name="q3" value="c"> return</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q4.</strong> What is the result of add(4, 6) if add returns a + b?</p>
+                <label><input type="radio" name="q4" value="a"> 10</label>
+                <label><input type="radio" name="q4" value="b"> 46</label>
+                <label><input type="radio" name="q4" value="c"> 2</label>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Q5.</strong> What does C use when passing ordinary arguments to functions?</p>
+                <label><input type="radio" name="q5" value="a"> Automatic global variables</label>
+                <label><input type="radio" name="q5" value="b"> Call by value</label>
+                <label><input type="radio" name="q5" value="c"> Call by name</label>
+            </div>
+
+            <button type="button" class="action-button" onclick="checkQuiz()">
+                Check Answers
+            </button>
+
+            <button type="reset" class="action-button" onclick="resetQuiz()">
+                Try Again
+            </button>
+
+        </form>
+
+        <div id="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section class="lesson" id="challenges">
+        <h2>13. Coding Challenges</h2>
+
+        <h3>Easy</h3>
+        <ol>
+            <li>Write a function that prints a greeting.</li>
+            <li>Write a function that accepts an integer and prints its square.</li>
+            <li>Write a function that returns the sum of two integers.</li>
+        </ol>
+
+        <h3>Medium</h3>
+        <ol>
+            <li>Write a function that returns the maximum of two numbers.</li>
+            <li>Write a function that checks whether a number is even.</li>
+            <li>Write a function that calculates the sum of digits of an integer.</li>
+            <li>Write a function that checks whether a number is prime.</li>
+        </ol>
+
+        <h3>Hard</h3>
+        <ol>
+            <li>Write a function that reverses an integer.</li>
+            <li>Write a function that checks whether a number is a palindrome.</li>
+            <li>Write a function that calculates the sum of the digits in a range of numbers.</li>
+            <li>Write a calculator using separate functions for addition, subtraction, multiplication, and division.</li>
+        </ol>
+
+        <div class="note">
+            <strong>Practice tip:</strong> First decide what input a function
+            needs and what result it should produce. Then write its declaration,
+            definition, and call.
+        </div>
+    </section>
+
+    <nav class="chapter-navigation">
+        <a class="action-button" href="chapter8.html">← Previous: Strings</a>
+        <a class="action-button" href="index.html">⌂ Home</a>
+        <a class="action-button" href="chapter10.html">Next: Recursion →</a>
+    </nav>
+
+</main>
+
+<script>
+    function checkQuiz() {
+        const answers = {
+            q1: "a",
+            q2: "b",
+            q3: "c",
+            q4: "a",
+            q5: "b"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers) {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === answers[question]) {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quiz-result");
+
+        if (unanswered > 0) {
+            result.textContent =
+                "Please answer all 5 questions. Unanswered: " + unanswered;
+            return;
+        }
+
+        result.textContent =
+            "Your score: " + score + "/5. " +
+            (score === 5
+                ? "Excellent work!"
+                : "Review the chapter and try again.");
+    }
+
+    function resetQuiz() {
+        document.getElementById("quiz-result").textContent = "";
+    }
+</script>
+
+</body>
+</html>

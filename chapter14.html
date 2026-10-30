@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 14: Enumerations and Typedef | CodePath</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1, h2, h3 {
+            color: #22d3ee;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #111827;
+        }
+
+        nav a {
+            color: #22d3ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 30px auto;
+        }
+
+        .hero, section {
+            background: #111c33;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #263650;
+            border-radius: 12px;
+        }
+
+        h2, h3 {
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin: 10px 0 15px 25px;
+        }
+
+        li {
+            margin-bottom: 7px;
+        }
+
+        pre {
+            background: #070c17;
+            color: #a5f3fc;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 3px solid #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        .note {
+            background: #172554;
+            border-left: 4px solid #38bdf8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .warning {
+            background: #3f1d2e;
+            border-left: 4px solid #fb7185;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #0891b2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #0e7490;
+        }
+
+        .question, .challenge {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            display: block;
+            margin: 7px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            margin-top: 15px;
+            color: #67e8f9;
+            font-weight: bold;
+        }
+
+        .chapter-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .chapter-buttons a {
+            background: #0891b2;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+        }
+
+        .chapter-buttons a:hover {
+            background: #0e7490;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            border-top: 1px solid #263650;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 94%;
+            }
+
+            section, .hero {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>CodePath</h1>
+    <p>Chapter 14: Enumerations and Typedef</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="chapter13.html">Previous Chapter</a>
+    <a href="chapter15.html">Next Chapter</a>
+</nav>
+
+<main class="container">
+
+    <div class="hero">
+        <h2>Enumerations and Typedef in C</h2>
+
+        <p>
+            Learn how to create named integer constants with
+            <code>enum</code> and how to create convenient type aliases
+            using <code>typedef</code>.
+        </p>
+
+        <p>
+            <strong>Learning goals:</strong>
+            Understand enumeration constants, their values, typedef aliases,
+            and how both features can be used with structures.
+        </p>
+    </div>
+
+    <section>
+        <h2>1. What Is an Enumeration?</h2>
+
+        <p>
+            An enumeration is a user-defined type that defines a set of
+            named integer constants.
+        </p>
+
+        <p>
+            We use the keyword <code>enum</code> to define an enumeration.
+        </p>
+
+        <pre>enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+};</pre>
+
+        <p>
+            By default, the first enumerator has value 0, and each
+            subsequent enumerator increases by 1.
+        </p>
+
+        <ul>
+            <li><code>MONDAY</code> = 0</li>
+            <li><code>TUESDAY</code> = 1</li>
+            <li><code>WEDNESDAY</code> = 2</li>
+            <li><code>THURSDAY</code> = 3</li>
+        </ul>
+
+        <div class="note">
+            Enumeration constants make programs easier to read than
+            unexplained numeric values.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Declaring and Using an enum</h2>
+
+        <pre>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};
+
+int main(void)
+{
+    enum Day today = TUESDAY;
+
+    printf("%d\n", today);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>1</pre>
+
+        <p>
+            The variable <code>today</code> stores the enumeration value
+            corresponding to <code>TUESDAY</code>, which is 1 in this example.
+        </p>
+
+        <div class="note">
+            <code>printf("%d", today)</code> prints the integer value,
+            not the word "TUESDAY".
+        </div>
+    </section>
+
+    <section>
+        <h2>3. Assigning Values to enum Constants</h2>
+
+        <p>
+            You can explicitly assign integer values to enumerators.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    FAILED = 0,
+    SUCCESS = 1,
+    PENDING = 5
+};
+
+int main(void)
+{
+    enum Status result = PENDING;
+
+    printf("%d\n", result);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>5</pre>
+
+        <p>
+            If an enumerator has an explicit value, the next enumerator
+            without an explicit value normally receives the preceding
+            value plus one.
+        </p>
+
+        <pre>enum Level
+{
+    LOW = 2,
+    MEDIUM,
+    HIGH
+};</pre>
+
+        <p>Here, the values are:</p>
+
+        <ul>
+            <li><code>LOW</code> = 2</li>
+            <li><code>MEDIUM</code> = 3</li>
+            <li><code>HIGH</code> = 4</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. Using enum with switch</h2>
+
+        <p>
+            Enumerations work well with <code>switch</code> statements.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+enum TrafficLight
+{
+    RED,
+    YELLOW,
+    GREEN
+};
+
+int main(void)
+{
+    enum TrafficLight light = GREEN;
+
+    switch (light)
+    {
+        case RED:
+            printf("Stop");
+            break;
+
+        case YELLOW:
+            printf("Wait");
+            break;
+
+        case GREEN:
+            printf("Go");
+            break;
+    }
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Go</pre>
+    </section>
+
+    <section>
+        <h2>5. Advantages of enum</h2>
+
+        <ul>
+            <li>Makes code easier to read.</li>
+            <li>Provides meaningful names for related integer constants.</li>
+            <li>Works naturally with <code>switch</code> statements.</li>
+            <li>Makes groups of related values easier to maintain.</li>
+        </ul>
+
+        <div class="warning">
+            In C, enumeration constants are integer constants. An enum
+            variable is not automatically restricted to only the named
+            enumerator values in every context.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. What Is typedef?</h2>
+
+        <p>
+            The <code>typedef</code> keyword creates an alias for an
+            existing type name. It does not create an entirely new
+            distinct type.
+        </p>
+
+        <pre>typedef unsigned int uint;
+
+int main(void)
+{
+    uint age = 20;
+
+    return 0;
+}</pre>
+
+        <p>
+            Here, <code>uint</code> is another name for
+            <code>unsigned int</code>.
+        </p>
+
+        <div class="note">
+            Remember: <code>typedef</code> creates a type alias;
+            it does not declare a variable by itself.
+        </div>
+    </section>
+
+    <section>
+        <h2>7. typedef with Structures</h2>
+
+        <p>
+            Without <code>typedef</code>, you generally write
+            <code>struct Student</code> when declaring a variable.
+        </p>
+
+        <pre>struct Student
+{
+    int roll;
+    float marks;
+};
+
+struct Student s1;</pre>
+
+        <p>
+            With <code>typedef</code>, you can create a shorter type name.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+typedef struct
+{
+    int roll;
+    float marks;
+} Student;
+
+int main(void)
+{
+    Student s1 = {101, 89.5f};
+
+    printf("Roll: %d\n", s1.roll);
+    printf("Marks: %.1f\n", s1.marks);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>Roll: 101
+Marks: 89.5</pre>
+
+        <p>
+            Now you can declare variables using <code>Student</code>
+            without writing <code>struct</code> each time.
+        </p>
+    </section>
+
+    <section>
+        <h2>8. typedef with enum</h2>
+
+        <p>
+            You can also create an alias for an enumeration type.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+typedef enum
+{
+    SMALL,
+    MEDIUM,
+    LARGE
+} Size;
+
+int main(void)
+{
+    Size shirt = LARGE;
+
+    printf("%d\n", shirt);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>2</pre>
+
+        <p>
+            The name <code>Size</code> can be used directly as the type name.
+        </p>
+    </section>
+
+    <section>
+        <h2>9. typedef with Pointers</h2>
+
+        <p>
+            A type alias can also represent a pointer type.
+        </p>
+
+        <pre>#include &lt;stdio.h&gt;
+
+typedef int* IntPointer;
+
+int main(void)
+{
+    int number = 50;
+
+    IntPointer ptr = &amp;number;
+
+    printf("%d\n", *ptr);
+
+    return 0;
+}</pre>
+
+        <p><strong>Output:</strong></p>
+
+        <pre>50</pre>
+
+        <div class="warning">
+            Be careful with pointer typedefs: <code>IntPointer a, b;</code>
+            declares both <code>a</code> and <code>b</code> as pointers to
+            int. This differs from writing <code>int *a, b;</code>, where
+            only <code>a</code> is a pointer.
+        </div>
+    </section>
+
+    <section>
+        <h2>10. enum vs typedef</h2>
+
+        <ul>
+            <li><code>enum</code> defines an enumeration type and named integer constants.</li>
+            <li><code>typedef</code> creates an alias for a type name.</li>
+            <li><code>enum</code> can introduce named choices such as <code>RED</code>, <code>GREEN</code>, and <code>BLUE</code>.</li>
+            <li><code>typedef</code> can make long type declarations easier to use.</li>
+        </ul>
+
+        <pre>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+typedef unsigned long ulong;</pre>
+    </section>
+
+    <section>
+        <h2>11. Common Mistakes</h2>
+
+        <ul>
+            <li>Forgetting the semicolon after an enum definition.</li>
+            <li>Assuming the first enumerator starts at 1 instead of 0.</li>
+            <li>Assuming printing an enum automatically prints its name.</li>
+            <li>Confusing a typedef alias with a variable declaration.</li>
+            <li>Assuming typedef creates a completely separate type.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>12. Interactive Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1. What is the default value of the first enumerator?</strong></p>
+
+                <label><input type="radio" name="q1" value="a"> 1</label>
+                <label><input type="radio" name="q1" value="b"> 0</label>
+                <label><input type="radio" name="q1" value="c"> -1</label>
+            </div>
+
+            <div class="question">
+                <p><strong>2. What does typedef do?</strong></p>
+
+                <label><input type="radio" name="q2" value="a"> Creates an alias for a type</label>
+                <label><input type="radio" name="q2" value="b"> Starts a loop</label>
+                <label><input type="radio" name="q2" value="c"> Prints a value</label>
+            </div>
+
+            <div class="question">
+                <p><strong>3. What is the output?</strong></p>
+
+                <pre>enum Level { LOW = 3, HIGH };
+printf("%d", HIGH);</pre>
+
+                <label><input type="radio" name="q3" value="a"> 0</label>
+                <label><input type="radio" name="q3" value="b"> 3</label>
+                <label><input type="radio" name="q3" value="c"> 4</label>
+            </div>
+
+            <div class="question">
+                <p><strong>4. Can typedef be used with structures?</strong></p>
+
+                <label><input type="radio" name="q4" value="a"> Yes</label>
+                <label><input type="radio" name="q4" value="b"> No</label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Answers</button>
+
+            <p id="quizResult"></p>
+        </form>
+    </section>
+
+    <section>
+        <h2>13. Coding Challenges</h2>
+
+        <div class="challenge">
+            <h3>Easy: Days of the Week</h3>
+            <p>
+                Define an enum named <code>Day</code> with the seven days
+                of the week. Declare a variable and print its integer value.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Medium: Traffic Light</h3>
+            <p>
+                Define a traffic-light enum and use a switch statement
+                to print a message for each light.
+            </p>
+        </div>
+
+        <div class="challenge">
+            <h3>Hard: Student typedef</h3>
+            <p>
+                Use typedef to create a type named <code>Student</code>
+                containing a roll number, name, and marks. Store three
+                students in an array and display their details.
+            </p>
+        </div>
+    </section>
+
+    <div class="chapter-buttons">
+        <a href="chapter13.html">← Previous: Structures and Unions</a>
+        <a href="index.html">Home</a>
+        <a href="chapter15.html">Next Chapter →</a>
+    </div>
+
+</main>
+
+<footer>
+    <p>CodePath | Learn C. Think Logically.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "b",
+            q2: "a",
+            q3: "c",
+            q4: "a"
+        };
+
+        let score = 0;
+        const total = Object.keys(answers).length;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (selected && selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        document.getElementById("quizResult").textContent =
+            "You scored " + score + " out of " + total + ".";
+    }
+</script>
+
+</body>
+</html>

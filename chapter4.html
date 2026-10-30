@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4 - Conditional Statements | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .lesson-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            color: #ffffff;
+        }
+
+        .lesson-section {
+            margin: 30px 0;
+            padding: 22px;
+            background: #101a2c;
+            border: 1px solid #263750;
+            border-radius: 12px;
+        }
+
+        .lesson-section h2 {
+            color: #00d9ff;
+        }
+
+        .lesson-section p,
+        .lesson-section li {
+            line-height: 1.8;
+            color: #c4d0df;
+        }
+
+        .code-example {
+            padding: 18px;
+            overflow-x: auto;
+            background: #080f1c;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .code-example code {
+            color: #a9f3ff;
+            white-space: pre;
+        }
+
+        .important-note {
+            padding: 15px;
+            background: #17243a;
+            border-radius: 8px;
+            border-left: 4px solid #00d9ff;
+        }
+
+        .quiz-question {
+            margin: 20px 0;
+            padding: 18px;
+            background: #17243a;
+            border-radius: 8px;
+        }
+
+        .quiz-question button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 11px;
+            text-align: left;
+            color: #ffffff;
+            background: #24344d;
+            border: 1px solid #40516b;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .quiz-question button:hover {
+            border-color: #00d9ff;
+        }
+
+        .quiz-feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 35px 0;
+        }
+
+        .chapter-navigation a {
+            display: inline-block;
+            padding: 12px 18px;
+            color: #07111f;
+            background: #00d9ff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .lesson-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="chapter3.html">Previous Chapter</a>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+
+        <h1>Chapter 4: Conditional Statements in C</h1>
+        <p>Learn how to make decisions in C programs using conditions.</p>
+
+        <section class="lesson-section">
+            <h2>1. What Are Conditional Statements?</h2>
+
+            <p>
+                Conditional statements allow a program to make decisions.
+                A block of code executes depending on whether a condition
+                is true or false.
+            </p>
+
+            <div class="code-example"><code>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int age = 20;
+
+    if (age >= 18)
+    {
+        printf("You are an adult.");
+    }
+
+    return 0;
+}</code></div>
+
+            <p><strong>Output:</strong> You are an adult.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>2. The if Statement</h2>
+
+            <p>The <code>if</code> statement executes code when its condition is true.</p>
+
+            <div class="code-example"><code>if (condition)
+{
+    // Code executes if condition is true
+}</code></div>
+
+            <p>Example:</p>
+
+            <div class="code-example"><code>int number = 10;
+
+if (number > 0)
+{
+    printf("Positive number");
+}</code></div>
+
+            <p><strong>Output:</strong> Positive number</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>3. The if-else Statement</h2>
+
+            <p>
+                Use <code>if-else</code> when one block should execute
+                if the condition is true and another if it is false.
+            </p>
+
+            <div class="code-example"><code>int number = 7;
+
+if (number % 2 == 0)
+{
+    printf("Even");
+}
+else
+{
+    printf("Odd");
+}</code></div>
+
+            <p><strong>Output:</strong> Odd</p>
+            <p>The remainder operator <code>%</code> helps check whether a number is even or odd.</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>4. The else-if Ladder</h2>
+
+            <p>
+                Use an <code>else-if</code> ladder to check multiple conditions.
+            </p>
+
+            <div class="code-example"><code>int marks = 75;
+
+if (marks >= 80)
+{
+    printf("Grade A");
+}
+else if (marks >= 60)
+{
+    printf("Grade B");
+}
+else if (marks >= 40)
+{
+    printf("Grade C");
+}
+else
+{
+    printf("Fail");
+}</code></div>
+
+            <p><strong>Output:</strong> Grade B</p>
+
+            <p class="important-note">
+                Conditions are checked from top to bottom.
+                When a condition is true, its block executes and the
+                remaining branches are skipped.
+            </p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>5. Nested if Statements</h2>
+
+            <p>
+                A nested <code>if</code> is an <code>if</code> statement
+                inside another <code>if</code> statement.
+            </p>
+
+            <div class="code-example"><code>int age = 20;
+int hasID = 1;
+
+if (age >= 18)
+{
+    if (hasID == 1)
+    {
+        printf("Entry allowed");
+    }
+}</code></div>
+
+            <p><strong>Output:</strong> Entry allowed</p>
+        </section>
+
+        <section class="lesson-section">
+            <h2>6. The switch Statement</h2>
+
+            <p>
+                A <code>switch</code> statement selects a branch based on
+                the value of an expression.
+            </p>
+
+            <div class="code-example"><code>int day = 2;
+
+switch (day)
+{
+    case 1:
+        printf("Monday");
+        break;
+
+    case 2:
+        printf("Tuesday");
+        break;
+
+    case 3:
+        printf("Wednesday");
+        break;
+
+    default:
+        printf("Invalid day");
+}
+
+</code></div>
+
+            <p><strong>Output:</strong> Tuesday</p>
+
+            <ul>
+                <li><code>case</code> specifies a possible value.</li>
+                <li><code>break</code> exits the switch statement.</li>
+                <li><code>default</code> runs when no case matches.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2>7. Common Mistakes</h2>
+
+            <ul>
+                <li>Writing <code>=</code> instead of <code>==</code> when comparing values.</li>
+                <li>Forgetting the semicolon after statements such as <code>printf()</code>.</li>
+                <li>Forgetting <code>break</code> in a switch case when you want to prevent fall-through.</li>
+                <li>Using incorrect braces or placing an <code>else</code> without a matching <code>if</code>.</li>
+            </ul>
+        </section>
+
+        <section class="lesson-section">
+            <h2>8. Test Your Knowledge</h2>
+
+            <div class="quiz-question">
+                <p><strong>Question 1:</strong> Which statement checks a condition?</p>
+
+                <button onclick="checkAnswer(this, false)">A. printf</button>
+                <button onclick="checkAnswer(this, true)">B. if</button>
+                <button onclick="checkAnswer(this, false)">C. return</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 2:</strong> What is the output?</p>
+
+                <div class="code-example"><code>int x = 5;
+
+if (x > 10)
+    printf("A");
+else
+    printf("B");</code></div>
+
+                <button onclick="checkAnswer(this, false)">A. A</button>
+                <button onclick="checkAnswer(this, true)">B. B</button>
+                <button onclick="checkAnswer(this, false)">C. No output</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 3:</strong> Which keyword exits a switch case?</p>
+
+                <button onclick="checkAnswer(this, true)">A. break</button>
+                <button onclick="checkAnswer(this, false)">B. case</button>
+                <button onclick="checkAnswer(this, false)">C. if</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 4:</strong> Which operator checks equality?</p>
+
+                <button onclick="checkAnswer(this, false)">A. =</button>
+                <button onclick="checkAnswer(this, true)">B. ==</button>
+                <button onclick="checkAnswer(this, false)">C. !=</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+
+            <div class="quiz-question">
+                <p><strong>Question 5:</strong> What happens when no switch case matches and there is a default branch?</p>
+
+                <button onclick="checkAnswer(this, false)">A. The program always stops</button>
+                <button onclick="checkAnswer(this, false)">B. The first case executes</button>
+                <button onclick="checkAnswer(this, true)">C. The default branch executes</button>
+
+                <p class="quiz-feedback"></p>
+            </div>
+        </section>
+
+        <div class="chapter-navigation">
+            <a href="chapter3.html">← Previous Chapter</a>
+            <a href="index.html">Back to Home</a>
+            <a href="chapter5.html">Next Chapter →</a>
+        </div>
+
+    </main>
+
+    <script>
+        function checkAnswer(button, isCorrect)
+        {
+            const question = button.closest(".quiz-question");
+            const feedback = question.querySelector(".quiz-feedback");
+
+            if (isCorrect)
+            {
+                feedback.textContent = "Correct! Well done.";
+                feedback.style.color = "#00e676";
+            }
+            else
+            {
+                feedback.textContent = "Not quite. Try again!";
+                feedback.style.color = "#ff7070";
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

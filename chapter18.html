@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 18 - Command-Line Arguments | CodePath</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111c33;
+            padding: 22px;
+            text-align: center;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        header h1 {
+            color: #22d3ee;
+            margin: 0;
+        }
+
+        nav {
+            text-align: center;
+            padding: 15px;
+            background: #101a2d;
+        }
+
+        nav a {
+            display: inline-block;
+            color: #22d3ee;
+            text-decoration: none;
+            margin: 5px 10px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        main {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background: #111c33;
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid #263650;
+        }
+
+        h2, h3 {
+            color: #22d3ee;
+        }
+
+        code {
+            color: #67e8f9;
+        }
+
+        pre {
+            background: #080e1a;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #22d3ee;
+            white-space: pre;
+        }
+
+        .note {
+            background: #172a40;
+            padding: 12px;
+            border-left: 4px solid #22d3ee;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #33251a;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #22d3ee;
+            color: #08111f;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #67e8f9;
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: #0b1527;
+            border-radius: 8px;
+        }
+
+        .question label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #quizResult {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            background: #111c33;
+            color: #94a3b8;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 10px;
+            }
+
+            section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Chapter 18: Command-Line Arguments in C</h1>
+    <p>Learn how to pass information to a program when starting it.</p>
+</header>
+
+<nav>
+    <a href="chapter17.html">← Previous</a>
+    <a href="index.html">Home</a>
+    <a href="chapter19.html">Next Chapters</a>
+</nav>
+
+<main>
+
+    <section>
+        <h2>1. What Are Command-Line Arguments?</h2>
+
+        <p>
+            Command-line arguments are values supplied to a program
+            when it is started from a command-line interface, such as
+            Windows Command Prompt.
+        </p>
+
+        <p>
+            Normally, a program may ask for input using
+            <code>scanf()</code>. With command-line arguments, you can
+            provide some input before the program begins executing.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>program.exe Arman 20</code></pre>
+
+        <p>
+            Here, <code>Arman</code> and <code>20</code> are arguments
+            supplied when the program is launched.
+        </p>
+
+        <div class="note">
+            Command-line arguments are useful for passing filenames,
+            numbers, configuration options, and other information to
+            programs.
+        </div>
+    </section>
+
+    <section>
+        <h2>2. The main() Function with Arguments</h2>
+
+        <p>
+            To receive command-line arguments, write
+            <code>main()</code> with two parameters:
+        </p>
+
+        <pre><code>int main(int argc, char *argv[])</code></pre>
+
+        <h3>Understanding argc</h3>
+
+        <p>
+            <code>argc</code> represents the argument count. It tells
+            you how many strings are available in <code>argv</code>,
+            including the program name at index zero.
+        </p>
+
+        <h3>Understanding argv</h3>
+
+        <p>
+            <code>argv</code> is an array of pointers to strings
+            containing the command-line arguments.
+        </p>
+
+        <ul>
+            <li><code>argv[0]</code> — Program name or invocation name.</li>
+            <li><code>argv[1]</code> — First argument supplied by the user.</li>
+            <li><code>argv[2]</code> — Second argument supplied by the user.</li>
+        </ul>
+
+        <div class="note">
+            For a portable hosted C program, use
+            <code>int main(int argc, char *argv[])</code>.
+            The strings in <code>argv</code> are not automatically integers;
+            they are strings.
+        </div>
+    </section>
+
+    <section>
+        <h2>3. First Program: Display Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    int i;
+
+    printf("Argument count: %d\n", argc);
+
+    for (i = 0; i &lt; argc; i++)
+    {
+        printf("argv[%d] = %s\n", i, argv[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Compile the Program</h3>
+
+        <p>
+            Save the file as <code>args.c</code>. Open Command Prompt
+            in the directory containing the file and run:
+        </p>
+
+        <pre><code>gcc args.c -o args.exe</code></pre>
+
+        <h3>Run with Arguments</h3>
+
+        <pre><code>args.exe Arman 20</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Argument count: 3
+argv[0] = args.exe
+argv[1] = Arman
+argv[2] = 20</code></pre>
+
+        <div class="warning">
+            The exact value printed for <code>argv[0]</code> can vary
+            depending on how the program is launched. The example shows
+            a common result.
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Accessing a Specific Argument</h2>
+
+        <p>
+            You can use an individual argument by referring to its index.
+            Always check <code>argc</code> before accessing an argument.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("Please provide your name.\n");
+        return 1;
+    }
+
+    printf("Hello, %s!\n", argv[1]);
+
+    return 0;
+}</code></pre>
+
+        <h3>Run</h3>
+
+        <pre><code>args.exe Arman</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello, Arman!</code></pre>
+
+        <p>
+            If you run the program without an additional argument,
+            it displays a message instead of accessing a missing argument.
+        </p>
+    </section>
+
+    <section>
+        <h2>5. Command-Line Arguments Are Strings</h2>
+
+        <p>
+            Even when you supply a number, the corresponding
+            <code>argv</code> element is a string.
+        </p>
+
+        <p>For example:</p>
+
+        <pre><code>args.exe 25</code></pre>
+
+        <p>
+            The value <code>argv[1]</code> contains the characters
+            <code>"25"</code>, not the integer <code>25</code>.
+        </p>
+
+        <p>
+            To convert a valid integer string into an integer, you can
+            use <code>strtol()</code> from <code>&lt;stdlib.h&gt;</code>.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+
+int main(int argc, char *argv[])
+{
+    char *end;
+    long number;
+
+    if (argc != 2)
+    {
+        printf("Usage: args.exe number\n");
+        return 1;
+    }
+
+    errno = 0;
+    number = strtol(argv[1], &amp;end, 10);
+
+    if (argv[1][0] == '\0' || *end != '\0' || errno != 0)
+    {
+        printf("Please provide a valid integer.\n");
+        return 1;
+    }
+
+    printf("Number = %ld\n", number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Run</h3>
+
+        <pre><code>args.exe 250</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 250</code></pre>
+
+        <div class="note">
+            <code>strtol()</code> supports error checking, unlike simply
+            assuming every argument contains a valid number.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. Adding Two Numbers</h2>
+
+        <p>
+            This example accepts two integer arguments and displays
+            their sum.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+
+int main(int argc, char *argv[])
+{
+    char *end1;
+    char *end2;
+    long a;
+    long b;
+
+    if (argc != 3)
+    {
+        printf("Usage: args.exe number1 number2\n");
+        return 1;
+    }
+
+    errno = 0;
+    a = strtol(argv[1], &amp;end1, 10);
+
+    if (argv[1][0] == '\0' || *end1 != '\0' || errno != 0)
+    {
+        printf("First argument is not a valid integer.\n");
+        return 1;
+    }
+
+    errno = 0;
+    b = strtol(argv[2], &amp;end2, 10);
+
+    if (argv[2][0] == '\0' || *end2 != '\0' || errno != 0)
+    {
+        printf("Second argument is not a valid integer.\n");
+        return 1;
+    }
+
+    printf("Sum = %ld\n", a + b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Run</h3>
+
+        <pre><code>args.exe 10 20</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+        <div class="warning">
+            This beginner example does not check for overflow when adding
+            two valid <code>long</code> values. Real applications should
+            check that the sum is representable before adding.
+        </div>
+    </section>
+
+    <section>
+        <h2>7. Advantages of Command-Line Arguments</h2>
+
+        <ul>
+            <li>Provide input without interactive prompts.</li>
+            <li>Make programs convenient to automate with scripts.</li>
+            <li>Allow users to specify filenames and options.</li>
+            <li>Make it easy to run the same program with different inputs.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>8. Common Mistakes</h2>
+
+        <ul>
+            <li>Accessing <code>argv[1]</code> without checking <code>argc</code>.</li>
+            <li>Assuming command-line arguments are automatically integers.</li>
+            <li>Using an incorrect argument index.</li>
+            <li>Forgetting that <code>argv[0]</code> normally refers to the program invocation name.</li>
+            <li>Failing to validate arguments before using them.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>9. Chapter Quiz</h2>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>Q1. What does argc represent?</strong></p>
+
+                <label>
+                    <input type="radio" name="q1" value="a">
+                    Argument count
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="b">
+                    Argument character
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="c">
+                    Array code
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q2. What does argv[1] normally contain?</strong></p>
+
+                <label>
+                    <input type="radio" name="q2" value="a">
+                    The argument count
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="b">
+                    The first user-supplied argument
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="c">
+                    Always an integer
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q3. What type of data does argv store?</strong></p>
+
+                <label>
+                    <input type="radio" name="q3" value="a">
+                    Only integers
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="b">
+                    Only floating-point numbers
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="c">
+                    Strings through pointers to characters
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q4. Which function can convert an integer string to a long integer with error checking?</strong></p>
+
+                <label>
+                    <input type="radio" name="q4" value="a">
+                    printf()
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="b">
+                    strtol()
+                </label>
+
+                <label>
+                    <input type="radio" name="q4" value="c">
+                    fopen()
+                </label>
+            </div>
+
+            <div class="question">
+                <p><strong>Q5. Why should you check argc before using argv[1]?</strong></p>
+
+                <label>
+                    <input type="radio" name="q5" value="a">
+                    To ensure the required argument was supplied
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="b">
+                    To close the program
+                </label>
+
+                <label>
+                    <input type="radio" name="q5" value="c">
+                    To change the argument into a string
+                </label>
+            </div>
+
+            <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+
+            <p id="quizResult" aria-live="polite"></p>
+
+        </form>
+    </section>
+
+    <section>
+        <h2>10. Coding Challenges</h2>
+
+        <h3>🟢 Easy</h3>
+        <p>
+            Write a program that accepts your name as a command-line
+            argument and displays a greeting.
+        </p>
+
+        <h3>🟡 Medium</h3>
+        <p>
+            Write a program that accepts two integer arguments, validates
+            them, and displays their sum.
+        </p>
+
+        <h3>🔴 Hard</h3>
+        <p>
+            Create a simple command-line calculator that accepts an
+            operator and two numbers, such as
+            <code>calc.exe + 10 20</code>. Support addition, subtraction,
+            multiplication, and division. Validate the arguments and
+            prevent division by zero.
+        </p>
+
+        <div class="note">
+            Try each challenge yourself before looking for a solution.
+            Pay particular attention to argument indexes and input validation.
+        </div>
+    </section>
+
+    <nav>
+        <a href="chapter17.html">← Previous Chapter</a>
+        <a href="index.html">Home</a>
+        <a href="chapter19.html">Next Chapters</a>
+    </nav>
+
+</main>
+
+<footer>
+    <p>© 2026 CodePath | Learn C, One Step at a Time.</p>
+</footer>
+
+<script>
+    function checkQuiz()
+    {
+        const answers = {
+            q1: "a",
+            q2: "b",
+            q3: "c",
+            q4: "b",
+            q5: "a"
+        };
+
+        let score = 0;
+        let unanswered = 0;
+
+        for (const question in answers)
+        {
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if (!selected)
+            {
+                unanswered++;
+            }
+            else if (selected.value === answers[question])
+            {
+                score++;
+            }
+        }
+
+        const result = document.getElementById("quizResult");
+
+        if (unanswered > 0)
+        {
+            result.textContent =
+                "Please answer all 5 questions before submitting.";
+        }
+        else
+        {
+            result.textContent = "Your score: " + score + "/5";
+
+            if (score === 5)
+            {
+                result.textContent += " — Excellent work!";
+            }
+            else if (score >= 3)
+            {
+                result.textContent += " — Good job! Review the missed answers.";
+            }
+            else
+            {
+                result.textContent += " — Review the chapter and try again.";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

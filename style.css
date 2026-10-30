@@ -1,0 +1,778 @@
+```css
+/* General settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #f1f5f9;
+    line-height: 1.6;
+}
+
+/* Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 8%;
+    background: #0f172a;
+    border-bottom: 1px solid #263247;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 15px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+.login-btn {
+    padding: 9px 20px;
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+}
+
+/* Hero section */
+.hero {
+    text-align: center;
+    padding: 100px 20px 110px;
+    background: radial-gradient(ellipse at top, #172b49, #0b1120 70%);
+}
+
+.tagline {
+    color: #38bdf8;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-size: clamp(44px, 7vw, 76px);
+    line-height: 1.15;
+    margin-bottom: 24px;
+}
+
+.hero h1 span {
+    color: #38bdf8;
+}
+
+.description {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    color: #aab8cc;
+    font-size: 18px;
+}
+
+.start-btn {
+    display: inline-block;
+    background: #38bdf8;
+    color: #082032;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.start-btn:hover {
+    background: #7dd3fc;
+    transform: translateY(-2px);
+}
+
+.note {
+    margin-top: 20px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Features */
+.features,
+.chapters {
+    padding: 75px 8%;
+    text-align: center;
+}
+
+.features h2,
+.chapters h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: #111c30;
+    border: 1px solid #263750;
+    padding: 30px 22px;
+    border-radius: 14px;
+    text-align: left;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+}
+
+.icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.feature-card p {
+    color: #aab8cc;
+    font-size: 14px;
+}
+
+/* Chapter preview */
+.chapters {
+    background: #0f172a;
+}
+
+.chapters > p {
+    color: #aab8cc;
+    margin-top: -25px;
+    margin-bottom: 35px;
+}
+
+.chapter-preview {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px;
+    text-align: left;
+    background: #111c30;
+    border: 1px solid #263750;
+    border-radius: 14px;
+}
+
+.chapter-preview span {
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.chapter-preview h3 {
+    font-size: 23px;
+    margin: 12px 0;
+}
+
+.chapter-preview p {
+    color: #aab8cc;
+}
+
+.chapter-preview .coming-soon {
+    color: #38bdf8;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    background: #0b1120;
+    border-top: 1px solid #263247;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    nav {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .hero {
+        padding: 75px 20px;
+    }
+
+    .features,
+    .chapters {
+        padding: 55px 6%;
+    }
+
+    .features h2,
+    .chapters h2 {
+        font-size: 27px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chapter-preview {
+        padding: 24px;
+    }
+}
+```
+```css
+/* Lesson page */
+
+.lesson-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px 24px 70px;
+}
+
+.lesson-heading {
+    text-align: center;
+    padding: 45px 10px;
+    margin-bottom: 35px;
+}
+
+.lesson-heading h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.2;
+    margin: 15px 0;
+}
+
+.lesson-heading h1 span {
+    color: #38bdf8;
+}
+
+.lesson-heading > p:last-child {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #aab8cc;
+}
+
+.lesson-content {
+    margin-bottom: 30px;
+}
+
+.lesson-card {
+    background: #111c30;
+    border: 1px solid #263750;
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+}
+
+.lesson-card h2 {
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+.lesson-card h3 {
+    font-size: 18px;
+    margin: 22px 0 10px;
+    color: #7dd3fc;
+}
+
+.lesson-card p,
+.lesson-card li {
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.lesson-card ul {
+    padding-left: 25px;
+}
+
+.lesson-card pre {
+    background: #080e19;
+    border: 1px solid #263750;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.lesson-card code {
+    font-family: Consolas, monospace;
+    color: #7dd3fc;
+}
+
+.practice-question label {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    background: #17253b;
+    border: 1px solid #263750;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.practice-question label:hover {
+    border-color: #38bdf8;
+}
+
+.practice-question input {
+    margin-right: 10px;
+    accent-color: #38bdf8;
+}
+
+.practice-question button {
+    margin-top: 15px;
+    padding: 12px 22px;
+    background: #38bdf8;
+    color: #082032;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.practice-question button:hover {
+    background: #7dd3fc;
+}
+
+#result {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.lesson-navigation {
+    margin: 35px 0;
+}
+
+@media (max-width: 600px) {
+    .lesson-page {
+        padding: 25px 15px 45px;
+    }
+
+    .lesson-card {
+        padding: 20px;
+    }
+
+    .lesson-card h2 {
+        font-size: 22px;
+    }
+}
+
+.answer-input {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 15px 0;
+    background: #080e19;
+    color: #f1f5f9;
+    border: 1px solid #263750;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.answer-input:focus {
+    outline: 2px solid #38bdf8;
+    outline-offset: 2px;
+}
+
+/* Search Results Panel */
+#searchResults {
+    display: none;
+    width: 280px;
+    max-width: 90%;
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #101a2c;
+    border: 1px solid #00d9ff;
+    border-radius: 10px;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 217, 255, 0.15);
+}
+
+/* Individual Search Result */
+.search-result {
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: #17243a;
+    border-radius: 7px;
+    border-left: 3px solid #00d9ff;
+}
+
+/* Topic Name */
+.search-result a {
+    color: #00d9ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Topic Hover Effect */
+.search-result a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Chapter Information */
+.search-result p {
+    margin: 5px 0 0;
+    color: #b8c7d9;
+    font-size: 13px;
+}
+
+/* Search Result Hover */
+.search-result:hover {
+    background-color: #20314b;
+}
+/* Search Container */
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Keep Search Input and Button in One Row */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Position Results Below Search Bar */
+.search-container #searchResults {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 280px;
+    max-width: 90vw;
+    margin-top: 8px;
+    box-sizing: border-box;
+}
+/* Chapter Directory Grid */
+.chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+/* Chapter Cards */
+.chapter-grid .chapter-preview {
+    padding: 22px;
+    border: 1px solid #263750;
+    border-radius: 12px;
+    background-color: #101a2c;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.chapter-grid .chapter-preview:hover {
+    transform: translateY(-4px);
+    border-color: #00d9ff;
+}
+
+.chapter-grid .chapter-preview h3 {
+    margin: 12px 0;
+    color: #ffffff;
+}
+
+.chapter-grid .chapter-preview p {
+    color: #b8c7d9;
+    line-height: 1.6;
+}
+
+.chapter-grid .chapter-preview .start-btn {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+/* Tablet: Two columns */
+@media (max-width: 900px) {
+    .chapter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile: One column */
+@media (max-width: 600px) {
+    .chapter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* Chapter Search */
+.search-container {
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    padding: 0 15px;
+}
+
+#chapterSearch {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #00d9ff;
+    border-radius: 12px;
+    background: #101a2b;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+#chapterSearch:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.25);
+}
+
+#chapterSearch::placeholder {
+    color: #aab8cc;
+}
+
+#searchMessage {
+    color: #00d9ff;
+    font-size: 14px;
+    margin-top: 12px;
+}
+/* Floating Scroll Buttons */
+.scroll-buttons {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.scroll-buttons button {
+    width: 45px;
+    height: 45px;
+    border: 2px solid #00d9ff;
+    border-radius: 50%;
+    background: #101a2b;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.scroll-buttons button:hover {
+    transform: scale(1.1);
+    background: #00a8cc;
+}
+
+@media (max-width: 600px) {
+    .scroll-buttons {
+        right: 12px;
+        bottom: 15px;
+    }
+
+    .scroll-buttons button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+/* ===== Full-Page MCQ Layout ===== */
+.mcq-question {
+    background: #101a2b;
+    border: 1px solid #263b55;
+    border-left: 4px solid #00d9ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.mcq-question h3 {
+    color: #ffffff;
+    margin-top: 0;
+    line-height: 1.6;
+}
+
+.mcq-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mcq-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #344861;
+    border-radius: 8px;
+    color: #e5edf7;
+    cursor: pointer;
+}
+
+.mcq-option:hover {
+    border-color: #00d9ff;
+}
+
+.mcq-option input {
+    margin-top: 4px;
+    accent-color: #00d9ff;
+}
+
+.mcq-feedback {
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.correct-feedback {
+    color: #54e39a;
+}
+
+.incorrect-feedback {
+    color: #ff8585;
+}
+
+#submitAnswersBtn {
+    padding: 14px 24px;
+    margin: 20px 0;
+    border: none;
+    border-radius: 8px;
+    background: #00d9ff;
+    color: #07111f;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#submitAnswersBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#resultArea {
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 12px;
+    background: #101a2b;
+}
+
+/* ===== CodePath Mobile Responsive Layout ===== */
+
+@media screen and (max-width: 768px) {
+
+    /* Prevent content from overflowing horizontally */
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Keep page content inside the phone screen */
+    .container {
+        width: 92%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Make headings fit smaller screens */
+    h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        line-height: 1.4;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        line-height: 1.4;
+    }
+
+    /* Make buttons easier to tap */
+    button,
+    .btn {
+        max-width: 100%;
+        min-height: 44px;
+    }
+
+    /* Prevent long code lines from breaking the page */
+    pre {
+        max-width: 100%;
+        overflow-x: auto;
+        box-sizing: border-box;
+    }
+
+    /* Keep images within the screen */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Make form fields fit the screen */
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Make MCQ options comfortable to tap */
+    .mcq-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px;
+        line-height: 1.5;
+    }
+
+    .mcq-option input[type="radio"] {
+        flex-shrink: 0;
+        margin-top: 4px;
+    }
+
+    /* Keep MCQ cards inside the screen */
+    .mcq-question {
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    /* Make floating scroll buttons smaller */
+    .scroll-buttons button {
+        width: 42px;
+        height: 42px;
+    }
+}

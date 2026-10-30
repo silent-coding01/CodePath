@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-11">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 11 - Pointers in C | CodePath</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .lesson-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 25px;
+            color: #fff;
+        }
+
+        .chapter-intro {
+            padding: 28px;
+            background: linear-gradient(135deg, #101a2c, #172c43);
+            border: 1px solid #00d9ff;
+            border-radius: 15px;
+        }
+
+        .chapter-intro p,
+        .lesson-section p,
+        .lesson-section li {
+            color: #c4d0df;
+            line-height: 1.8;
+        }
+
+        .lesson-section {
+            margin: 30px 0;
+            padding: 24px;
+            background: #101a2c;
+            border: 1px solid #263750;
+            border-radius: 12px;
+            scroll-margin-top: 25px;
+        }
+
+        .lesson-section h2 {
+            color: #00d9ff;
+            margin-top: 0;
+        }
+
+        .lesson-section h3 {
+            color: #8beeff;
+            margin-top: 25px;
+        }
+
+        .lesson-section strong {
+            color: #fff;
+        }
+
+        .code-example {
+            margin: 18px 0;
+            padding: 18px;
+            overflow-x: auto;
+            background: #080f1c;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .code-example pre {
+            margin: 0;
+            color: #a9f3ff;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre;
+        }
+
+        .output-box {
+            padding: 15px;
+            background: #081b17;
+            border-left: 4px solid #00e676;
+            border-radius: 8px;
+        }
+
+        .output-box pre {
+            margin: 0;
+            color: #8affc2;
+            font-family: Consolas, monospace;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .important-note {
+            margin: 20px 0;
+            padding: 16px;
+            background: #17243a;
+            border-left: 4px solid #00d9ff;
+            border-radius: 8px;
+        }
+
+        .important-note p {
+            margin: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .lesson-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #c4d0df;
+        }
+
+        .lesson-table th,
+        .lesson-table td {
+            padding: 12px;
+            border: 1px solid #34465f;
+            text-align: left;
+        }
+
+        .lesson-table th {
+            color: #00d9ff;
+            background: #17243a;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .toc-grid a {
+            display: block;
+            padding: 12px;
+            color: #a9f3ff;
+            text-decoration: none;
+            background: #17243a;
+            border: 1px solid #263750;
+            border-radius: 8px;
+        }
+
+        .toc-grid a:hover {
+            border-color: #00d9ff;
+            color: #fff;
+        }
+
+        .quiz-question {
+            margin: 22px 0;
+            padding: 20px;
+            background: #17243a;
+            border: 1px solid #263750;
+            border-radius: 10px;
+        }
+
+        .quiz-question button {
+            display: block;
+            width: 100%;
+            margin: 9px 0;
+            padding: 12px;
+            text-align: left;
+            color: #fff;
+            background: #24344d;
+            border: 1px solid #40516b;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .quiz-question button:hover {
+            border-color: #00d9ff;
+        }
+
+        .quiz-feedback {
+            min-height: 20px;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 35px 0;
+        }
+
+        .chapter-navigation a {
+            display: inline-block;
+            padding: 12px 18px;
+            color: #07111f;
+            background: #00d9ff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            .lesson-content {
+                padding: 12px;
+            }
+
+            .lesson-section {
+                padding: 16px;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="chapter10.html">Previous Chapter</a>
+    </nav>
+</header>
+
+<main class="lesson-content">
+
+    <section class="chapter-intro">
+        <p>CHAPTER 10 · CORE C PROGRAMMING</p>
+        <h1>Pointers in C: Complete Guide</h1>
+
+        <p>
+            Understand memory addresses, pointer variables, dereferencing,
+            arrays, functions, pointer arithmetic, and dynamic memory
+            allocation through practical C programs.
+        </p>
+
+        <p><strong>Level:</strong> Beginner to Intermediate</p>
+    </section>
+
+    <!-- TABLE OF CONTENTS -->
+
+    <section class="lesson-section" id="contents">
+        <h2>Chapter Contents</h2>
+
+        <div class="toc-grid">
+            <a href="#introduction">1. What Is a Pointer?</a>
+            <a href="#memory">2. Memory and Addresses</a>
+            <a href="#address">3. Address Operator (&amp;)</a>
+            <a href="#declaration">4. Pointer Declaration</a>
+            <a href="#dereference">5. Dereferencing (*)</a>
+            <a href="#modify">6. Modify Values Using Pointers</a>
+            <a href="#null">7. NULL Pointers</a>
+            <a href="#functions">8. Pointers and Functions</a>
+            <a href="#arrays">9. Pointers and Arrays</a>
+            <a href="#arithmetic">10. Pointer Arithmetic</a>
+            <a href="#strings">11. Pointers and Strings</a>
+            <a href="#double">12. Pointers to Pointers</a>
+            <a href="#dynamic">13. Dynamic Memory</a>
+            <a href="#mistakes">14. Common Mistakes</a>
+            <a href="#quiz">15. Interactive Quiz</a>
+            <a href="#practice">16. Coding Challenges</a>
+        </div>
+    </section>
+
+    <!-- 1. INTRODUCTION -->
+
+    <section class="lesson-section" id="introduction">
+        <h2>1. What Is a Pointer?</h2>
+
+        <p>
+            A pointer is an object that stores the address of another
+            object or function, subject to the pointer's type.
+        </p>
+
+        <p>
+            Ordinary variables store values. Pointer variables store
+            addresses that can be used to access other objects.
+        </p>
+
+        <div class="code-example">
+<pre>int number = 25;
+int *ptr = &amp;number;</pre>
+        </div>
+
+        <p>Here:</p>
+
+        <ul>
+            <li><code>number</code> stores the integer value 25.</li>
+            <li><code>&amp;number</code> gives the address of number.</li>
+            <li><code>ptr</code> stores that address.</li>
+            <li><code>*ptr</code> accesses the value at that address.</li>
+        </ul>
+
+        <div class="important-note">
+            <p>
+                <strong>Remember:</strong> A pointer is not the same thing
+                as the value it points to. The pointer stores an address;
+                dereferencing it accesses the pointed-to object.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. MEMORY -->
+
+    <section class="lesson-section" id="memory">
+        <h2>2. Understanding Memory and Addresses</h2>
+
+        <p>
+            When a program uses a variable, the variable occupies memory.
+            Its address identifies where that object is located in the
+            program's memory model.
+        </p>
+
+        <p>Consider this example:</p>
+
+        <div class="code-example">
+<pre>int age = 20;
+int *ptr = &amp;age;</pre>
+        </div>
+
+        <p>Conceptually, we can represent the relationship like this:</p>
+
+        <div class="table-wrapper">
+            <table class="lesson-table">
+                <tr>
+                    <th>Object</th>
+                    <th>What it contains</th>
+                </tr>
+                <tr>
+                    <td><code>age</code></td>
+                    <td>The integer value 20</td>
+                </tr>
+                <tr>
+                    <td><code>ptr</code></td>
+                    <td>The address of age</td>
+                </tr>
+                <tr>
+                    <td><code>*ptr</code></td>
+                    <td>The value 20, accessed through ptr</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>
+            The actual address depends on the program's execution.
+            We should not assume that a variable always has a particular
+            address.
+        </p>
+
+        <div class="important-note">
+            <p>
+                A pointer's printed address is implementation-dependent.
+                The relationship between the variables is what matters,
+                not a specific hexadecimal number.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. ADDRESS OPERATOR -->
+
+    <section class="lesson-section" id="address">
+        <h2>3. The Address Operator (&amp;)</h2>
+
+        <p>
+            The unary <code>&amp;</code> operator obtains the address of
+            an object when that object is addressable.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int number = 50;
+
+    printf("Value = %d\n", number);
+    printf("Address = %p\n", (void *)&amp;number);
+
+    return 0;
+}</pre>
+        </div>
+
+        <p>Example output:</p>
+
+        <div class="output-box">
+<pre>Value = 50
+Address = 0x7ffd1234</pre>
+        </div>
+
+        <p>
+            The address above is illustrative. Your program will generally
+            print a different address.
+        </p>
+
+        <p>
+            The <code>%p</code> format specifier is used to print a
+            pointer value. Converting an object pointer to
+            <code>void *</code> is appropriate for this use.
+        </p>
+    </section>
+
+    <!-- 4. DECLARATION -->
+
+    <section class="lesson-section" id="declaration">
+        <h2>4. Pointer Declaration and Initialization</h2>
+
+        <h3>Declaring a pointer</h3>
+
+        <div class="code-example">
+<pre>int *p;
+char *c;
+float *f;
+double *d;</pre>
+        </div>
+
+        <p>
+            These declarations create pointer variables with different
+            pointed-to types.
+        </p>
+
+        <p>
+            An uninitialized local pointer must not be dereferenced.
+            It does not automatically point to a valid object.
+        </p>
+
+        <h3>Initializing a pointer</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int number = 100;
+    int *ptr = &amp;number;
+
+    printf("Number = %d\n", number);
+    printf("Through pointer = %d\n", *ptr);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Number = 100
+Through pointer = 100</pre>
+        </div>
+
+        <h3>Declaring multiple pointers</h3>
+
+        <div class="code-example">
+<pre>int *p, *q;</pre>
+        </div>
+
+        <p>
+            Both <code>p</code> and <code>q</code> are pointers to int.
+            The asterisk binds to each declarator, so
+            <code>int *p, q;</code> declares p as a pointer but q as
+            an ordinary integer.
+        </p>
+    </section>
+
+    <!-- 5. DEREFERENCE -->
+
+    <section class="lesson-section" id="dereference">
+        <h2>5. The Dereference Operator (*)</h2>
+
+        <p>
+            When a pointer refers to a valid object of the correct type,
+            unary <code>*</code> lets us access that object.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int number = 75;
+    int *ptr = &amp;number;
+
+    printf("%d\n", *ptr);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>75</pre></div>
+
+        <p>
+            In <code>int *ptr</code>, the asterisk declares a pointer.
+            In <code>*ptr</code> inside an expression, it dereferences
+            the pointer.
+        </p>
+
+        <div class="important-note">
+            <p>
+                Dereferencing a null pointer, an uninitialized pointer,
+                or an invalid or dangling pointer is not safe and can
+                cause undefined behavior.
+            </p>
+        </div>
+    </section>
+
+    <!-- 6. MODIFY -->
+
+    <section class="lesson-section" id="modify">
+        <h2>6. Modify a Variable Through a Pointer</h2>
+
+        <p>
+            A pointer can be used to modify the object it points to.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int number = 10;
+    int *ptr = &amp;number;
+
+    printf("Before = %d\n", number);
+
+    *ptr = 99;
+
+    printf("After = %d\n", number);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>Before = 10
+After = 99</pre>
+        </div>
+
+        <p>
+            The statement <code>*ptr = 99;</code> changes the value of
+            the original variable because ptr points to number.
+        </p>
+    </section>
+
+    <!-- 7. NULL -->
+
+    <section class="lesson-section" id="null">
+        <h2>7. NULL Pointers</h2>
+
+        <p>
+            A null pointer intentionally represents that it does not
+            point to an object or function.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int *ptr = NULL;
+
+    if (ptr == NULL)
+    {
+        printf("Pointer is NULL\n");
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>Pointer is NULL</pre></div>
+
+        <p>
+            Checking whether a pointer is null is useful before using it
+            when null is an allowed state.
+        </p>
+
+        <div class="important-note">
+            <p>
+                Never dereference a null pointer. A null pointer is not
+                a valid address to an ordinary object.
+            </p>
+        </div>
+    </section>
+
+    <!-- 8. FUNCTIONS -->
+
+    <section class="lesson-section" id="functions">
+        <h2>8. Pointers and Functions</h2>
+
+        <p>
+            C passes function arguments by value. However, we can pass
+            a pointer value to a function, allowing the function to
+            modify the object that pointer refers to.
+        </p>
+
+        <h3>Example: Modify a variable</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+void changeValue(int *p)
+{
+    *p = 500;
+}
+
+int main(void)
+{
+    int number = 10;
+
+    changeValue(&amp;number);
+
+    printf("%d\n", number);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>500</pre></div>
+
+        <h3>Example: Swap two integers</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main(void)
+{
+    int x = 10;
+    int y = 20;
+
+    swap(&amp;x, &amp;y);
+
+    printf("x = %d\n", x);
+    printf("y = %d\n", y);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>x = 20
+y = 10</pre>
+        </div>
+
+        <p>
+            The function receives the addresses of x and y. Dereferencing
+            its parameters lets it change those original variables.
+        </p>
+    </section>
+
+    <!-- 9. ARRAYS -->
+
+    <section class="lesson-section" id="arrays">
+        <h2>9. Pointers and Arrays</h2>
+
+        <p>
+            In many expressions, an array name is converted to a pointer
+            to its first element. Arrays and pointers are closely related,
+            but they are not identical.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[4] = {10, 20, 30, 40};
+    int *p = a;
+
+    printf("%d\n", a[0]);
+    printf("%d\n", *p);
+    printf("%d\n", *(p + 1));
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>10
+10
+20</pre>
+        </div>
+
+        <p>These expressions are equivalent for valid indices:</p>
+
+        <div class="code-example">
+<pre>a[0] == *(a + 0)
+a[1] == *(a + 1)
+a[2] == *(a + 2)</pre>
+        </div>
+
+        <div class="important-note">
+            <p>
+                An array is not a pointer variable. For example, you cannot
+                assign a new address to an array name using
+                <code>a = p;</code>.
+            </p>
+        </div>
+    </section>
+
+    <!-- 10. POINTER ARITHMETIC -->
+
+    <section class="lesson-section" id="arithmetic">
+        <h2>10. Pointer Arithmetic</h2>
+
+        <p>
+            Adding one to a pointer to an array element moves it to the
+            next element of the pointed-to type, not simply one byte
+            forward.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[4] = {11, 22, 33, 44};
+    int *p = a;
+
+    printf("%d\n", *p);
+
+    p++;
+
+    printf("%d\n", *p);
+
+    p++;
+
+    printf("%d\n", *p);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>11
+22
+33</pre>
+        </div>
+
+        <p>
+            Here, p advances from a[0] to a[1], then to a[2].
+            Pointer arithmetic is defined only within the same array
+            object and one position past its end; the one-past position
+            must not be dereferenced.
+        </p>
+
+        <h3>Traverse an array with a pointer</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int a[5] = {2, 4, 6, 8, 10};
+    int *p;
+
+    for (p = a; p &lt; a + 5; p++)
+    {
+        printf("%d ", *p);
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>2 4 6 8 10</pre></div>
+    </section>
+
+    <!-- 11. STRINGS -->
+
+    <section class="lesson-section" id="strings">
+        <h2>11. Pointers and Strings</h2>
+
+        <p>
+            A C string is a sequence of characters terminated by
+            the null character <code>'\0'</code>. Pointers can be used
+            to read characters in a string.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    char text[] = "CODE";
+    char *p = text;
+
+    while (*p != '\0')
+    {
+        printf("%c ", *p);
+        p++;
+    }
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>C O D E</pre></div>
+
+        <p>
+            Each iteration prints the current character and advances
+            the pointer to the next character.
+        </p>
+
+        <div class="important-note">
+            <p>
+                A string literal such as <code>"CODE"</code> should not
+                be modified through a pointer. The example uses a
+                modifiable character array instead.
+            </p>
+        </div>
+    </section>
+
+    <!-- 12. DOUBLE POINTER -->
+
+    <section class="lesson-section" id="double">
+        <h2>12. Pointers to Pointers</h2>
+
+        <p>
+            A pointer to a pointer stores the address of another pointer.
+            For example, <code>int **pp</code> is a pointer to a pointer
+            to int.
+        </p>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    int number = 25;
+    int *p = &amp;number;
+    int **pp = &amp;p;
+
+    printf("%d\n", number);
+    printf("%d\n", *p);
+    printf("%d\n", **pp);
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box">
+<pre>25
+25
+25</pre>
+        </div>
+
+        <p>
+            <code>*p</code> accesses number, while <code>**pp</code>
+            follows pp to p and then follows p to number.
+        </p>
+    </section>
+
+    <!-- 13. DYNAMIC MEMORY -->
+
+    <section class="lesson-section" id="dynamic">
+        <h2>13. Dynamic Memory Allocation</h2>
+
+        <p>
+            Dynamic memory allocation allows a program to request memory
+            while it is running. The standard library functions used
+            for this are declared in <code>&lt;stdlib.h&gt;</code>.
+        </p>
+
+        <h3>Using malloc()</h3>
+
+        <div class="code-example">
+<pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void)
+{
+    int n = 5;
+    int i;
+    int *a = malloc((size_t)n * sizeof *a);
+
+    if (a == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    for (i = 0; i &lt; n; i++)
+    {
+        a[i] = (i + 1) * 10;
+    }
+
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("%d ", a[i]);
+    }
+
+    printf("\n");
+
+    free(a);
+    a = NULL;
+
+    return 0;
+}</pre>
+        </div>
+
+        <div class="output-box"><pre>10 20 30 40 50</pre></div>
+
+        <p>Important functions:</p>
+
+        <ul>
+            <li><code>malloc()</code> allocates a block of memory.</li>
+            <li><code>calloc()</code> allocates memory for multiple elements and initializes all bytes to zero.</li>
+            <li><code>realloc()</code> attempts to resize an allocated block.</li>
+            <li><code>free()</code> releases allocated memory.</li>
+        </ul>
+
+        <div class="important-note">
+            <p>
+                Always check whether allocation succeeded. Access only
+                memory within the allocated range, and release allocated
+                memory when it is no longer needed. Do not use a pointer
+                to access memory after it has been freed.
+            </p>
+        </div>
+    </section>
+
+    <!-- 14. MISTAKES -->
+
+    <section class="lesson-section" id="mistakes">
+        <h2>14. Common Pointer Mistakes</h2>
+
+        <h3>Mistake 1: Uninitialized pointer</h3>
+
+        <div class="code-example">
+<pre>int *p;
+*p = 10;   /* Incorrect */</pre>
+        </div>
+
+        <p>
+            p does not point to a known valid object. Initialize it to
+            the address of a suitable object or to NULL before use.
+        </p>
+
+        <h3>Mistake 2: Dereferencing NULL</h3>
+
+        <div class="code-example">
+<pre>int *p = NULL;
+printf("%d", *p);   /* Incorrect */</pre>
+        </div>
+
+        <p>A null pointer must not be dereferenced.</p>
+
+        <h3>Mistake 3: Returning the address of a local variable</h3>
+
+        <div class="code-example">
+<pre>int *badFunction(void)
+{
+    int x = 10;
+    return &amp;x;
+}</pre>
+        </div>
+
+        <p>
+            The local variable's lifetime ends when the function returns.
+            The returned pointer is therefore not valid for accessing x.
+        </p>
+
+        <h3>Mistake 4: Accessing beyond an array</h3>
+
+        <div class="code-example">
+<pre>int a[3] = {10, 20, 30};
+int *p = a;
+
+printf("%d", *(p + 3));</pre>
+        </div>
+
+        <p>
+            <code>p + 3</code> is one position past the array. It may be
+            formed, but it must not be dereferenced.
+        </p>
+
+        <h3>Mistake 5: Using freed memory</h3>
+
+        <div class="code-example">
+<pre>int *p = malloc(sizeof *p);
+
+if (p != NULL)
+{
+    *p = 10;
+    free(p);
+    p = NULL;
+}</pre>
+        </div>
+
+        <p>
+            Setting p to NULL after freeing helps prevent accidental
+            use through that pointer. It does not fix other copies
+            of the old pointer that might still exist.
+        </p>
+    </section>
+
+    <!-- 15. QUIZ -->
+
+    <section class="lesson-section" id="quiz">
+        <h2>15. Interactive Pointer Quiz</h2>
+
+        <p>Choose the correct answer for each question.</p>
+
+        <div class="quiz-question">
+            <p><strong>Question 1:</strong> What does a pointer store?</p>
+            <button onclick="checkAnswer(this, true)">A. An address</button>
+            <button onclick="checkAnswer(this, false)">B. Only a decimal number</button>
+            <button onclick="checkAnswer(this, false)">C. A loop condition</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 2:</strong> What does <code>&amp;x</code> mean?</p>
+            <button onclick="checkAnswer(this, false)">A. The value of x multiplied by x</button>
+            <button onclick="checkAnswer(this, true)">B. The address of x</button>
+            <button onclick="checkAnswer(this, false)">C. The size of x</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 3:</strong> What does <code>*p</code> access when p validly points to an int?</p>
+            <button onclick="checkAnswer(this, true)">A. The pointed-to integer</button>
+            <button onclick="checkAnswer(this, false)">B. The pointer's variable name</button>
+            <button onclick="checkAnswer(this, false)">C. The next function</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 4:</strong> What does NULL represent for a pointer?</p>
+            <button onclick="checkAnswer(this, false)">A. The integer 100</button>
+            <button onclick="checkAnswer(this, true)">B. A null pointer value</button>
+            <button onclick="checkAnswer(this, false)">C. A pointer to the first array element</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 5:</strong> What is printed?</p>
+            <div class="code-example"><pre>int x = 20;
+int *p = &amp;x;
+printf("%d", *p);</pre></div>
+            <button onclick="checkAnswer(this, true)">A. 20</button>
+            <button onclick="checkAnswer(this, false)">B. The address of x</button>
+            <button onclick="checkAnswer(this, false)">C. 0</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 6:</strong> Which function releases dynamically allocated memory?</p>
+            <button onclick="checkAnswer(this, false)">A. printf()</button>
+            <button onclick="checkAnswer(this, false)">B. scanf()</button>
+            <button onclick="checkAnswer(this, true)">C. free()</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 7:</strong> What is the relationship between an array and a pointer?</p>
+            <button onclick="checkAnswer(this, false)">A. They are identical in every situation</button>
+            <button onclick="checkAnswer(this, true)">B. An array name often converts to a pointer to its first element in expressions</button>
+            <button onclick="checkAnswer(this, false)">C. An array cannot be accessed using pointers</button>
+            <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-question">
+            <p><strong>Question 8:</strong> What happens when a valid pointer to an array element is incremented by one?</p>
+            <button onclick="checkAnswer(this, true)">A. It advances to the next element of its pointed-to type</button>
+            <button onclick="checkAnswer(this, false)">B. It always advances exactly one byte</button>
+            <button onclick="checkAnswer(this, false)">C. It becomes NULL</button>
+            <p class="quiz-feedback"></p>
+        </div>
+    </section>
+
+    <!-- 16. PRACTICE -->
+
+    <section class="lesson-section" id="practice">
+        <h2>16. Pointer Coding Challenges</h2>
+
+        <h3>Beginner</h3>
+        <ol>
+            <li>Declare an integer and print its value and address.</li>
+            <li>Use a pointer to print a variable's value.</li>
+            <li>Change a variable's value using a pointer.</li>
+        </ol>
+
+        <h3>Intermediate</h3>
+        <ol>
+            <li>Write a function that swaps two integers using pointers.</li>
+            <li>Print every element of an array using pointer arithmetic.</li>
+            <li>Find the sum of an array using a pointer and a loop.</li>
+            <li>Count the characters in a string using a pointer.</li>
+        </ol>
+
+        <h3>Advanced</h3>
+        <ol>
+            <li>Write a function that finds the largest array element using pointers.</li>
+            <li>Allocate an integer array dynamically and calculate its average.</li>
+            <li>Explain the difference between a null pointer and an uninitialized pointer.</li>
+            <li>Explain why returning the address of a local variable is unsafe.</li>
+        </ol>
+
+        <div class="important-note">
+            <p>
+                <strong>Study advice:</strong> Compile and run each complete
+                C program using GCC. Change the values, predict the output,
+                and then test your prediction.
+            </p>
+        </div>
+    </section>
+
+    <div class="chapter-navigation">
+        <a href="chapter10.html">← Previous Chapter</a>
+        <a href="index.html">Back to Home</a>
+        <a href="chapter12.html">Next Chapter →</a>
+    </div>
+
+</main>
+
+<script>
+    function checkAnswer(button, isCorrect)
+    {
+        const question = button.closest(".quiz-question");
+        const feedback = question.querySelector(".quiz-feedback");
+
+        if (isCorrect)
+        {
+            feedback.textContent = "Correct! Well done.";
+            feedback.style.color = "#00e676";
+        }
+        else
+        {
+            feedback.textContent = "Not quite. Try again!";
+            feedback.style.color = "#ff7070";
+        }
+    }
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 1 - Introduction to C | CodePath</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CodePath<span>.</span></div>
+
+	<nav>
+    <a href="index.html">Home</a>
+    <a href="#lesson">Lesson</a>
+    <a href="#practice">Practice</a>
+
+    <input
+        type="text"
+        id="topicSearch"
+        placeholder="Search topics..."
+        onkeydown="if(event.key === 'Enter') searchTopic();"
+    >
+
+    <button type="button" onclick="searchTopic()">Search</button>
+	</nav>
+
+       
+    </header>
+
+    <main class="lesson-page">
+
+        <div class="lesson-heading">
+            <p class="tagline">CHAPTER 01</p>
+
+            <h1>Introduction to <span>C Programming</span></h1>
+
+            <p>
+                Start your programming journey by learning the fundamentals
+                of C, one concept at a time.
+            </p>
+        </div>
+
+        <section class="lesson-content" id="lesson">
+
+            <article class="lesson-card">
+                <h2>1. What Is Programming?</h2>
+
+                <p>
+                    Programming is the process of writing instructions
+                    that tell a computer what to do.
+                </p>
+
+                <h3>Real-life example</h3>
+
+                <p>
+                    Imagine giving someone instructions to make tea:
+                    boil water, add tea leaves, add milk, and serve.
+                    A computer program also follows instructions to
+                    complete a task.
+                </p>
+
+                <p>
+                    However, computers require instructions written
+                    in a programming language they can process.
+                </p>
+            </article>
+
+            <article class="lesson-card">
+                <h2>2. What Is C?</h2>
+
+                <p>
+                    C is a general-purpose programming language developed
+                    by Dennis Ritchie at Bell Laboratories in the early 1970s.
+                </p>
+
+                <p>
+                    C is widely used for learning programming fundamentals,
+                    systems programming, embedded systems, and other
+                    performance-sensitive applications.
+                </p>
+
+                <h3>Why learn C?</h3>
+
+                <ul>
+                    <li>It teaches important programming fundamentals.</li>
+                    <li>It helps you understand memory and data types.</li>
+                    <li>It develops logical problem-solving skills.</li>
+                    <li>It provides a foundation for learning other languages.</li>
+                </ul>
+            </article>
+
+            <article class="lesson-card">
+                <h2>3. What Is a Compiler?</h2>
+
+                <p>
+                    A compiler translates source code written in a
+                    programming language into a form that can be executed
+                    by a computer.
+                </p>
+
+                <h3>Real-life example</h3>
+
+                <p>
+                    Imagine a translator converting a message from one
+                    language into another. A compiler performs a related
+                    translation task for computer programs, although
+                    the details are different.
+                </p>
+
+                <p>
+                    GCC is one commonly used compiler for C.
+                </p>
+            </article>
+
+            <article class="lesson-card">
+                <h2>4. Your First C Program</h2>
+
+                <p>Here is a simple C program:</p>
+
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Hello, World!");
+
+    return 0;
+}</code></pre>
+
+                <h3>Understanding the code</h3>
+
+                <ul>
+                    <li>
+                        <code>#include &lt;stdio.h&gt;</code> provides
+                        declarations for standard input/output functions
+                        such as <code>printf()</code>.
+                    </li>
+                    <li>
+                        <code>int main()</code> defines the main function
+                        where execution of this program begins.
+                    </li>
+                    <li>
+                        <code>printf()</code> displays text on the screen.
+                    </li>
+                    <li>
+                        <code>return 0;</code> indicates successful
+                        completion of the program.
+                    </li>
+                </ul>
+
+                <h3>Output</h3>
+
+                <pre><code>Hello, World!</code></pre>
+            </article>
+
+        </section>
+
+        <section class="lesson-content" id="practice">
+
+            <div class="lesson-card">
+                <h2>5. Quick Practice</h2>
+
+                <p>
+                    Test your understanding before moving to the next lesson.
+                </p>
+
+                <div class="practice-question">
+                    <h3>Question 1</h3>
+
+                    <p>Who developed the C programming language?</p>
+
+                    <label>
+                        <input type="radio" name="q1" value="a">
+                        James Gosling
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="b">
+                        Dennis Ritchie
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="c">
+                        Guido van Rossum
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="d">
+                        Bjarne Stroustrup
+                    </label>
+
+                    <button type="button" onclick="checkAnswer()">
+                        Check Answer
+                    </button>
+
+                    <p id="result" aria-live="polite"></p>
+                </div>
+            </div>
+			
+<!-- Question 2: Fill in the blanks -->
+<div class="lesson-card">
+    <h2>Question 2: Fill in the Blanks</h2>
+
+    <p>Complete the statement to display text on the screen in C.</p>
+
+    <pre><code>int main()
+{
+    ______("Hello World");
+    return 0;
+}</code></pre>
+
+    <input
+        type="text"
+        id="fillAnswer"
+        placeholder="Enter the missing function"
+        class="answer-input"
+    >
+
+    <button type="button" onclick="checkFillAnswer()">
+        Check Answer
+    </button>
+
+    <p id="fillResult" aria-live="polite"></p>
+</div>
+
+
+<!-- Question 3: Predict the output -->
+<div class="lesson-card">
+    <h2>Question 3: Predict the Output</h2>
+
+    <p>What will this program display?</p>
+
+    <pre><code>int a = 8;
+int b = 2;
+printf("%d", a + b);</code></pre>
+
+    <div class="practice-question">
+        <label>
+            <input type="radio" name="q3" value="a">
+            A. 6
+        </label>
+
+        <label>
+            <input type="radio" name="q3" value="b">
+            B. 10
+        </label>
+
+        <label>
+            <input type="radio" name="q3" value="c">
+            C. 82
+        </label>
+
+        <label>
+            <input type="radio" name="q3" value="d">
+            D. 16
+        </label>
+
+        <button type="button" onclick="checkOutputAnswer()">
+            Check Answer
+        </button>
+
+        <p id="outputResult" aria-live="polite"></p>
+    </div>
+</div>
+
+
+<!-- Question 4: Find the error -->
+<div class="lesson-card">
+    <h2>Question 4: Find the Error</h2>
+
+    <p>What is missing from the following statement?</p>
+
+    <pre><code>printf("Hello World")</code></pre>
+
+    <div class="practice-question">
+        <label>
+            <input type="radio" name="q4" value="a">
+            A. A comma
+        </label>
+
+        <label>
+            <input type="radio" name="q4" value="b">
+            B. A semicolon
+        </label>
+
+        <label>
+            <input type="radio" name="q4" value="c">
+            C. An integer variable
+        </label>
+
+        <label>
+            <input type="radio" name="q4" value="d">
+            D. A loop
+        </label>
+
+        <button type="button" onclick="checkErrorAnswer()">
+            Check Answer
+        </button>
+
+        <p id="errorResult" aria-live="polite"></p>
+    </div>
+</div>
+
+
+        </section>
+
+        <div class="chapter-navigation">
+		<a href="index.html">← Back to Home</a>
+		<a href="chapter2.html">Next Chapter →</a>
+	</div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 CodePath. Learn something new every day.</p>
+    </footer>
+
+    <script>
+        function checkAnswer() {
+            const selected = document.querySelector(
+                'input[name="q1"]:checked'
+            );
+
+            const result = document.getElementById("result");
+
+            if (!selected) {
+                result.textContent = "Please select an answer first.";
+                result.style.color = "#fbbf24";
+                return;
+            }
+
+            if (selected.value === "b") {
+                result.textContent =
+                    "Correct! Dennis Ritchie developed C at Bell Laboratories.";
+                result.style.color = "#4ade80";
+            } else {
+                result.textContent =
+                    "Not quite. Review the section about the history of C and try again.";
+                result.style.color = "#f87171";
+            }
+        }
+		
+// Question 2: Fill in the blanks
+function checkFillAnswer() {
+    const answer = document.getElementById("fillAnswer")
+        .value.trim().toLowerCase();
+
+    const result = document.getElementById("fillResult");
+
+    if (answer === "printf" || answer === "printf()") {
+        result.textContent =
+            "Correct! printf() displays formatted output in C.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent =
+            "Try again. Which function displays output in C?";
+        result.style.color = "#f87171";
+    }
+}
+
+
+// Question 3: Predict the output
+function checkOutputAnswer() {
+    const selected = document.querySelector(
+        'input[name="q3"]:checked'
+    );
+
+    const result = document.getElementById("outputResult");
+
+    if (!selected) {
+        result.textContent = "Please select an answer first.";
+        result.style.color = "#fbbf24";
+        return;
+    }
+
+    if (selected.value === "b") {
+        result.textContent =
+            "Correct! 8 + 2 = 10.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent =
+            "Incorrect. Remember that + adds the two integers.";
+        result.style.color = "#f87171";
+    }
+}
+
+
+// Question 4: Find the error
+function checkErrorAnswer() {
+    const selected = document.querySelector(
+        'input[name="q4"]:checked'
+    );
+
+    const result = document.getElementById("errorResult");
+
+    if (!selected) {
+        result.textContent = "Please select an answer first.";
+        result.style.color = "#fbbf24";
+        return;
+    }
+
+    if (selected.value === "b") {
+        result.textContent =
+            "Correct! A semicolon terminates this C statement.";
+        result.style.color = "#4ade80";
+    } else {
+        result.textContent =
+            "Incorrect. Look at the punctuation at the end of the statement.";
+        result.style.color = "#f87171";
+    }
+}
+
+    </script>
+
+<script src="script.js"></script>
+</body>
+</html>
